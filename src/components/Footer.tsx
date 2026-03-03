@@ -8,10 +8,10 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <p className="text-2xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Nova<span className="opacity-70">Lar</span>
+              SO <span className="opacity-70">Alphaville</span>
             </p>
             <p className="text-sm text-primary-foreground/60 leading-relaxed">
-              Transformando sonhos em endereços desde 2014. Seu novo lar começa aqui.
+              Transformando sonhos em endereços desde 2014. Seu imóvel em Alphaville começa aqui.
             </p>
           </div>
 
@@ -31,7 +31,7 @@ const Footer = () => {
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Contato</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
               <li className="flex items-center gap-2"><Phone size={14} /> (11) 99999-9999</li>
-              <li className="flex items-center gap-2"><Mail size={14} /> contato@novalar.com.br</li>
+              <li className="flex items-center gap-2"><Mail size={14} /> contato@soalphaville.com.br</li>
               <li className="flex items-start gap-2"><MapPin size={14} className="mt-0.5" /> Av. Paulista, 1000 - São Paulo, SP</li>
             </ul>
           </div>
@@ -50,7 +50,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/10 mt-12 pt-8 text-center text-sm text-primary-foreground/40">
-          © 2024 NovaLar. Todos os direitos reservados.
+          © 2024 SO Alphaville. Todos os direitos reservados.
         </div>
       </div>
     </footer>

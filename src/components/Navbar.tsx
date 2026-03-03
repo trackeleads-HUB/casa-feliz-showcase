@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#hero" className="font-serif text-2xl font-bold text-foreground tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-          Nova<span className="text-primary">Lar</span>
+          SO <span className="text-primary">Alphaville</span>
         </a>
 
         {/* Desktop */}

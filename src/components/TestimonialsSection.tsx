@@ -4,9 +4,9 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 import { Quote } from "lucide-react";
 
 const testimonials = [
-  { name: "Maria Silva", initials: "MS", text: "A NovaLar tornou o processo de compra do meu primeiro apartamento muito mais simples. A equipe foi atenciosa em cada detalhe!" },
+  { name: "Maria Silva", initials: "MS", text: "A SO Alphaville tornou o processo de compra do meu primeiro apartamento muito mais simples. A equipe foi atenciosa em cada detalhe!" },
   { name: "João Santos", initials: "JS", text: "Vendemos nossa casa em tempo recorde e pelo valor justo. Profissionais excepcionais que realmente entendem o mercado." },
-  { name: "Ana Oliveira", initials: "AO", text: "Alugar com a NovaLar foi uma experiência incrível. Sem burocracia, tudo digital e com suporte completo. Recomendo!" },
+  { name: "Ana Oliveira", initials: "AO", text: "Alugar com a SO Alphaville foi uma experiência incrível. Sem burocracia, tudo digital e com suporte completo. Recomendo!" },
 ];
 
 const TestimonialsSection = () => {
