@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
-import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings } from "lucide-react";
+import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote } from "lucide-react";
 
 type Property = {
   id: string;
@@ -132,9 +132,14 @@ const Dashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             {isAdmin && (
-              <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
-                <Settings size={16} /> Configurações
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/depoimentos")}>
+                  <MessageSquareQuote size={16} /> Depoimentos
+                </Button>
+                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
+                  <Settings size={16} /> Configurações
+                </Button>
+              </div>
             )}
             <Button onClick={() => navigate("/imoveis/novo")} size="sm" className="gap-2">
               <Plus size={16} /> Novo Imóvel
