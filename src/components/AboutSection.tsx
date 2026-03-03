@@ -13,7 +13,7 @@ const AboutSection = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="rounded-2xl overflow-hidden shadow-lg">
-            <img src={aboutTeam} alt="Equipe NovaLar" className="w-full h-80 object-cover" />
+            <img src={aboutTeam} alt="Equipe SO Alphaville" className="w-full h-80 object-cover" />
           </div>
           <div>
             <p className="text-sm font-medium text-primary tracking-widest uppercase mb-3">Sobre nós</p>
@@ -21,7 +21,7 @@ const AboutSection = () => {
               Realizando sonhos há mais de uma década
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              A NovaLar nasceu com o propósito de transformar a experiência de comprar, vender e alugar imóveis.
+              A SO Alphaville nasceu com o propósito de transformar a experiência de comprar, vender e alugar imóveis.
               Com uma equipe apaixonada e tecnologia de ponta, conectamos pessoas ao lugar perfeito para
               chamar de lar.
             </p>
