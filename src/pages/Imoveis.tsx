@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import Navbar from "@/components/Navbar";
@@ -240,31 +240,33 @@ const Imoveis = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((p) => (
-              <Card key={p.id} className="group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="relative h-56 overflow-hidden bg-muted">
-                  {p.image ? (
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
-                      <Home size={40} />
-                    </div>
-                  )}
-                  <Badge className="absolute top-4 left-4">{p.tag}</Badge>
-                  <Badge variant="secondary" className="absolute top-4 right-4">{p.propertyType}</Badge>
-                </div>
-                <CardContent className="p-5">
-                  <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{p.title}</h3>
-                  <p className="flex items-center gap-1 text-sm text-muted-foreground mb-4">
-                    <MapPin size={14} /> {p.location}
-                  </p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground border-t border-border pt-4">
-                    {p.beds ? <span className="flex items-center gap-1"><Bed size={14} /> {p.beds}</span> : null}
-                    {p.baths ? <span className="flex items-center gap-1"><Bath size={14} /> {p.baths}</span> : null}
-                    {p.area ? <span className="flex items-center gap-1"><Maximize size={14} /> {p.area}m²</span> : null}
+              <Link key={p.id} to={`/imoveis/${p.id}`}>
+                <Card className="group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="relative h-56 overflow-hidden bg-muted">
+                    {p.image ? (
+                      <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
+                        <Home size={40} />
+                      </div>
+                    )}
+                    <Badge className="absolute top-4 left-4">{p.tag}</Badge>
+                    <Badge variant="secondary" className="absolute top-4 right-4">{p.propertyType}</Badge>
                   </div>
-                </CardContent>
-              </Card>
+                  <CardContent className="p-5">
+                    <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">{p.title}</h3>
+                    <p className="flex items-center gap-1 text-sm text-muted-foreground mb-4">
+                      <MapPin size={14} /> {p.location}
+                    </p>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground border-t border-border pt-4">
+                      {p.beds ? <span className="flex items-center gap-1"><Bed size={14} /> {p.beds}</span> : null}
+                      {p.baths ? <span className="flex items-center gap-1"><Bath size={14} /> {p.baths}</span> : null}
+                      {p.area ? <span className="flex items-center gap-1"><Maximize size={14} /> {p.area}m²</span> : null}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         )}
