@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Bed, Bath, Maximize, Home } from "lucide-react";
+import { MapPin, Bed, Bath, Maximize, Home, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-// Fallback mock data
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
@@ -28,15 +26,9 @@ const listingLabels: Record<string, string> = {
 };
 
 type DisplayProperty = {
-  id: string;
-  image: string;
-  title: string;
-  location: string;
-  price: number | null;
-  beds: number | null;
-  baths: number | null;
-  area: number | null;
-  tag: string;
+  id: string; image: string; title: string; location: string;
+  price: number | null; beds: number | null; baths: number | null;
+  area: number | null; tag: string;
 };
 
 const formatPrice = (price: number | null) => {
@@ -64,92 +56,81 @@ const FeaturedProperties = () => {
         return;
       }
 
-      // Fetch cover images for each property
       const withImages = await Promise.all(
         data.map(async (p) => {
           const { data: imgs } = await supabase
-            .from("property_images")
-            .select("url")
-            .eq("property_id", p.id)
-            .eq("is_cover", true)
-            .limit(1);
-
-          const coverUrl = imgs?.[0]?.url;
-
+            .from("property_images").select("url")
+            .eq("property_id", p.id).eq("is_cover", true).limit(1);
           return {
-            id: p.id,
-            image: coverUrl || "",
-            title: p.title,
+            id: p.id, image: imgs?.[0]?.url || "", title: p.title,
             location: [p.neighborhood, p.city].filter(Boolean).join(", ") || "Localização não informada",
-            price: p.price ? Number(p.price) : null,
-            beds: p.bedrooms,
-            baths: p.bathrooms,
-            area: p.area ? Number(p.area) : null,
+            price: p.price ? Number(p.price) : null, beds: p.bedrooms,
+            baths: p.bathrooms, area: p.area ? Number(p.area) : null,
             tag: listingLabels[p.listing_type] || p.listing_type,
           };
         })
       );
-
       setProperties(withImages);
       setLoading(false);
     };
-
     fetchProperties();
   }, []);
 
   return (
-    <section id="imoveis" className="py-24 bg-background">
+    <section id="imoveis" className="py-28 bg-secondary/30">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium text-primary tracking-widest uppercase mb-3">Destaques</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Imóveis em Destaque
+        <div className="text-center mb-20">
+          <p className="text-[13px] uppercase tracking-[0.25em] text-primary mb-4">Destaques</p>
+          <h2 className="text-4xl md:text-5xl font-semibold text-foreground">
+            Imóveis em <span className="italic font-light">Destaque</span>
           </h2>
         </div>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-muted rounded-xl h-80 animate-pulse" />
+              <div key={i} className="bg-muted rounded-2xl h-96 animate-pulse" />
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((p) => (
-              <Card
+              <div
                 key={p.id}
-                className="group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                className="group bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-2xl hover:shadow-foreground/5 transition-all duration-500 cursor-pointer"
                 onClick={() => navigate(`/imoveis/${p.id}`)}
               >
-                <div className="relative h-56 overflow-hidden bg-muted">
+                <div className="relative h-64 overflow-hidden bg-muted">
                   {p.image ? (
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
-                      <Home size={40} />
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">
+                      <Home size={48} />
                     </div>
                   )}
-                  <Badge className="absolute top-4 left-4">{p.tag}</Badge>
+                  <Badge className="absolute top-4 left-4 rounded-full px-3">{p.tag}</Badge>
                 </div>
-                <CardContent className="p-5">
+                <div className="p-6">
                   <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{p.title}</h3>
-                  <p className="flex items-center gap-1 text-sm text-muted-foreground mb-4">
+                  <h3 className="text-lg font-medium text-foreground mb-2">{p.title}</h3>
+                  <p className="flex items-center gap-1.5 text-sm text-muted-foreground mb-5">
                     <MapPin size={14} /> {p.location}
                   </p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground border-t border-border pt-4">
-                    {p.beds ? <span className="flex items-center gap-1"><Bed size={14} /> {p.beds}</span> : null}
-                    {p.baths ? <span className="flex items-center gap-1"><Bath size={14} /> {p.baths}</span> : null}
-                    {p.area ? <span className="flex items-center gap-1"><Maximize size={14} /> {p.area}m²</span> : null}
+                  <div className="flex items-center gap-5 text-sm text-muted-foreground border-t border-border/50 pt-4">
+                    {p.beds ? <span className="flex items-center gap-1.5"><Bed size={14} /> {p.beds}</span> : null}
+                    {p.baths ? <span className="flex items-center gap-1.5"><Bath size={14} /> {p.baths}</span> : null}
+                    {p.area ? <span className="flex items-center gap-1.5"><Maximize size={14} /> {p.area}m²</span> : null}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         )}
 
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg" onClick={() => navigate("/imoveis")}>Ver todos os imóveis</Button>
+        <div className="text-center mt-16">
+          <Button variant="outline" size="lg" className="rounded-full px-8 gap-2" onClick={() => navigate("/imoveis")}>
+            Ver todos os imóveis <ArrowRight size={14} />
+          </Button>
         </div>
       </div>
     </section>

@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { Quote } from "lucide-react";
@@ -11,39 +10,37 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section id="depoimentos" className="py-24 bg-secondary">
+    <section id="depoimentos" className="py-28 bg-background">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium text-primary tracking-widest uppercase mb-3">Depoimentos</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
-            O que dizem nossos clientes
+        <div className="text-center mb-20">
+          <p className="text-[13px] uppercase tracking-[0.25em] text-primary mb-4">Depoimentos</p>
+          <h2 className="text-4xl md:text-5xl font-semibold text-foreground">
+            O que dizem nossos <span className="italic font-light">clientes</span>
           </h2>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <Carousel opts={{ loop: true }}>
             <CarouselContent>
               {testimonials.map((t) => (
                 <CarouselItem key={t.name}>
-                  <Card className="border-0 shadow-sm">
-                    <CardContent className="p-10 text-center">
-                      <Quote size={32} className="text-primary/20 mx-auto mb-6" />
-                      <p className="text-lg text-muted-foreground leading-relaxed mb-8 italic">
-                        "{t.text}"
-                      </p>
-                      <Avatar className="mx-auto mb-3 w-12 h-12">
-                        <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
-                          {t.initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <p className="font-semibold text-foreground">{t.name}</p>
-                    </CardContent>
-                  </Card>
+                  <div className="text-center px-4 md:px-12">
+                    <Quote size={40} className="text-primary/15 mx-auto mb-8" />
+                    <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-10 font-light italic">
+                      "{t.text}"
+                    </p>
+                    <Avatar className="mx-auto mb-4 w-14 h-14">
+                      <AvatarFallback className="bg-primary text-primary-foreground font-semibold text-sm">
+                        {t.initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <p className="font-semibold text-foreground text-sm uppercase tracking-wider">{t.name}</p>
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="border-border/50" />
+            <CarouselNext className="border-border/50" />
           </Carousel>
         </div>
       </div>

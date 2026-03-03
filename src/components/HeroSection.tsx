@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
@@ -21,30 +20,34 @@ const HeroSection = () => {
     navigate(`/imoveis?${params.toString()}`);
   };
 
+  const selectClass =
+    "flex-1 h-12 rounded-xl border-0 bg-foreground/5 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 appearance-none";
+
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center">
+    <section id="hero" className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center scale-105"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
-      <div className="absolute inset-0 bg-foreground/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/50 to-foreground/80" />
 
-      <div className="relative z-10 container mx-auto px-6 text-center">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-          Encontre o imóvel<br />dos seus sonhos
+      <div className="relative z-10 container mx-auto px-6 text-center pt-20">
+        <p className="text-[13px] uppercase tracking-[0.3em] text-primary-foreground/60 mb-6">
+          Imobiliária Premium em Alphaville
+        </p>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-primary-foreground mb-8 leading-[1.05] text-balance">
+          Encontre o imóvel
+          <br />
+          <span className="italic font-light">dos seus sonhos</span>
         </h1>
-        <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 max-w-2xl mx-auto">
-          Casas, apartamentos e terrenos nas melhores localizações. Seu novo lar está aqui.
+        <p className="text-lg md:text-xl text-primary-foreground/70 mb-14 max-w-xl mx-auto font-light leading-relaxed">
+          Casas, apartamentos e terrenos nas melhores localizações.
         </p>
 
         {/* Search bar */}
-        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-sm rounded-xl p-3 shadow-2xl">
+        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl shadow-foreground/10">
           <div className="flex flex-col md:flex-row gap-3">
-            <select
-              value={propertyType}
-              onChange={(e) => setPropertyType(e.target.value)}
-              className="flex-1 h-10 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground"
-            >
+            <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className={selectClass}>
               <option value="">Tipo de imóvel</option>
               <option value="casa">Casa</option>
               <option value="apartamento">Apartamento</option>
@@ -53,40 +56,39 @@ const HeroSection = () => {
               <option value="cobertura">Cobertura</option>
               <option value="chacara">Chácara</option>
             </select>
-            <select
-              value={listingType}
-              onChange={(e) => setListingType(e.target.value)}
-              className="flex-1 h-10 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground"
-            >
+            <select value={listingType} onChange={(e) => setListingType(e.target.value)} className={selectClass}>
               <option value="">Venda ou Locação</option>
               <option value="venda">Venda</option>
               <option value="aluguel">Aluguel</option>
               <option value="venda_aluguel">Venda e Aluguel</option>
             </select>
-            <Input
+            <input
               placeholder="Localização"
-              className="flex-1"
+              className={selectClass}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
-            <select
-              value={priceRange}
-              onChange={(e) => setPriceRange(e.target.value)}
-              className="flex-1 h-10 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground"
-            >
+            <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)} className={selectClass}>
               <option value="">Faixa de preço</option>
               <option value="300000">Até R$ 300.000</option>
               <option value="300000-600000">R$ 300.000 - R$ 600.000</option>
               <option value="600000-1000000">R$ 600.000 - R$ 1.000.000</option>
               <option value="1000000">Acima de R$ 1.000.000</option>
             </select>
-            <Button className="gap-2" onClick={handleSearch}>
+            <Button className="gap-2 h-12 rounded-xl px-6" onClick={handleSearch}>
               <Search size={16} />
               Buscar
             </Button>
           </div>
         </div>
+
+        <button
+          onClick={() => document.getElementById("imoveis")?.scrollIntoView({ behavior: "smooth" })}
+          className="mt-16 inline-flex items-center gap-2 text-primary-foreground/50 hover:text-primary-foreground transition-colors text-sm tracking-wide"
+        >
+          Explorar imóveis <ArrowRight size={14} />
+        </button>
       </div>
     </section>
   );
