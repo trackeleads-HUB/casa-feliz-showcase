@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, ArrowRight } from "lucide-react";
+import { Menu, X, Settings, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
@@ -40,7 +40,7 @@ const Navbar = () => {
           {user ? (
             <Link to="/dashboard">
               <Button size="sm" variant="outline" className="gap-2 rounded-full px-5">
-                <User size={14} /> Meus Imóveis
+                <Settings size={14} /> Admin
               </Button>
             </Link>
           ) : (
@@ -74,7 +74,7 @@ const Navbar = () => {
           {user ? (
             <Link to="/dashboard">
               <Button size="sm" variant="outline" className="w-full gap-2 rounded-full">
-                <User size={14} /> Meus Imóveis
+                <Settings size={14} /> Admin
               </Button>
             </Link>
           ) : (
