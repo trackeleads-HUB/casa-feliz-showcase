@@ -72,6 +72,10 @@ const PropertyDetails = () => {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  useEffect(() => {
     if (!id) return;
 
     const fetchData = async () => {
