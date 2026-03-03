@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
 
   const links = [
     { label: "Início", href: "#hero" },
@@ -31,7 +33,19 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <Button size="sm">Fale Conosco</Button>
+          {user ? (
+            <a href="/dashboard">
+              <Button size="sm" variant="outline" className="gap-2">
+                <User size={14} /> Meus Imóveis
+              </Button>
+            </a>
+          ) : (
+            <a href="/auth">
+              <Button size="sm" className="gap-2">
+                <User size={14} /> Entrar
+              </Button>
+            </a>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -53,7 +67,19 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <Button size="sm" className="w-full">Fale Conosco</Button>
+          {user ? (
+            <a href="/dashboard">
+              <Button size="sm" variant="outline" className="w-full gap-2">
+                <User size={14} /> Meus Imóveis
+              </Button>
+            </a>
+          ) : (
+            <a href="/auth">
+              <Button size="sm" className="w-full gap-2">
+                <User size={14} /> Entrar
+              </Button>
+            </a>
+          )}
         </div>
       )}
     </nav>
