@@ -58,6 +58,8 @@ export type Database = {
           latitude: number | null
           listing_type: Database["public"]["Enums"]["listing_type"]
           longitude: number | null
+          meta_description: string | null
+          meta_title: string | null
           neighborhood: string | null
           parking_spots: number | null
           price: number | null
@@ -82,6 +84,8 @@ export type Database = {
           latitude?: number | null
           listing_type?: Database["public"]["Enums"]["listing_type"]
           longitude?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
           neighborhood?: string | null
           parking_spots?: number | null
           price?: number | null
@@ -106,6 +110,8 @@ export type Database = {
           latitude?: number | null
           listing_type?: Database["public"]["Enums"]["listing_type"]
           longitude?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
           neighborhood?: string | null
           parking_spots?: number | null
           price?: number | null

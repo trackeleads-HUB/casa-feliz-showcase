@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 import PropertyGallery from "@/components/PropertyGallery";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -57,6 +58,8 @@ type PropertyData = {
   state: string | null;
   zip_code: string | null;
   features: string[] | null;
+  meta_title: string | null;
+  meta_description: string | null;
 };
 
 const PropertyDetails = () => {
@@ -145,8 +148,47 @@ const PropertyDetails = () => {
     );
   }
 
+  const coverImage = images.find((i) => i.is_cover)?.url || images[0]?.url || "";
+
+  const seoTitle = property.meta_title || property.title;
+  const seoDesc = property.meta_description || 
+    `${propertyTypeLabels[property.property_type] || property.property_type} ${listingLabels[property.listing_type]?.toLowerCase() || ""} em ${property.neighborhood || property.city || "Alphaville"}. ${property.bedrooms ? property.bedrooms + " quartos, " : ""}${property.area ? property.area + "m². " : ""}${formatPrice(property.price)}.`;
+  
+  const propertyJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    name: property.title,
+    description: property.description || seoDesc,
+    url: `${window.location.origin}/imoveis/${property.id}`,
+    ...(coverImage && { image: coverImage }),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: property.address || undefined,
+      addressLocality: property.city || "Barueri",
+      addressRegion: property.state || "SP",
+      addressCountry: "BR",
+      postalCode: property.zip_code || undefined,
+    },
+    ...(property.price && {
+      offers: {
+        "@type": "Offer",
+        price: property.price,
+        priceCurrency: "BRL",
+        availability: property.status === "disponivel" ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+      },
+    }),
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={seoTitle}
+        description={seoDesc}
+        canonical={`${window.location.origin}/imoveis/${property.id}`}
+        ogImage={coverImage || undefined}
+        ogType="article"
+        jsonLd={propertyJsonLd}
+      />
       <Navbar />
 
       <div className="pt-20 sm:pt-24 container mx-auto px-4 sm:px-6 py-6 sm:py-8">

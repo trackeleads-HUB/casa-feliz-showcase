@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -152,6 +153,11 @@ const Imoveis = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Buscar Imóveis"
+        description="Pesquise imóveis em Alphaville. Filtros por tipo, preço, localização. Casas, apartamentos, terrenos e muito mais."
+        canonical={`${window.location.origin}/imoveis`}
+      />
       <Navbar />
 
       {/* Filters */}
