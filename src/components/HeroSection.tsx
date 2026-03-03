@@ -28,6 +28,15 @@ const HeroSection = () => {
               <option>Casa</option>
               <option>Apartamento</option>
               <option>Terreno</option>
+              <option>Comercial</option>
+              <option>Cobertura</option>
+              <option>Chácara</option>
+            </select>
+            <select className="flex-1 h-10 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground">
+              <option value="">Venda ou Locação</option>
+              <option>Venda</option>
+              <option>Aluguel</option>
+              <option>Venda e Aluguel</option>
             </select>
             <Input placeholder="Localização" className="flex-1" />
             <select className="flex-1 h-10 rounded-md border border-input bg-background px-3 text-sm text-muted-foreground">
