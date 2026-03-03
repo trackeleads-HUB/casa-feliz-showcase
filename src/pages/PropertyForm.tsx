@@ -50,6 +50,8 @@ const PropertyForm = () => {
     state: "SP",
     zip_code: "",
     features: [] as string[],
+    meta_title: "",
+    meta_description: "",
   });
 
   const [images, setImages] = useState<ImageFile[]>([]);
@@ -92,6 +94,8 @@ const PropertyForm = () => {
       state: data.state || "SP",
       zip_code: data.zip_code || "",
       features: data.features || [],
+      meta_title: (data as any).meta_title || "",
+      meta_description: (data as any).meta_description || "",
     });
 
     // Load images
@@ -180,6 +184,8 @@ const PropertyForm = () => {
         state: form.state.trim() || null,
         zip_code: form.zip_code.trim() || null,
         features: form.features,
+        meta_title: form.meta_title.trim() || null,
+        meta_description: form.meta_description.trim() || null,
       };
 
       let propertyId = id;
@@ -424,6 +430,24 @@ const PropertyForm = () => {
               </label>
             </div>
             <p className="text-xs text-muted-foreground">Clique na estrela para definir a foto de capa.</p>
+          </section>
+
+          {/* SEO */}
+          <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+            <h2 className="text-lg font-semibold">SEO (Otimização para Buscadores)</h2>
+            <p className="text-xs text-muted-foreground">Opcional. Se não preenchido, será gerado automaticamente a partir do título e descrição.</p>
+
+            <div>
+              <Label htmlFor="meta_title">Título SEO</Label>
+              <Input id="meta_title" value={form.meta_title} onChange={(e) => handleChange("meta_title", e.target.value)} placeholder="Ex: Casa 4 quartos em Alphaville - Venda" maxLength={60} className="mt-1.5" />
+              <p className="text-xs text-muted-foreground mt-1">{form.meta_title.length}/60 caracteres</p>
+            </div>
+
+            <div>
+              <Label htmlFor="meta_description">Descrição SEO</Label>
+              <Textarea id="meta_description" value={form.meta_description} onChange={(e) => handleChange("meta_description", e.target.value)} placeholder="Breve descrição para resultados de busca..." maxLength={160} rows={2} className="mt-1.5" />
+              <p className="text-xs text-muted-foreground mt-1">{form.meta_description.length}/160 caracteres</p>
+            </div>
           </section>
 
           {/* Submit */}

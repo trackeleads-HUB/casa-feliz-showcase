@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import SEOHead from "@/components/SEOHead";
 import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft } from "lucide-react";
 
 type Property = {
@@ -109,6 +110,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Meus Imóveis" description="Gerencie seus imóveis cadastrados na SO Alphaville." noindex />
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">

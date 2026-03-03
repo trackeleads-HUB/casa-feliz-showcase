@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from "react";
+import SEOHead from "@/components/SEOHead";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -59,6 +60,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
+      <SEOHead title={isLogin ? "Login" : "Cadastro"} description="Acesse sua conta SO Alphaville para gerenciar seus imóveis." noindex />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <a href="/" className="text-3xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
