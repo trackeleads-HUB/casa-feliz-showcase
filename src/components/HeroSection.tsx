@@ -31,11 +31,11 @@ const HeroSection = () => {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/50 to-foreground/80" />
 
-      <div className="relative z-10 container mx-auto px-6 text-center pt-20">
-        <p className="text-[13px] uppercase tracking-[0.3em] text-primary-foreground/60 mb-6">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center pt-24 sm:pt-20">
+        <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-primary-foreground/60 mb-4 sm:mb-6">
           Imobiliária Premium em Alphaville
         </p>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-primary-foreground mb-8 leading-[1.05] text-balance">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold text-primary-foreground mb-6 sm:mb-8 leading-[1.1] sm:leading-[1.05] text-balance">
           Encontre o imóvel
           <br />
           <span className="italic font-light">dos seus sonhos</span>
@@ -45,8 +45,8 @@ const HeroSection = () => {
         </p>
 
         {/* Search bar */}
-        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl shadow-foreground/10">
-          <div className="flex flex-col md:flex-row gap-3">
+        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-md rounded-2xl p-3 sm:p-4 shadow-2xl shadow-foreground/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-2 sm:gap-3">
             <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className={selectClass}>
               <option value="">Tipo de imóvel</option>
               <option value="casa">Casa</option>
@@ -76,7 +76,7 @@ const HeroSection = () => {
               <option value="600000-1000000">R$ 600.000 - R$ 1.000.000</option>
               <option value="1000000">Acima de R$ 1.000.000</option>
             </select>
-            <Button className="gap-2 h-12 rounded-xl px-6" onClick={handleSearch}>
+            <Button className="gap-2 h-12 rounded-xl px-6 sm:col-span-2 md:col-span-1" onClick={handleSearch}>
               <Search size={16} />
               Buscar
             </Button>
