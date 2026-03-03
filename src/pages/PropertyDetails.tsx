@@ -149,7 +149,7 @@ const PropertyDetails = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="pt-24 container mx-auto px-6 py-8">
+      <div className="pt-20 sm:pt-24 container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Back link */}
         <Link to="/imoveis" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
           <ArrowLeft size={16} /> Voltar para resultados
@@ -158,9 +158,9 @@ const PropertyDetails = () => {
         {/* Gallery */}
         <PropertyGallery images={images} title={property.title} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mt-6 lg:mt-8">
           {/* Main info */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-5 sm:space-y-6 order-2 lg:order-1">
             {/* Header */}
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -168,7 +168,7 @@ const PropertyDetails = () => {
                 <Badge variant="secondary">{propertyTypeLabels[property.property_type] || property.property_type}</Badge>
                 <Badge variant="outline">{statusLabels[property.status] || property.status}</Badge>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
                 {property.title}
               </h1>
               {fullAddress && (
@@ -250,8 +250,8 @@ const PropertyDetails = () => {
           </div>
 
           {/* Sidebar – Contact */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-28 bg-card border border-border rounded-xl p-6 shadow-sm space-y-5">
+          <div className="lg:col-span-1 order-1 lg:order-2">
+            <div className="lg:sticky lg:top-28 bg-card border border-border rounded-xl p-5 sm:p-6 shadow-sm space-y-4 sm:space-y-5">
               <h3 className="text-lg font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Interessado neste imóvel?
               </h3>

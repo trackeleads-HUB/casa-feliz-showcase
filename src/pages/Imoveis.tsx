@@ -155,8 +155,8 @@ const Imoveis = () => {
       <Navbar />
 
       {/* Filters */}
-      <div className="pt-24 pb-8 bg-muted/50">
-        <div className="container mx-auto px-6">
+      <div className="pt-20 sm:pt-24 pb-6 sm:pb-8 bg-muted/50">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 mb-6">
             <SlidersHorizontal size={20} className="text-primary" />
             <h1 className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -220,7 +220,7 @@ const Imoveis = () => {
       </div>
 
       {/* Results */}
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <p className="text-muted-foreground mb-8">
           {loading ? "Buscando..." : `${totalCount} imóvel(is) encontrado(s)`}
         </p>
