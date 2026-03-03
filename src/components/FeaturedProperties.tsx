@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -44,6 +45,7 @@ const formatPrice = (price: number | null) => {
 };
 
 const FeaturedProperties = () => {
+  const navigate = useNavigate();
   const [properties, setProperties] = useState<DisplayProperty[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -143,7 +145,7 @@ const FeaturedProperties = () => {
         )}
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg">Ver todos os imóveis</Button>
+          <Button variant="outline" size="lg" onClick={() => navigate("/imoveis")}>Ver todos os imóveis</Button>
         </div>
       </div>
     </section>
