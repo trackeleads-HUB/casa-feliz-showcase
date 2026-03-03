@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Search, ArrowRight } from "lucide-react";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const { settings } = useSiteSettings();
   const [propertyType, setPropertyType] = useState("");
   const [listingType, setListingType] = useState("");
   const [location, setLocation] = useState("");
@@ -33,15 +35,15 @@ const HeroSection = () => {
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center pt-24 sm:pt-20">
         <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-primary-foreground/60 mb-4 sm:mb-6">
-          Imobiliária Premium em Alphaville
+          {settings.site_tagline}
         </p>
         <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold text-primary-foreground mb-6 sm:mb-8 leading-[1.1] sm:leading-[1.05] text-balance">
-          Encontre o imóvel
+          {settings.hero_title?.split(" ").slice(0, -2).join(" ")}
           <br />
-          <span className="italic font-light">dos seus sonhos</span>
+          <span className="italic font-light">{settings.hero_title?.split(" ").slice(-2).join(" ")}</span>
         </h1>
         <p className="text-lg md:text-xl text-primary-foreground/70 mb-14 max-w-xl mx-auto font-light leading-relaxed">
-          Casas, apartamentos e terrenos nas melhores localizações.
+          {settings.hero_subtitle}
         </p>
 
         {/* Search bar */}

@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 import PropertyGallery from "@/components/PropertyGallery";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -63,6 +64,7 @@ type PropertyData = {
 };
 
 const PropertyDetails = () => {
+  const { settings } = useSiteSettings();
   const { id } = useParams<{ id: string }>();
   const [property, setProperty] = useState<PropertyData | null>(null);
   const [images, setImages] = useState<{ url: string; is_cover: boolean | null }[]>([]);
@@ -302,7 +304,7 @@ const PropertyDetails = () => {
               </p>
 
               <a
-                href={`https://wa.me/5511999999999?text=${whatsappMessage}`}
+                href={`https://wa.me/${settings.whatsapp}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -311,13 +313,13 @@ const PropertyDetails = () => {
                 </Button>
               </a>
 
-              <a href="tel:+551199999999">
+              <a href={`tel:+${settings.whatsapp}`}>
                 <Button variant="outline" className="w-full gap-2 mt-2">
-                  <Phone size={18} /> (11) 99999-9999
+                  <Phone size={18} /> {settings.phone}
                 </Button>
               </a>
 
-              <a href="mailto:contato@soalphaville.com.br">
+              <a href={`mailto:${settings.email}`}>
                 <Button variant="outline" className="w-full gap-2">
                   <Mail size={18} /> Enviar e-mail
                 </Button>
