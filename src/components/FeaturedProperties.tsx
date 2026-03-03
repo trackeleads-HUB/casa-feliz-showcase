@@ -116,7 +116,11 @@ const FeaturedProperties = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((p) => (
-              <Card key={p.id} className="group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <Card
+                key={p.id}
+                className="group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                onClick={() => navigate(`/imoveis/${p.id}`)}
+              >
                 <div className="relative h-56 overflow-hidden bg-muted">
                   {p.image ? (
                     <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />

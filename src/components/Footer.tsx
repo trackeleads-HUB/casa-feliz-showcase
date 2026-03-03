@@ -19,10 +19,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Navegação</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/60">
-              <li><a href="#hero" className="hover:text-primary-foreground transition-colors">Início</a></li>
-              <li><a href="#imoveis" className="hover:text-primary-foreground transition-colors">Imóveis</a></li>
-              <li><a href="#sobre" className="hover:text-primary-foreground transition-colors">Sobre</a></li>
-              <li><a href="#servicos" className="hover:text-primary-foreground transition-colors">Serviços</a></li>
+              <li><a href="/#hero" className="hover:text-primary-foreground transition-colors">Início</a></li>
+              <li><a href="/imoveis" className="hover:text-primary-foreground transition-colors">Imóveis</a></li>
+              <li><a href="/#sobre" className="hover:text-primary-foreground transition-colors">Sobre</a></li>
+              <li><a href="/#servicos" className="hover:text-primary-foreground transition-colors">Serviços</a></li>
             </ul>
           </div>
 
@@ -30,8 +30,8 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Contato</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li className="flex items-center gap-2"><Phone size={14} /> (11) 99999-9999</li>
-              <li className="flex items-center gap-2"><Mail size={14} /> contato@soalphaville.com.br</li>
+              <li><a href="tel:+5511999999999" className="flex items-center gap-2 hover:text-primary-foreground transition-colors"><Phone size={14} /> (11) 99999-9999</a></li>
+              <li><a href="mailto:contato@soalphaville.com.br" className="flex items-center gap-2 hover:text-primary-foreground transition-colors"><Mail size={14} /> contato@soalphaville.com.br</a></li>
               <li className="flex items-start gap-2"><MapPin size={14} className="mt-0.5" /> Av. Paulista, 1000 - São Paulo, SP</li>
             </ul>
           </div>

@@ -11,10 +11,12 @@ const CTASection = () => {
         <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
           Entre em contato com nossa equipe e descubra como podemos ajudar você a alcançar o melhor resultado.
         </p>
-        <Button variant="secondary" size="lg" className="gap-2">
-          <Phone size={18} />
-          Fale Conosco
-        </Button>
+        <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20seus%20servi%C3%A7os." target="_blank" rel="noopener noreferrer">
+          <Button variant="secondary" size="lg" className="gap-2">
+            <Phone size={18} />
+            Fale Conosco
+          </Button>
+        </a>
       </div>
     </section>
   );
