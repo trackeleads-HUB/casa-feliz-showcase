@@ -1,14 +1,32 @@
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { Quote } from "lucide-react";
 
-const testimonials = [
-  { name: "Maria Silva", initials: "MS", text: "A SO Alphaville tornou o processo de compra do meu primeiro apartamento muito mais simples. A equipe foi atenciosa em cada detalhe!" },
-  { name: "João Santos", initials: "JS", text: "Vendemos nossa casa em tempo recorde e pelo valor justo. Profissionais excepcionais que realmente entendem o mercado." },
-  { name: "Ana Oliveira", initials: "AO", text: "Alugar com a SO Alphaville foi uma experiência incrível. Sem burocracia, tudo digital e com suporte completo. Recomendo!" },
-];
+type Testimonial = {
+  id: string;
+  name: string;
+  initials: string;
+  text: string;
+};
 
 const TestimonialsSection = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("testimonials")
+      .select("id, name, initials, text")
+      .eq("is_active", true)
+      .order("sort_order")
+      .then(({ data }) => {
+        if (data?.length) setTestimonials(data);
+      });
+  }, []);
+
+  if (testimonials.length === 0) return null;
+
   return (
     <section id="depoimentos" className="py-28 bg-background">
       <div className="container mx-auto px-6">
@@ -23,7 +41,7 @@ const TestimonialsSection = () => {
           <Carousel opts={{ loop: true }}>
             <CarouselContent>
               {testimonials.map((t) => (
-                <CarouselItem key={t.name}>
+                <CarouselItem key={t.id}>
                   <div className="text-center px-4 md:px-12">
                     <Quote size={40} className="text-primary/15 mx-auto mb-8" />
                     <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-10 font-light italic">
