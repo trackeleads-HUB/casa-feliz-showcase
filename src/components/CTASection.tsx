@@ -8,8 +8,8 @@ const CTASection = () => {
   const whatsappUrl = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent("Olá! Gostaria de mais informações sobre seus serviços.")}`;
 
   return (
-    <section className="py-28 bg-foreground relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+    <section className="py-28 bg-gradient-brand relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-6 text-center relative z-10">
         <p className="text-[13px] uppercase tracking-[0.25em] text-primary-foreground/40 mb-6">Entre em contato</p>

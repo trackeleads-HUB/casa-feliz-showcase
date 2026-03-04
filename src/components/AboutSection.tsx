@@ -20,7 +20,7 @@ const AboutSection = () => {
             <div className="absolute -bottom-6 left-2 right-2 sm:left-4 sm:right-4 lg:left-auto lg:-right-8 bg-card rounded-2xl shadow-xl p-3 sm:p-6 grid grid-cols-4 sm:grid-cols-2 gap-2 sm:gap-4 border border-border/50">
               {stats.map((s) => (
                 <div key={s.label} className="text-center px-1 sm:px-4">
-                  <p className="text-base sm:text-2xl font-bold text-primary">{s.value}</p>
+                  <p className="text-base sm:text-2xl font-bold text-gradient-brand">{s.value}</p>
                   <p className="text-[9px] sm:text-xs text-muted-foreground uppercase tracking-wider mt-1">{s.label}</p>
                 </div>
               ))}
