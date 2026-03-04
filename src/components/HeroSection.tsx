@@ -31,7 +31,8 @@ const HeroSection = () => {
         className="absolute inset-0 bg-cover bg-center scale-105"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/50 to-foreground/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/40 to-foreground/80" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(145_60%_36%/0.15)] via-transparent to-[hsl(185_55%_30%/0.15)]" />
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center pt-24 sm:pt-20">
         <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-primary-foreground/60 mb-4 sm:mb-6">
@@ -78,7 +79,7 @@ const HeroSection = () => {
               <option value="600000-1000000">R$ 600.000 - R$ 1.000.000</option>
               <option value="1000000">Acima de R$ 1.000.000</option>
             </select>
-            <Button className="gap-2 h-12 rounded-xl px-6 sm:col-span-2 md:col-span-1" onClick={handleSearch}>
+            <Button className="gap-2 h-12 rounded-xl px-6 sm:col-span-2 md:col-span-1 bg-gradient-brand hover:opacity-90 border-0" onClick={handleSearch}>
               <Search size={16} />
               Buscar
             </Button>
