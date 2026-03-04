@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Settings, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+
+const isRouterLink = (href: string) => !href.includes("#");
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,15 +28,25 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-10">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[13px] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-300"
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) =>
+            isRouterLink(link.href) ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-[13px] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[13px] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </div>
 
         <div className="hidden md:block">
@@ -62,16 +74,27 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 pb-6 pt-2 space-y-4">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) =>
+            isRouterLink(link.href) ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="block text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="block text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </a>
+            )
+          )}
           {user ? (
             <Link to="/dashboard">
               <Button size="sm" variant="outline" className="w-full gap-2 rounded-full">
