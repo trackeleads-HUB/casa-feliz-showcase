@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,7 @@ import { ArrowLeft, Send, MessageCircle } from "lucide-react";
 
 const AnunciarImovel = () => {
   const { toast } = useToast();
+  const { settings } = useSiteSettings();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -61,8 +63,8 @@ const AnunciarImovel = () => {
       message: form.message || null,
     });
 
-    // Open WhatsApp
-    const whatsappNumber = "5511999999999"; // TODO: configure via site_settings
+    // Open WhatsApp with configured number
+    const whatsappNumber = settings.whatsapp?.replace(/\D/g, "") || "5511999999999";
     const url = `https://wa.me/${whatsappNumber}?text=${buildWhatsAppMessage()}`;
     window.open(url, "_blank");
 
