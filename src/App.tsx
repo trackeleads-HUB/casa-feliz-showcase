@@ -13,6 +13,8 @@ import PropertyForm from "./pages/PropertyForm";
 import PropertyDetails from "./pages/PropertyDetails";
 import AdminSettings from "./pages/AdminSettings";
 import AdminTestimonials from "./pages/AdminTestimonials";
+import AdminLeads from "./pages/AdminLeads";
+import AnunciarImovel from "./pages/AnunciarImovel";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => (
             <Route path="/imoveis/:id/editar" element={<PropertyForm />} />
             <Route path="/admin/configuracoes" element={<AdminSettings />} />
             <Route path="/admin/depoimentos" element={<AdminTestimonials />} />
+            <Route path="/admin/leads" element={<AdminLeads />} />
+            <Route path="/anunciar" element={<AnunciarImovel />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

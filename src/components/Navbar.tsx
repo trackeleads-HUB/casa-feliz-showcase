@@ -11,6 +11,7 @@ const Navbar = () => {
   const links = [
     { label: "Início", href: "/#hero" },
     { label: "Imóveis", href: "/imoveis" },
+    { label: "Anuncie seu Imóvel", href: "/anunciar" },
     { label: "Sobre", href: "/#sobre" },
     { label: "Serviços", href: "/#servicos" },
     { label: "Depoimentos", href: "/#depoimentos" },

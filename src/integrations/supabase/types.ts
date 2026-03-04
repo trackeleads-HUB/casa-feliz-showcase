@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      leads: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          listing_type: string | null
+          message: string | null
+          name: string
+          neighborhood: string | null
+          phone: string
+          property_type: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          listing_type?: string | null
+          message?: string | null
+          name: string
+          neighborhood?: string | null
+          phone: string
+          property_type?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          listing_type?: string | null
+          message?: string | null
+          name?: string
+          neighborhood?: string | null
+          phone?: string
+          property_type?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
