@@ -158,7 +158,7 @@ const AdminTestimonials = () => {
             </button>
             <div className="flex items-center gap-2">
               <MessageSquareQuote size={20} className="text-primary" />
-              <h1 className="text-xl font-bold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h1 className="text-xl font-bold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Depoimentos
               </h1>
             </div>

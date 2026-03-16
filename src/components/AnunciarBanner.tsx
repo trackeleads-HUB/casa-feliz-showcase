@@ -15,7 +15,7 @@ const AnunciarBanner = () => {
             <span className="text-white/90 text-sm font-medium tracking-wide uppercase">Para Proprietários</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Quer Vender ou Alugar<br />seu Imóvel?
           </h2>
           
