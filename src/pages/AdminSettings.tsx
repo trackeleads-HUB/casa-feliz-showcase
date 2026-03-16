@@ -130,7 +130,7 @@ const AdminSettings = () => {
             </button>
             <div className="flex items-center gap-2">
               <Settings size={20} className="text-primary" />
-              <h1 className="text-xl font-bold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h1 className="text-xl font-bold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Configurações Gerais
               </h1>
             </div>
