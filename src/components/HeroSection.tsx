@@ -48,9 +48,9 @@ const HeroSection = () => {
         </p>
 
         {/* Search bar */}
-        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-md rounded-2xl p-3 sm:p-4 shadow-2xl shadow-foreground/10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-2 sm:gap-3">
-            <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className={selectClass}>
+        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-4 shadow-2xl shadow-foreground/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-2 sm:gap-3 w-full">
+            <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className={`${selectClass} w-full min-w-0`}>
               <option value="">Tipo de imóvel</option>
               <option value="casa">Casa</option>
               <option value="apartamento">Apartamento</option>
@@ -59,7 +59,7 @@ const HeroSection = () => {
               <option value="cobertura">Cobertura</option>
               <option value="chacara">Chácara</option>
             </select>
-            <select value={listingType} onChange={(e) => setListingType(e.target.value)} className={selectClass}>
+            <select value={listingType} onChange={(e) => setListingType(e.target.value)} className={`${selectClass} w-full min-w-0`}>
               <option value="">Venda ou Locação</option>
               <option value="venda">Venda</option>
               <option value="aluguel">Aluguel</option>
@@ -67,19 +67,22 @@ const HeroSection = () => {
             </select>
             <input
               placeholder="Localização"
-              className={selectClass}
+              className={`${selectClass} w-full min-w-0`}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
-            <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)} className={selectClass}>
+            <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)} className={`${selectClass} w-full min-w-0`}>
               <option value="">Faixa de preço</option>
               <option value="300000">Até R$ 300.000</option>
               <option value="300000-600000">R$ 300.000 - R$ 600.000</option>
               <option value="600000-1000000">R$ 600.000 - R$ 1.000.000</option>
               <option value="1000000">Acima de R$ 1.000.000</option>
             </select>
-            <Button className="gap-2 h-12 rounded-xl px-6 sm:col-span-2 md:col-span-1 bg-gradient-brand hover:opacity-90 border-0 text-[15px] font-semibold" onClick={handleSearch}>
+            <Button
+              className="gap-2 h-12 rounded-xl px-4 sm:px-6 w-full sm:col-span-2 md:col-span-1 md:w-auto md:shrink-0 bg-gradient-brand hover:opacity-90 border-0 text-[15px] font-semibold"
+              onClick={handleSearch}
+            >
               <Search size={16} />
               Buscar
             </Button>
