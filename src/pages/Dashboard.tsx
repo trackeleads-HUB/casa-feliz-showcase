@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
-import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search, Menu, X } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search, Menu } from "lucide-react";
 
 type Property = {
   id: string;
@@ -163,36 +164,56 @@ const Dashboard = () => {
             <Button onClick={() => navigate("/imoveis/novo")} size="icon" className="shrink-0" aria-label="Novo Imóvel">
               <Plus size={18} />
             </Button>
-            <Button variant="outline" size="icon" onClick={() => setMenuOpen((v) => !v)} aria-label="Menu">
-              {menuOpen ? <X size={18} /> : <Menu size={18} />}
-            </Button>
+            <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" aria-label="Abrir menu">
+                  <Menu size={18} />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[85vw] sm:w-80 p-0 flex flex-col">
+                <SheetHeader className="px-5 py-4 border-b border-border text-left">
+                  <SheetTitle className="text-base font-semibold">Menu</SheetTitle>
+                </SheetHeader>
+
+                <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+                  <Button
+                    onClick={() => { setMenuOpen(false); navigate("/imoveis/novo"); }}
+                    className="w-full justify-start gap-3 h-11"
+                  >
+                    <Plus size={18} /> Novo Imóvel
+                  </Button>
+
+                  {isAdmin && (
+                    <>
+                      <p className="px-3 pt-4 pb-1 text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">
+                        Administração
+                      </p>
+                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/leads"); }}>
+                        <Home size={18} /> Leads
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/depoimentos"); }}>
+                        <MessageSquareQuote size={18} /> Depoimentos
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
+                        <Search size={18} /> SEO
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
+                        <Settings size={18} /> Configurações
+                      </Button>
+                    </>
+                  )}
+
+                  <p className="px-3 pt-4 pb-1 text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">
+                    Conta
+                  </p>
+                  <Button variant="ghost" className="w-full justify-start gap-3 h-11 text-destructive hover:text-destructive" onClick={() => { setMenuOpen(false); signOut(); }}>
+                    <LogOut size={18} /> Sair
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-
-        {/* Mobile/tablet drawer */}
-        {menuOpen && (
-          <div className="lg:hidden border-t border-border bg-card px-4 sm:px-6 py-4 space-y-2">
-            {isAdmin && (
-              <>
-                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/leads"); }}>
-                  <Home size={16} /> Leads
-                </Button>
-                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/depoimentos"); }}>
-                  <MessageSquareQuote size={16} /> Depoimentos
-                </Button>
-                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
-                  <Search size={16} /> SEO
-                </Button>
-                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
-                  <Settings size={16} /> Configurações
-                </Button>
-              </>
-            )}
-            <Button variant="ghost" size="sm" onClick={() => { setMenuOpen(false); signOut(); }} className="w-full justify-start gap-2">
-              <LogOut size={16} /> Sair
-            </Button>
-          </div>
-        )}
       </header>
 
       <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
