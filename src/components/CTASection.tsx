@@ -22,7 +22,7 @@ const CTASection = () => {
           {settings.cta_text}
         </p>
         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-          <Button size="lg" className="gap-2 rounded-full px-8 h-12 text-sm">
+          <Button size="lg" className="gap-2 rounded-full px-8">
             Fale Conosco <ArrowRight size={16} />
           </Button>
         </a>

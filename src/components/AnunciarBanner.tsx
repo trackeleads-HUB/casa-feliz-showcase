@@ -24,7 +24,7 @@ const AnunciarBanner = () => {
           </p>
           
           <Link to="/anunciar">
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full px-10 h-14 text-base font-semibold gap-2 shadow-lg">
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full px-8 gap-2 shadow-lg">
               Anunciar meu Imóvel <ArrowRight size={18} />
             </Button>
           </Link>

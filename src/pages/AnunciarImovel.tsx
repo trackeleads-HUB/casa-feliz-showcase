@@ -153,7 +153,7 @@ const AnunciarImovel = () => {
               <Textarea id="message" name="message" value={form.message} onChange={handleChange} placeholder="Detalhes adicionais sobre o seu imóvel..." rows={4} />
             </div>
 
-            <Button type="submit" disabled={loading} className="w-full gap-2 bg-gradient-brand hover:opacity-90 text-primary-foreground h-12 text-base">
+            <Button type="submit" size="lg" disabled={loading} className="w-full gap-2 bg-gradient-brand hover:opacity-90 text-primary-foreground">
               <MessageCircle size={18} />
               {loading ? "Enviando..." : "Enviar via WhatsApp"}
             </Button>
