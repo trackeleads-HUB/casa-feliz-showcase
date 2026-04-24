@@ -38,7 +38,7 @@ const HeroSection = () => {
         <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-primary-foreground/60 mb-4 sm:mb-6">
           {settings.site_tagline}
         </p>
-        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold text-primary-foreground mb-6 sm:mb-8 leading-[1.1] sm:leading-[1.05] text-balance">
+        <h1 className="text-[56px] sm:text-[64px] md:text-7xl lg:text-[72px] font-bold text-primary-foreground mb-6 sm:mb-8 leading-[1.1] sm:leading-[1.05] text-balance">
           {settings.hero_title?.split(" ").slice(0, -2).join(" ")}
           <br />
           <span className="italic font-light">{settings.hero_title?.split(" ").slice(-2).join(" ")}</span>
