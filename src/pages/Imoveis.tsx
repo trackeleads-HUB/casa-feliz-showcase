@@ -262,7 +262,7 @@ const Imoveis = () => {
                   <CardContent className="p-5">
                     <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
                     <h3 className="text-lg font-semibold text-foreground mb-2">{p.title}</h3>
-                    <p className="flex items-center gap-1 text-sm text-muted-foreground mb-4">
+                    <p className="flex items-center gap-1 text-base text-muted-foreground mb-4">
                       <MapPin size={14} /> {p.location}
                     </p>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground border-t border-border pt-4">
