@@ -91,14 +91,29 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  button, .btn {
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
+  }
+
+  nav a, nav button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
   }
 }
 
