@@ -85,7 +85,7 @@ const AnunciarImovel = () => {
           </Link>
 
           <div className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="text-gradient-brand">Anuncie</span> seu Imóvel
             </h1>
             <p className="text-muted-foreground text-lg">
