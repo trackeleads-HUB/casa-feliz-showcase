@@ -43,7 +43,7 @@ const HeroSection = () => {
           <br />
           <span className="italic font-light">{settings.hero_title?.split(" ").slice(-2).join(" ")}</span>
         </h1>
-        <p className="text-lg md:text-xl text-primary-foreground/70 mb-14 max-w-xl mx-auto font-light leading-relaxed">
+        <p className="text-base md:text-lg text-primary-foreground/70 mb-14 max-w-xl mx-auto font-light leading-relaxed">
           {settings.hero_subtitle}
         </p>
 
