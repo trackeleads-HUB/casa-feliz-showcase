@@ -17,10 +17,10 @@ const PoliticaDePrivacidade = () => {
         canonical={`${settings.site_url || ""}/politica-de-privacidade`}
       />
       <Navbar />
-      <main className="pt-32 pb-20 container mx-auto px-6 max-w-3xl">
-        <Breadcrumbs items={[{ label: "Política de Privacidade" }]} className="mb-8" />
+      <main className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 container mx-auto px-4 sm:px-6 max-w-3xl">
+        <Breadcrumbs items={[{ label: "Política de Privacidade" }]} className="mb-6 sm:mb-8" />
         <article
-          className="prose prose-neutral max-w-none [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:mb-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:mt-10 [&_h2]:mb-3 [&_p]:text-base [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:text-muted-foreground"
+          className="prose prose-neutral max-w-none [&_h1]:text-2xl [&_h1]:sm:text-3xl [&_h1]:md:text-4xl [&_h1]:font-bold [&_h1]:mb-4 [&_h1]:sm:mb-6 [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:font-semibold [&_h2]:mt-8 [&_h2]:sm:mt-10 [&_h2]:mb-3 [&_p]:text-sm [&_p]:sm:text-base [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:ml-5 [&_ul]:sm:ml-6 [&_ul]:text-muted-foreground [&_ul]:text-sm [&_ul]:sm:text-base"
           dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
         />
       </main>
