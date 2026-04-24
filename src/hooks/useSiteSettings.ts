@@ -6,6 +6,7 @@ export type SiteSettings = Record<string, string>;
 const DEFAULTS: SiteSettings = {
   site_name: "SO Alphaville",
   site_tagline: "Imóveis de Alto Padrão em Alphaville",
+  site_url: "https://soalphaville.lovable.app",
   whatsapp: "5511999999999",
   phone: "(11) 99999-9999",
   email: "contato@soalphaville.com.br",
@@ -17,6 +18,21 @@ const DEFAULTS: SiteSettings = {
   hero_subtitle: "Imóveis exclusivos em Alphaville, com a sofisticação e segurança que sua família merece.",
   cta_title: "Encontre o Imóvel Perfeito para Você",
   cta_text: "Nossa equipe está pronta para ajudá-lo a encontrar o imóvel ideal.",
+  // SEO
+  default_meta_title: "SO Alphaville - Imóveis de Alto Padrão em Alphaville",
+  default_meta_description: "Encontre casas, apartamentos e terrenos de alto padrão em Alphaville.",
+  default_og_image: "",
+  gtm_id: "",
+  ga_id: "",
+  google_ads_id: "",
+  facebook_pixel_id: "",
+  google_site_verification: "",
+  bing_site_verification: "",
+  facebook_domain_verification: "",
+  cnpj: "",
+  creci: "",
+  privacy_policy_content: "",
+  terms_of_use_content: "",
 };
 
 let cachedSettings: SiteSettings | null = null;
