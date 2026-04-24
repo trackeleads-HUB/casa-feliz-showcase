@@ -176,9 +176,9 @@ const Imoveis = () => {
             ]}
             className="mb-4"
           />
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-4 sm:mb-6">
             <SlidersHorizontal size={20} className="text-primary" />
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
               Buscar Imóveis
             </h1>
           </div>
@@ -240,24 +240,24 @@ const Imoveis = () => {
 
       {/* Results */}
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <p className="text-muted-foreground mb-8">
+        <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">
           {loading ? "Buscando..." : `${totalCount} imóvel(is) encontrado(s)`}
         </p>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="bg-muted rounded-xl h-80 animate-pulse" />
             ))}
           </div>
         ) : properties.length === 0 ? (
-          <div className="text-center py-20">
+          <div className="text-center py-16 sm:py-20">
             <Home size={48} className="mx-auto text-muted-foreground/30 mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">Nenhum imóvel encontrado</h3>
-            <p className="text-muted-foreground">Tente ajustar os filtros para encontrar mais resultados.</p>
+            <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">Nenhum imóvel encontrado</h3>
+            <p className="text-sm sm:text-base text-muted-foreground">Tente ajustar os filtros para encontrar mais resultados.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
             {properties.map((p) => (
               <Link key={p.id} to={`/imoveis/${p.id}`}>
                 <Card className="group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">

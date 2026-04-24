@@ -79,20 +79,20 @@ const AnunciarImovel = () => {
       <SEOHead title="Anunciar Imóvel - SO Alphaville" description="Quer vender ou alugar seu imóvel? Preencha o formulário e entre em contato conosco." />
       <Navbar />
 
-      <main className="pt-28 pb-16">
-        <div className="container mx-auto px-6 max-w-2xl">
-          <Breadcrumbs items={[{ label: "Anuncie seu Imóvel" }]} className="mb-8" />
+      <main className="pt-24 sm:pt-28 pb-12 sm:pb-16">
+        <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
+          <Breadcrumbs items={[{ label: "Anuncie seu Imóvel" }]} className="mb-6 sm:mb-8" />
 
-          <div className="text-center mb-10">
-            <h1 className="text-3xl md:text-4xl lg:text-[44px] font-bold mb-4">
+          <div className="text-center mb-8 sm:mb-10">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-bold mb-3 sm:mb-4">
               <span className="text-gradient-brand">Anuncie</span> seu Imóvel
             </h1>
-            <p className="text-muted-foreground text-base md:text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg">
               Preencha os dados abaixo e entraremos em contato pelo WhatsApp.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8 space-y-5 shadow-sm">
+          <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-5 sm:p-7 md:p-8 space-y-4 sm:space-y-5 shadow-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome *</Label>
