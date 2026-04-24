@@ -165,7 +165,7 @@ const Imoveis = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 mb-6">
             <SlidersHorizontal size={20} className="text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground">
               Buscar Imóveis
             </h1>
           </div>
@@ -262,7 +262,7 @@ const Imoveis = () => {
                   <CardContent className="p-5">
                     <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
                     <h3 className="text-lg font-semibold text-foreground mb-2">{p.title}</h3>
-                    <p className="flex items-center gap-1 text-sm text-muted-foreground mb-4">
+                    <p className="flex items-center gap-1 text-base text-muted-foreground mb-4">
                       <MapPin size={14} /> {p.location}
                     </p>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground border-t border-border pt-4">

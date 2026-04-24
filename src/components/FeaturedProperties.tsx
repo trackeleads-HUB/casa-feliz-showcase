@@ -81,7 +81,7 @@ const FeaturedProperties = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <p className="text-[13px] uppercase tracking-[0.25em] text-primary mb-4">Destaques</p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-foreground">
+          <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
             Imóveis em <span className="italic font-light">Destaque</span>
           </h2>
         </div>
@@ -113,7 +113,7 @@ const FeaturedProperties = () => {
                 <div className="p-6">
                   <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
                   <h3 className="text-lg font-medium text-foreground mb-2">{p.title}</h3>
-                  <p className="flex items-center gap-1.5 text-sm text-muted-foreground mb-5">
+                  <p className="flex items-center gap-1.5 text-base text-muted-foreground mb-5">
                     <MapPin size={14} /> {p.location}
                   </p>
                   <div className="flex items-center gap-5 text-sm text-muted-foreground border-t border-border/50 pt-4">

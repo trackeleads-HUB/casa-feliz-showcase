@@ -216,7 +216,7 @@ const PropertyDetails = () => {
                 <Badge variant="secondary">{propertyTypeLabels[property.property_type] || property.property_type}</Badge>
                 <Badge variant="outline">{statusLabels[property.status] || property.status}</Badge>
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
+              <h1 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground mb-2">
                 {property.title}
               </h1>
               {fullAddress && (
@@ -273,23 +273,23 @@ const PropertyDetails = () => {
             {/* Description */}
             {property.description && (
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
                   Descrição
                 </h2>
-                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{property.description}</p>
+                <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line">{property.description}</p>
               </div>
             )}
 
             {/* Features */}
             {property.features && property.features.length > 0 && (
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
                   Características
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {property.features.map((f, i) => (
-                    <span key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 size={14} className="text-primary shrink-0" /> {f}
+                    <span key={i} className="flex items-center gap-2 text-base text-muted-foreground">
+                      <CheckCircle2 size={16} className="text-primary shrink-0" /> {f}
                     </span>
                   ))}
                 </div>
@@ -303,7 +303,7 @@ const PropertyDetails = () => {
               <h3 className="text-lg font-bold text-foreground">
                 Interessado neste imóvel?
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 Entre em contato conosco para agendar uma visita ou obter mais informações.
               </p>
 

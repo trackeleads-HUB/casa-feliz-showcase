@@ -15,11 +15,11 @@ const AnunciarBanner = () => {
             <span className="text-white/90 text-sm font-medium tracking-wide uppercase">Para Proprietários</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5">
+          <h2 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-white mb-5">
             Quer Vender ou Alugar<br />seu Imóvel?
           </h2>
           
-          <p className="text-white/85 text-lg md:text-xl mb-8 max-w-xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-white/85 mb-8 max-w-xl mx-auto leading-relaxed">
             Cadastre seu imóvel e nossa equipe entrará em contato para ajudá-lo a fechar o melhor negócio.
           </p>
           

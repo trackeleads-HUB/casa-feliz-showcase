@@ -13,7 +13,7 @@ const ServicesSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <p className="text-[13px] uppercase tracking-[0.25em] text-primary mb-4">O que fazemos</p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-foreground">
+          <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
             Nossos <span className="italic font-light">Serviços</span>
           </h2>
         </div>
