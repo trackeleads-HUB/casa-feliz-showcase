@@ -79,7 +79,7 @@ const HeroSection = () => {
               <option value="600000-1000000">R$ 600.000 - R$ 1.000.000</option>
               <option value="1000000">Acima de R$ 1.000.000</option>
             </select>
-            <Button className="gap-2 h-12 rounded-xl px-6 sm:col-span-2 md:col-span-1 bg-gradient-brand hover:opacity-90 border-0" onClick={handleSearch}>
+            <Button size="lg" className="gap-2 rounded-xl px-7 sm:col-span-2 md:col-span-1 bg-gradient-brand hover:opacity-90 border-0" onClick={handleSearch}>
               <Search size={16} />
               Buscar
             </Button>
