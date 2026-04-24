@@ -303,7 +303,7 @@ const PropertyDetails = () => {
               <h3 className="text-lg font-bold text-foreground">
                 Interessado neste imóvel?
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 Entre em contato conosco para agendar uma visita ou obter mais informações.
               </p>
 
