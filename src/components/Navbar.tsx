@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Settings, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,6 +9,8 @@ const isRouterLink = (href: string) => !href.includes("#");
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const links = [
     { label: "Início", href: "/#hero" },
@@ -19,10 +21,35 @@ const Navbar = () => {
     { label: "Depoimentos", href: "/#depoimentos" },
   ];
 
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleAnchorClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+    setIsOpen(false);
+    const id = href.split("#")[1];
+    if (!id) return;
+
+    if (location.pathname === "/") {
+      scrollToId(id);
+    } else {
+      navigate(`/#${id}`);
+      // Aguarda a home renderizar antes de rolar
+      setTimeout(() => scrollToId(id), 80);
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/#hero" className="text-2xl font-bold tracking-tight">
+        <a href="/#hero" onClick={(e) => handleAnchorClick(e, "/#hero")} className="text-2xl font-bold tracking-tight">
           <span className="text-gradient-brand">SO</span> <span className="text-foreground">Alphaville</span>
         </a>
 
@@ -41,7 +68,8 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[13px] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-300"
+                onClick={(e) => handleAnchorClick(e, link.href)}
+                className="text-[13px] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-300 cursor-pointer"
               >
                 {link.label}
               </a>
@@ -88,8 +116,8 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="block text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleAnchorClick(e, link.href)}
+                className="block text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               >
                 {link.label}
               </a>
