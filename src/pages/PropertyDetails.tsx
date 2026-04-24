@@ -283,13 +283,13 @@ const PropertyDetails = () => {
             {/* Features */}
             {property.features && property.features.length > 0 && (
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
                   Características
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {property.features.map((f, i) => (
-                    <span key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 size={14} className="text-primary shrink-0" /> {f}
+                    <span key={i} className="flex items-center gap-2 text-base text-muted-foreground">
+                      <CheckCircle2 size={16} className="text-primary shrink-0" /> {f}
                     </span>
                   ))}
                 </div>
