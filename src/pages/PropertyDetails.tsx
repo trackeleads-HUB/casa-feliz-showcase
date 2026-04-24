@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import PropertyGallery from "@/components/PropertyGallery";
 import { Badge } from "@/components/ui/badge";
@@ -198,10 +199,17 @@ const PropertyDetails = () => {
       <Navbar />
 
       <div className="pt-20 sm:pt-24 container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Back link */}
-        <Link to="/imoveis" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
-          <ArrowLeft size={16} /> Voltar para resultados
-        </Link>
+        {/* Breadcrumbs */}
+        <Breadcrumbs
+          items={[
+            { label: "Imóveis", href: "/imoveis" },
+            ...(property.city
+              ? [{ label: property.city, href: `/imoveis?local=${encodeURIComponent(property.city)}` }]
+              : []),
+            { label: property.title },
+          ]}
+          className="mb-6"
+        />
 
         {/* Gallery */}
         <PropertyGallery images={images} title={property.title} />
