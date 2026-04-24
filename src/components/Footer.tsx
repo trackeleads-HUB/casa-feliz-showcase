@@ -11,12 +11,12 @@ const Footer = () => {
   ].filter((s) => s.url);
 
   return (
-    <footer className="bg-foreground text-primary-foreground pt-20 pb-8">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-foreground text-primary-foreground pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-10 sm:mb-12 md:mb-16">
           {/* Brand */}
           <div>
-            <p className="text-3xl font-semibold mb-4">
+            <p className="text-2xl sm:text-3xl font-semibold mb-3 sm:mb-4">
               {settings.site_name?.split(" ").map((w, i) =>
                 i === 0 ? <span key={i}>{w} </span> : <span key={i} className="text-primary-foreground/50">{w}</span>
               )}
@@ -28,7 +28,7 @@ const Footer = () => {
 
           {/* Links */}
           <div>
-            <h4 className="text-[13px] uppercase tracking-[0.2em] text-primary-foreground/60 mb-6">Navegação</h4>
+            <h4 className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] text-primary-foreground/60 mb-4 sm:mb-6">Navegação</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/40">
               <li><a href="/#hero" className="hover:text-primary-foreground transition-colors duration-300">Início</a></li>
               <li><a href="/imoveis" className="hover:text-primary-foreground transition-colors duration-300">Imóveis</a></li>
@@ -43,7 +43,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-[13px] uppercase tracking-[0.2em] text-primary-foreground/60 mb-6">Contato</h4>
+            <h4 className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] text-primary-foreground/60 mb-4 sm:mb-6">Contato</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/40">
               <li>
                 <a href={`tel:+${settings.whatsapp}`} className="flex items-center gap-2.5 hover:text-primary-foreground transition-colors duration-300">
@@ -63,7 +63,7 @@ const Footer = () => {
 
           {/* Social */}
           <div>
-            <h4 className="text-[13px] uppercase tracking-[0.2em] text-primary-foreground/60 mb-6">Redes Sociais</h4>
+            <h4 className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] text-primary-foreground/60 mb-4 sm:mb-6">Redes Sociais</h4>
             <div className="flex gap-3">
               {socialLinks.length > 0 ? socialLinks.map(({ Icon, url }, i) => (
                 <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-primary-foreground/10 flex items-center justify-center hover:border-primary-foreground/30 hover:bg-primary-foreground/5 transition-all duration-300">
@@ -80,7 +80,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/10 pt-8 text-center text-xs text-primary-foreground/25 tracking-wider">
+        <div className="border-t border-primary-foreground/10 pt-6 sm:pt-8 text-center text-[11px] sm:text-xs text-primary-foreground/25 tracking-wider px-2">
           © {new Date().getFullYear()} {settings.site_name}. Todos os direitos reservados.
         </div>
       </div>
