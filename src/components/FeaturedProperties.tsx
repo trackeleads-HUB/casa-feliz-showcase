@@ -77,23 +77,23 @@ const FeaturedProperties = () => {
   }, []);
 
   return (
-    <section id="imoveis" className="py-28 bg-secondary/30">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
-          <p className="text-[13px] uppercase tracking-[0.25em] text-primary mb-4">Destaques</p>
-          <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
+    <section id="imoveis" className="py-16 sm:py-20 md:py-28 bg-secondary/30">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">Destaques</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground">
             Imóveis em <span className="italic font-light">Destaque</span>
           </h2>
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-muted rounded-2xl h-96 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
             {properties.map((p) => (
               <div
                 key={p.id}
@@ -127,7 +127,7 @@ const FeaturedProperties = () => {
           </div>
         )}
 
-        <div className="text-center mt-16">
+        <div className="text-center mt-10 sm:mt-12 md:mt-16">
           <Button variant="outline" size="lg" className="rounded-full px-8 gap-2" onClick={() => navigate("/imoveis")}>
             Ver todos os imóveis <ArrowRight size={14} />
           </Button>

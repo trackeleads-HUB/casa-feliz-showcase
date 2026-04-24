@@ -28,11 +28,11 @@ const TestimonialsSection = () => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section id="depoimentos" className="py-28 bg-background">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
-          <p className="text-[13px] uppercase tracking-[0.25em] text-primary mb-4">Depoimentos</p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-foreground">
+    <section id="depoimentos" className="py-16 sm:py-20 md:py-28 bg-background">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">Depoimentos</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground">
             O que dizem nossos <span className="italic font-light">clientes</span>
           </h2>
         </div>
@@ -42,23 +42,23 @@ const TestimonialsSection = () => {
             <CarouselContent>
               {testimonials.map((t) => (
                 <CarouselItem key={t.id}>
-                  <div className="text-center px-4 md:px-12">
-                    <Quote size={40} className="text-primary/15 mx-auto mb-8" />
-                    <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-10 font-light italic">
+                  <div className="text-center px-2 sm:px-4 md:px-12">
+                    <Quote size={32} className="sm:w-10 sm:h-10 text-primary/15 mx-auto mb-5 sm:mb-8" />
+                    <p className="text-base sm:text-lg md:text-2xl text-foreground leading-relaxed mb-6 sm:mb-10 font-light italic">
                       "{t.text}"
                     </p>
-                    <Avatar className="mx-auto mb-4 w-14 h-14">
+                    <Avatar className="mx-auto mb-3 sm:mb-4 w-12 h-12 sm:w-14 sm:h-14">
                       <AvatarFallback className="bg-primary text-primary-foreground font-semibold text-sm">
                         {t.initials}
                       </AvatarFallback>
                     </Avatar>
-                    <p className="font-semibold text-foreground text-sm uppercase tracking-wider">{t.name}</p>
+                    <p className="font-semibold text-foreground text-xs sm:text-sm uppercase tracking-wider">{t.name}</p>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="border-border/50" />
-            <CarouselNext className="border-border/50" />
+            <CarouselPrevious className="border-border/50 hidden sm:flex" />
+            <CarouselNext className="border-border/50 hidden sm:flex" />
           </Carousel>
         </div>
       </div>

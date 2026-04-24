@@ -31,14 +31,14 @@ const FAQSection = () => {
   };
 
   return (
-    <section id="faq" className="py-24 bg-background">
+    <section id="faq" className="py-16 sm:py-20 md:py-24 bg-background">
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
-      <div className="container mx-auto px-6 max-w-3xl">
-        <div className="text-center mb-14">
-          <p className="text-[13px] uppercase tracking-[0.25em] text-primary mb-4">Dúvidas Frequentes</p>
-          <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
+      <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+        <div className="text-center mb-10 sm:mb-12 md:mb-14">
+          <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">Dúvidas Frequentes</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground">
             Perguntas <span className="italic font-light">Frequentes</span>
           </h2>
         </div>
@@ -53,17 +53,17 @@ const FAQSection = () => {
               >
                 <button
                   onClick={() => setOpenId(isOpen ? null : f.id)}
-                  className="w-full flex items-center justify-between px-6 py-5 text-left"
+                  className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 text-left gap-3"
                   aria-expanded={isOpen}
                 >
-                  <h3 className="text-base md:text-lg font-medium text-foreground pr-4">{f.question}</h3>
+                  <h3 className="text-sm sm:text-base md:text-lg font-medium text-foreground">{f.question}</h3>
                   <ChevronDown
                     size={20}
                     className={`text-muted-foreground transition-transform duration-300 shrink-0 ${isOpen ? "rotate-180" : ""}`}
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-6 pb-5 text-base text-muted-foreground leading-relaxed">{f.answer}</div>
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-5 text-sm sm:text-base text-muted-foreground leading-relaxed">{f.answer}</div>
                 )}
               </div>
             );
