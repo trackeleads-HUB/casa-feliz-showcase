@@ -48,9 +48,9 @@ const HeroSection = () => {
         </p>
 
         {/* Search bar */}
-        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-md rounded-2xl p-3 sm:p-4 shadow-2xl shadow-foreground/10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-2 sm:gap-3">
-            <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className={selectClass}>
+        <div className="max-w-4xl mx-auto bg-background/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-4 shadow-2xl shadow-foreground/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-2 sm:gap-3 w-full">
+            <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className={`${selectClass} w-full min-w-0`}>
               <option value="">Tipo de imóvel</option>
               <option value="casa">Casa</option>
               <option value="apartamento">Apartamento</option>
