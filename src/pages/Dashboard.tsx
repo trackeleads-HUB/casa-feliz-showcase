@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
-import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search } from "lucide-react";
+import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search, Menu, X } from "lucide-react";
 
 type Property = {
   id: string;
@@ -47,6 +47,7 @@ const Dashboard = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -121,16 +122,18 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background">
       <SEOHead title="Meus Imóveis" description="Gerencie seus imóveis cadastrados na SO Alphaville." noindex />
       <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link to="/" className="text-muted-foreground hover:text-foreground">
+        <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <Link to="/" className="text-muted-foreground hover:text-foreground shrink-0">
               <ArrowLeft size={20} />
             </Link>
-            <h1 className="text-xl font-bold">
+            <h1 className="text-base sm:text-xl font-bold truncate">
               Meus Imóveis
             </h1>
           </div>
-          <div className="flex items-center gap-3">
+
+          {/* Desktop actions */}
+          <div className="hidden lg:flex items-center gap-3">
             {isAdmin && (
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/leads")}>
@@ -154,10 +157,45 @@ const Dashboard = () => {
               <LogOut size={16} /> Sair
             </Button>
           </div>
+
+          {/* Mobile/tablet quick actions */}
+          <div className="flex lg:hidden items-center gap-2">
+            <Button onClick={() => navigate("/imoveis/novo")} size="icon" className="shrink-0" aria-label="Novo Imóvel">
+              <Plus size={18} />
+            </Button>
+            <Button variant="outline" size="icon" onClick={() => setMenuOpen((v) => !v)} aria-label="Menu">
+              {menuOpen ? <X size={18} /> : <Menu size={18} />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile/tablet drawer */}
+        {menuOpen && (
+          <div className="lg:hidden border-t border-border bg-card px-4 sm:px-6 py-4 space-y-2">
+            {isAdmin && (
+              <>
+                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/leads"); }}>
+                  <Home size={16} /> Leads
+                </Button>
+                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/depoimentos"); }}>
+                  <MessageSquareQuote size={16} /> Depoimentos
+                </Button>
+                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
+                  <Search size={16} /> SEO
+                </Button>
+                <Button variant="outline" size="sm" className="w-full justify-start gap-2" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
+                  <Settings size={16} /> Configurações
+                </Button>
+              </>
+            )}
+            <Button variant="ghost" size="sm" onClick={() => { setMenuOpen(false); signOut(); }} className="w-full justify-start gap-2">
+              <LogOut size={16} /> Sair
+            </Button>
+          </div>
+        )}
       </header>
 
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {loading ? (
           <div className="text-center py-20 text-muted-foreground">Carregando imóveis...</div>
         ) : properties.length === 0 ? (
