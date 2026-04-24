@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { ArrowLeft, Send, MessageCircle } from "lucide-react";
 
 const AnunciarImovel = () => {
@@ -80,9 +81,7 @@ const AnunciarImovel = () => {
 
       <main className="pt-28 pb-16">
         <div className="container mx-auto px-6 max-w-2xl">
-          <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 text-sm">
-            <ArrowLeft size={16} /> Voltar
-          </Link>
+          <Breadcrumbs items={[{ label: "Anuncie seu Imóvel" }]} className="mb-8" />
 
           <div className="text-center mb-10">
             <h1 className="text-3xl md:text-4xl lg:text-[44px] font-bold mb-4">
