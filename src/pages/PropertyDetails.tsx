@@ -273,10 +273,10 @@ const PropertyDetails = () => {
             {/* Description */}
             {property.description && (
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
                   Descrição
                 </h2>
-                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{property.description}</p>
+                <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line">{property.description}</p>
               </div>
             )}
 
