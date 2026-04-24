@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
+import TrackingScripts from "@/components/TrackingScripts";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Imoveis from "./pages/Imoveis";
@@ -14,7 +15,10 @@ import PropertyDetails from "./pages/PropertyDetails";
 import AdminSettings from "./pages/AdminSettings";
 import AdminTestimonials from "./pages/AdminTestimonials";
 import AdminLeads from "./pages/AdminLeads";
+import AdminSEO from "./pages/AdminSEO";
 import AnunciarImovel from "./pages/AnunciarImovel";
+import PoliticaDePrivacidade from "./pages/PoliticaDePrivacidade";
+import TermosDeUso from "./pages/TermosDeUso";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +31,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <TrackingScripts />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
@@ -34,11 +39,14 @@ const App = () => (
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/imoveis/:id" element={<PropertyDetails />} />
               <Route path="/imoveis/novo" element={<PropertyForm />} />
-            <Route path="/imoveis/:id/editar" element={<PropertyForm />} />
-            <Route path="/admin/configuracoes" element={<AdminSettings />} />
-            <Route path="/admin/depoimentos" element={<AdminTestimonials />} />
-            <Route path="/admin/leads" element={<AdminLeads />} />
-            <Route path="/anunciar" element={<AnunciarImovel />} />
+              <Route path="/imoveis/:id/editar" element={<PropertyForm />} />
+              <Route path="/admin/configuracoes" element={<AdminSettings />} />
+              <Route path="/admin/depoimentos" element={<AdminTestimonials />} />
+              <Route path="/admin/leads" element={<AdminLeads />} />
+              <Route path="/admin/seo" element={<AdminSEO />} />
+              <Route path="/anunciar" element={<AnunciarImovel />} />
+              <Route path="/politica-de-privacidade" element={<PoliticaDePrivacidade />} />
+              <Route path="/termos-de-uso" element={<TermosDeUso />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
