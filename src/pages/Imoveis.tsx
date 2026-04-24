@@ -5,6 +5,7 @@ import type { Database } from "@/integrations/supabase/types";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -163,6 +164,18 @@ const Imoveis = () => {
       {/* Filters */}
       <div className="pt-20 sm:pt-24 pb-6 sm:pb-8 bg-muted/50">
         <div className="container mx-auto px-4 sm:px-6">
+          <Breadcrumbs
+            items={[
+              { label: "Imóveis", href: propertyType || listingType ? "/imoveis" : undefined },
+              ...(propertyType
+                ? [{ label: propertyTypeLabels[propertyType] || propertyType }]
+                : []),
+              ...(!propertyType && listingType
+                ? [{ label: listingLabels[listingType] || listingType }]
+                : []),
+            ]}
+            className="mb-4"
+          />
           <div className="flex items-center gap-2 mb-6">
             <SlidersHorizontal size={20} className="text-primary" />
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">
