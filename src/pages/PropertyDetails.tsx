@@ -224,17 +224,17 @@ const PropertyDetails = () => {
                 <Badge variant="secondary">{propertyTypeLabels[property.property_type] || property.property_type}</Badge>
                 <Badge variant="outline">{statusLabels[property.status] || property.status}</Badge>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground mb-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground mb-2 break-words">
                 {property.title}
               </h1>
               {fullAddress && (
-                <p className="flex items-center gap-1.5 text-muted-foreground">
-                  <MapPin size={16} /> {fullAddress}
+                <p className="flex items-start gap-1.5 text-sm sm:text-base text-muted-foreground">
+                  <MapPin size={16} className="mt-0.5 shrink-0" /> <span className="break-words">{fullAddress}</span>
                 </p>
               )}
             </div>
 
-            <p className="text-3xl font-bold text-primary">{formatPrice(property.price)}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-primary">{formatPrice(property.price)}</p>
 
             {/* Key specs */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
