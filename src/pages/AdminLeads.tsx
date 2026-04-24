@@ -84,7 +84,7 @@ const AdminLeads = () => {
             <Link to="/dashboard" className="text-muted-foreground hover:text-foreground">
               <ArrowLeft size={20} />
             </Link>
-            <h1 className="text-xl font-bold flex items-center gap-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h1 className="text-xl font-bold flex items-center gap-2">
               <Users size={20} /> Contatos / Leads
             </h1>
           </div>

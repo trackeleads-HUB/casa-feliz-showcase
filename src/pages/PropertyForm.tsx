@@ -261,7 +261,7 @@ const PropertyForm = () => {
           <button onClick={() => navigate("/dashboard")} className="text-muted-foreground hover:text-foreground">
             <ArrowLeft size={20} />
           </button>
-          <h1 className="text-xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-xl font-bold">
             {isEditing ? "Editar Imóvel" : "Novo Imóvel"}
           </h1>
         </div>

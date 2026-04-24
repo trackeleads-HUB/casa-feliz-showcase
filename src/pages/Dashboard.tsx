@@ -126,7 +126,7 @@ const Dashboard = () => {
             <Link to="/" className="text-muted-foreground hover:text-foreground">
               <ArrowLeft size={20} />
             </Link>
-            <h1 className="text-xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h1 className="text-xl font-bold">
               Meus Imóveis
             </h1>
           </div>

@@ -165,7 +165,7 @@ const Imoveis = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 mb-6">
             <SlidersHorizontal size={20} className="text-primary" />
-            <h1 className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h1 className="text-2xl font-bold text-foreground">
               Buscar Imóveis
             </h1>
           </div>
