@@ -320,19 +320,19 @@ const PropertyDetails = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button className="w-full gap-2 bg-[hsl(142,70%,35%)] hover:bg-[hsl(142,70%,30%)] text-white">
+                <Button size="lg" className="w-full gap-2 bg-[hsl(142,70%,35%)] hover:bg-[hsl(142,70%,30%)] text-white">
                   <MessageCircle size={18} /> WhatsApp
                 </Button>
               </a>
 
               <a href={`tel:+${settings.whatsapp}`}>
-                <Button variant="outline" className="w-full gap-2 mt-2">
+                <Button size="lg" variant="outline" className="w-full gap-2 mt-2">
                   <Phone size={18} /> {settings.phone}
                 </Button>
               </a>
 
               <a href={`mailto:${settings.email}`}>
-                <Button variant="outline" className="w-full gap-2">
+                <Button size="lg" variant="outline" className="w-full gap-2">
                   <Mail size={18} /> Enviar e-mail
                 </Button>
               </a>
