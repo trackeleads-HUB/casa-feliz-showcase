@@ -63,7 +63,7 @@ const Auth = () => {
       <SEOHead title={isLogin ? "Login" : "Cadastro"} description="Acesse sua conta SO Alphaville para gerenciar seus imóveis." noindex />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <a href="/" className="text-3xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <a href="/" className="text-3xl font-bold text-foreground">
             SO <span className="text-primary">Alphaville</span>
           </a>
           <p className="text-muted-foreground mt-2">

@@ -273,7 +273,7 @@ const PropertyDetails = () => {
             {/* Description */}
             {property.description && (
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h2 className="text-xl font-bold text-foreground mb-3">
                   Descrição
                 </h2>
                 <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{property.description}</p>
@@ -283,7 +283,7 @@ const PropertyDetails = () => {
             {/* Features */}
             {property.features && property.features.length > 0 && (
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h2 className="text-xl font-bold text-foreground mb-3">
                   Características
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -300,7 +300,7 @@ const PropertyDetails = () => {
           {/* Sidebar – Contact */}
           <div className="lg:col-span-1 order-1 lg:order-2">
             <div className="lg:sticky lg:top-28 bg-card border border-border rounded-xl p-5 sm:p-6 shadow-sm space-y-4 sm:space-y-5">
-              <h3 className="text-lg font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h3 className="text-lg font-bold text-foreground">
                 Interessado neste imóvel?
               </h3>
               <p className="text-sm text-muted-foreground">
