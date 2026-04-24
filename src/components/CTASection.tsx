@@ -13,7 +13,7 @@ const CTASection = () => {
 
       <div className="container mx-auto px-6 text-center relative z-10">
         <p className="text-[13px] uppercase tracking-[0.25em] text-primary-foreground/40 mb-6">Entre em contato</p>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-primary-foreground mb-6 leading-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-[44px] font-semibold text-primary-foreground mb-6 leading-tight">
           {settings.cta_title?.split(" ").slice(0, 4).join(" ")}
           <br />
           <span className="italic font-light">{settings.cta_title?.split(" ").slice(4).join(" ")}</span>
