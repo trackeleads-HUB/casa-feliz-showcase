@@ -216,7 +216,7 @@ const PropertyDetails = () => {
                 <Badge variant="secondary">{propertyTypeLabels[property.property_type] || property.property_type}</Badge>
                 <Badge variant="outline">{statusLabels[property.status] || property.status}</Badge>
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
+              <h1 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground mb-2">
                 {property.title}
               </h1>
               {fullAddress && (
