@@ -85,10 +85,10 @@ const AnunciarImovel = () => {
           </Link>
 
           <div className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-[44px] font-bold mb-4">
               <span className="text-gradient-brand">Anuncie</span> seu Imóvel
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-base md:text-lg">
               Preencha os dados abaixo e entraremos em contato pelo WhatsApp.
             </p>
           </div>
