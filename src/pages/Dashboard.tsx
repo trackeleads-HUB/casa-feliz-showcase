@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search, Menu } from "lucide-react";
+import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search, Menu, Sparkles } from "lucide-react";
 
 type Property = {
   id: string;
@@ -146,6 +146,9 @@ const Dashboard = () => {
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/seo")}>
                   <Search size={16} /> SEO
                 </Button>
+                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/ia")}>
+                  <Sparkles size={16} /> IA
+                </Button>
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
                   <Settings size={16} /> Configurações
                 </Button>
@@ -196,6 +199,9 @@ const Dashboard = () => {
                       </Button>
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
                         <Search size={18} /> SEO
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/ia"); }}>
+                        <Sparkles size={18} /> IA
                       </Button>
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
                         <Settings size={18} /> Configurações
