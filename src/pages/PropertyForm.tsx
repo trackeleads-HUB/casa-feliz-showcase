@@ -12,7 +12,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Upload, X, Star, Sparkles, Loader2 } from "lucide-react";
+import { ArrowLeft, Upload, X, Star, Sparkles, Loader2, Check, Trash2, Pencil, Copy, RefreshCw } from "lucide-react";
 
 const FEATURES_OPTIONS = [
   "Piscina", "Churrasqueira", "Academia", "Playground", "Portaria 24h",
