@@ -542,6 +542,84 @@ const PropertyForm = () => {
             </Button>
           </div>
 
+          {/* AI Preview */}
+          {aiPreview && (
+            <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-5 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="flex items-start justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="text-primary" size={18} />
+                  <h3 className="font-semibold text-foreground">Pré-visualização da IA</h3>
+                </div>
+                <span className="text-xs text-muted-foreground">
+                  {aiPreview.length} caracteres • {aiPreview.trim().split(/\s+/).length} palavras
+                </span>
+              </div>
+
+              <p className="text-xs text-muted-foreground">
+                Revise o texto abaixo. Ele só será aplicado ao campo Descrição quando você clicar em <strong>Aplicar</strong>. Salvar o imóvel não inclui esta pré-visualização automaticamente.
+              </p>
+
+              {editingPreview ? (
+                <Textarea
+                  value={aiPreview}
+                  onChange={(e) => setAiPreview(e.target.value)}
+                  rows={10}
+                  className="text-sm leading-relaxed"
+                />
+              ) : (
+                <div className="bg-muted/40 border border-border rounded-lg p-4 max-h-80 overflow-y-auto whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+                  {aiPreview}
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-2">
+                <Button type="button" size="sm" onClick={applyAIPreview} className="gap-1.5">
+                  <Check size={14} /> Aplicar à descrição
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setEditingPreview((v) => !v)}
+                  className="gap-1.5"
+                >
+                  <Pencil size={14} /> {editingPreview ? "Concluir edição" : "Editar"}
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    navigator.clipboard.writeText(aiPreview);
+                    toast({ title: "Texto copiado!" });
+                  }}
+                  className="gap-1.5"
+                >
+                  <Copy size={14} /> Copiar
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => void generateAIDescription()}
+                  disabled={generatingAI}
+                  className="gap-1.5"
+                >
+                  <RefreshCw size={14} className={generatingAI ? "animate-spin" : ""} /> Gerar novamente
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={discardAIPreview}
+                  className="gap-1.5 text-destructive hover:text-destructive"
+                >
+                  <Trash2 size={14} /> Descartar
+                </Button>
+              </div>
+            </div>
+          )}
+
           {/* Submit */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Button type="submit" className="flex-1" disabled={saving || generatingAI}>
