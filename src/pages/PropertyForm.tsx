@@ -8,7 +8,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Upload, X, Star } from "lucide-react";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ArrowLeft, Upload, X, Star, Sparkles, Loader2 } from "lucide-react";
 
 const FEATURES_OPTIONS = [
   "Piscina", "Churrasqueira", "Academia", "Playground", "Portaria 24h",
@@ -32,6 +36,8 @@ const PropertyForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
+  const [generatingAI, setGeneratingAI] = useState(false);
+  const [confirmOverwrite, setConfirmOverwrite] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
