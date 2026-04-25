@@ -12,7 +12,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Upload, X, Star, Sparkles, Loader2 } from "lucide-react";
+import { ArrowLeft, Upload, X, Star, Sparkles, Loader2, Check, Trash2, Pencil, Copy, RefreshCw } from "lucide-react";
 
 const FEATURES_OPTIONS = [
   "Piscina", "Churrasqueira", "Academia", "Playground", "Portaria 24h",
@@ -38,6 +38,8 @@ const PropertyForm = () => {
   const [saving, setSaving] = useState(false);
   const [generatingAI, setGeneratingAI] = useState(false);
   const [confirmOverwrite, setConfirmOverwrite] = useState(false);
+  const [aiPreview, setAiPreview] = useState<string>("");
+  const [editingPreview, setEditingPreview] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -166,10 +168,6 @@ const PropertyForm = () => {
       toast({ title: "Preencha pelo menos o título antes de gerar.", variant: "destructive" });
       return;
     }
-    if (form.description.trim()) {
-      setConfirmOverwrite(true);
-      return;
-    }
     void generateAIDescription();
   };
 
@@ -198,14 +196,32 @@ const PropertyForm = () => {
       const { data, error } = await supabase.functions.invoke("generate-property-description", { body: payload });
       if (error) throw error;
       if (!data?.description) throw new Error("Resposta vazia da IA.");
-      setForm((prev) => ({ ...prev, description: data.description }));
-      toast({ title: "Descrição gerada!", description: "Revise e ajuste antes de salvar." });
+      setAiPreview(data.description);
+      setEditingPreview(false);
+      toast({ title: "Descrição gerada!", description: "Revise a pré-visualização antes de aplicar." });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erro ao gerar descrição";
       toast({ title: "Erro na IA", description: msg, variant: "destructive" });
     } finally {
       setGeneratingAI(false);
     }
+  };
+
+  const applyAIPreview = () => {
+    if (form.description.trim() && !confirmOverwrite) {
+      setConfirmOverwrite(true);
+      return;
+    }
+    setForm((prev) => ({ ...prev, description: aiPreview }));
+    setAiPreview("");
+    setEditingPreview(false);
+    setConfirmOverwrite(false);
+    toast({ title: "Descrição aplicada", description: "Lembre-se de salvar o imóvel." });
+  };
+
+  const discardAIPreview = () => {
+    setAiPreview("");
+    setEditingPreview(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -526,6 +542,84 @@ const PropertyForm = () => {
             </Button>
           </div>
 
+          {/* AI Preview */}
+          {aiPreview && (
+            <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-5 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="flex items-start justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="text-primary" size={18} />
+                  <h3 className="font-semibold text-foreground">Pré-visualização da IA</h3>
+                </div>
+                <span className="text-xs text-muted-foreground">
+                  {aiPreview.length} caracteres • {aiPreview.trim().split(/\s+/).length} palavras
+                </span>
+              </div>
+
+              <p className="text-xs text-muted-foreground">
+                Revise o texto abaixo. Ele só será aplicado ao campo Descrição quando você clicar em <strong>Aplicar</strong>. Salvar o imóvel não inclui esta pré-visualização automaticamente.
+              </p>
+
+              {editingPreview ? (
+                <Textarea
+                  value={aiPreview}
+                  onChange={(e) => setAiPreview(e.target.value)}
+                  rows={10}
+                  className="text-sm leading-relaxed"
+                />
+              ) : (
+                <div className="bg-muted/40 border border-border rounded-lg p-4 max-h-80 overflow-y-auto whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+                  {aiPreview}
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-2">
+                <Button type="button" size="sm" onClick={applyAIPreview} className="gap-1.5">
+                  <Check size={14} /> Aplicar à descrição
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setEditingPreview((v) => !v)}
+                  className="gap-1.5"
+                >
+                  <Pencil size={14} /> {editingPreview ? "Concluir edição" : "Editar"}
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    navigator.clipboard.writeText(aiPreview);
+                    toast({ title: "Texto copiado!" });
+                  }}
+                  className="gap-1.5"
+                >
+                  <Copy size={14} /> Copiar
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => void generateAIDescription()}
+                  disabled={generatingAI}
+                  className="gap-1.5"
+                >
+                  <RefreshCw size={14} className={generatingAI ? "animate-spin" : ""} /> Gerar novamente
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={discardAIPreview}
+                  className="gap-1.5 text-destructive hover:text-destructive"
+                >
+                  <Trash2 size={14} /> Descartar
+                </Button>
+              </div>
+            </div>
+          )}
+
           {/* Submit */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Button type="submit" className="flex-1" disabled={saving || generatingAI}>
@@ -541,13 +635,21 @@ const PropertyForm = () => {
               <AlertDialogHeader>
                 <AlertDialogTitle>Substituir descrição existente?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Já existe um texto preenchido no campo Descrição. Ao gerar com IA, esse conteúdo será substituído. Deseja continuar?
+                  Já existe um texto preenchido no campo Descrição. Ao aplicar a pré-visualização da IA, esse conteúdo será substituído. Deseja continuar?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction onClick={() => void generateAIDescription()}>
-                  Substituir e gerar
+                <AlertDialogAction
+                  onClick={() => {
+                    setForm((prev) => ({ ...prev, description: aiPreview }));
+                    setAiPreview("");
+                    setEditingPreview(false);
+                    setConfirmOverwrite(false);
+                    toast({ title: "Descrição aplicada", description: "Lembre-se de salvar o imóvel." });
+                  }}
+                >
+                  Substituir e aplicar
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
