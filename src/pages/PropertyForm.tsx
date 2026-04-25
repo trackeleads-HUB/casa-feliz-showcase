@@ -168,10 +168,6 @@ const PropertyForm = () => {
       toast({ title: "Preencha pelo menos o título antes de gerar.", variant: "destructive" });
       return;
     }
-    if (form.description.trim()) {
-      setConfirmOverwrite(true);
-      return;
-    }
     void generateAIDescription();
   };
 
@@ -200,14 +196,32 @@ const PropertyForm = () => {
       const { data, error } = await supabase.functions.invoke("generate-property-description", { body: payload });
       if (error) throw error;
       if (!data?.description) throw new Error("Resposta vazia da IA.");
-      setForm((prev) => ({ ...prev, description: data.description }));
-      toast({ title: "Descrição gerada!", description: "Revise e ajuste antes de salvar." });
+      setAiPreview(data.description);
+      setEditingPreview(false);
+      toast({ title: "Descrição gerada!", description: "Revise a pré-visualização antes de aplicar." });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erro ao gerar descrição";
       toast({ title: "Erro na IA", description: msg, variant: "destructive" });
     } finally {
       setGeneratingAI(false);
     }
+  };
+
+  const applyAIPreview = () => {
+    if (form.description.trim() && !confirmOverwrite) {
+      setConfirmOverwrite(true);
+      return;
+    }
+    setForm((prev) => ({ ...prev, description: aiPreview }));
+    setAiPreview("");
+    setEditingPreview(false);
+    setConfirmOverwrite(false);
+    toast({ title: "Descrição aplicada", description: "Lembre-se de salvar o imóvel." });
+  };
+
+  const discardAIPreview = () => {
+    setAiPreview("");
+    setEditingPreview(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
