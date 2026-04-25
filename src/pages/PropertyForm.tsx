@@ -161,6 +161,53 @@ const PropertyForm = () => {
     );
   };
 
+  const requestGenerateAI = () => {
+    if (!form.title.trim()) {
+      toast({ title: "Preencha pelo menos o título antes de gerar.", variant: "destructive" });
+      return;
+    }
+    if (form.description.trim()) {
+      setConfirmOverwrite(true);
+      return;
+    }
+    void generateAIDescription();
+  };
+
+  const generateAIDescription = async () => {
+    setConfirmOverwrite(false);
+    setGeneratingAI(true);
+    try {
+      const payload = {
+        property: {
+          title: form.title,
+          description: form.description,
+          property_type: form.property_type,
+          listing_type: form.listing_type,
+          price: form.price ? parseFloat(form.price) : null,
+          area: form.area ? parseFloat(form.area) : null,
+          bedrooms: parseInt(form.bedrooms) || 0,
+          bathrooms: parseInt(form.bathrooms) || 0,
+          parking_spots: parseInt(form.parking_spots) || 0,
+          address: form.address,
+          neighborhood: form.neighborhood,
+          city: form.city,
+          state: form.state,
+          features: form.features,
+        },
+      };
+      const { data, error } = await supabase.functions.invoke("generate-property-description", { body: payload });
+      if (error) throw error;
+      if (!data?.description) throw new Error("Resposta vazia da IA.");
+      setForm((prev) => ({ ...prev, description: data.description }));
+      toast({ title: "Descrição gerada!", description: "Revise e ajuste antes de salvar." });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Erro ao gerar descrição";
+      toast({ title: "Erro na IA", description: msg, variant: "destructive" });
+    } finally {
+      setGeneratingAI(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
