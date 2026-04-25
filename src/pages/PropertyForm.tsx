@@ -8,7 +8,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Upload, X, Star } from "lucide-react";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ArrowLeft, Upload, X, Star, Sparkles, Loader2 } from "lucide-react";
 
 const FEATURES_OPTIONS = [
   "Piscina", "Churrasqueira", "Academia", "Playground", "Portaria 24h",
@@ -32,6 +36,8 @@ const PropertyForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
+  const [generatingAI, setGeneratingAI] = useState(false);
+  const [confirmOverwrite, setConfirmOverwrite] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -153,6 +159,53 @@ const PropertyForm = () => {
     setImages((prev) =>
       prev.map((img, i) => ({ ...img, is_cover: i === index }))
     );
+  };
+
+  const requestGenerateAI = () => {
+    if (!form.title.trim()) {
+      toast({ title: "Preencha pelo menos o título antes de gerar.", variant: "destructive" });
+      return;
+    }
+    if (form.description.trim()) {
+      setConfirmOverwrite(true);
+      return;
+    }
+    void generateAIDescription();
+  };
+
+  const generateAIDescription = async () => {
+    setConfirmOverwrite(false);
+    setGeneratingAI(true);
+    try {
+      const payload = {
+        property: {
+          title: form.title,
+          description: form.description,
+          property_type: form.property_type,
+          listing_type: form.listing_type,
+          price: form.price ? parseFloat(form.price) : null,
+          area: form.area ? parseFloat(form.area) : null,
+          bedrooms: parseInt(form.bedrooms) || 0,
+          bathrooms: parseInt(form.bathrooms) || 0,
+          parking_spots: parseInt(form.parking_spots) || 0,
+          address: form.address,
+          neighborhood: form.neighborhood,
+          city: form.city,
+          state: form.state,
+          features: form.features,
+        },
+      };
+      const { data, error } = await supabase.functions.invoke("generate-property-description", { body: payload });
+      if (error) throw error;
+      if (!data?.description) throw new Error("Resposta vazia da IA.");
+      setForm((prev) => ({ ...prev, description: data.description }));
+      toast({ title: "Descrição gerada!", description: "Revise e ajuste antes de salvar." });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Erro ao gerar descrição";
+      toast({ title: "Erro na IA", description: msg, variant: "destructive" });
+    } finally {
+      setGeneratingAI(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -450,15 +503,55 @@ const PropertyForm = () => {
             </div>
           </section>
 
+          {/* AI Generation + Submit */}
+          <div className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 sm:p-5 space-y-3">
+            <div className="flex items-start gap-3">
+              <Sparkles className="text-primary shrink-0 mt-0.5" size={20} />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground">Gerar descrição com IA</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Cria automaticamente um texto profissional e otimizado para SEO com base nos dados preenchidos. Você pode editar antes de salvar.
+                </p>
+              </div>
+            </div>
+            <Button
+              type="button"
+              onClick={requestGenerateAI}
+              disabled={generatingAI || saving}
+              className="w-full gap-2"
+              variant="default"
+            >
+              {generatingAI ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+              {generatingAI ? "Gerando descrição..." : "Gerar descrição com IA"}
+            </Button>
+          </div>
+
           {/* Submit */}
-          <div className="flex gap-3">
-            <Button type="submit" className="flex-1" disabled={saving}>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button type="submit" className="flex-1" disabled={saving || generatingAI}>
               {saving ? "Salvando..." : isEditing ? "Salvar Alterações" : "Cadastrar Imóvel"}
             </Button>
             <Button type="button" variant="outline" onClick={() => navigate("/dashboard")}>
               Cancelar
             </Button>
           </div>
+
+          <AlertDialog open={confirmOverwrite} onOpenChange={setConfirmOverwrite}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Substituir descrição existente?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Já existe um texto preenchido no campo Descrição. Ao gerar com IA, esse conteúdo será substituído. Deseja continuar?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction onClick={() => void generateAIDescription()}>
+                  Substituir e gerar
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </form>
       </main>
     </div>
