@@ -38,6 +38,8 @@ const PropertyForm = () => {
   const [saving, setSaving] = useState(false);
   const [generatingAI, setGeneratingAI] = useState(false);
   const [confirmOverwrite, setConfirmOverwrite] = useState(false);
+  const [aiPreview, setAiPreview] = useState<string>("");
+  const [editingPreview, setEditingPreview] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
