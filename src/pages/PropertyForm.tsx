@@ -503,15 +503,55 @@ const PropertyForm = () => {
             </div>
           </section>
 
+          {/* AI Generation + Submit */}
+          <div className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 sm:p-5 space-y-3">
+            <div className="flex items-start gap-3">
+              <Sparkles className="text-primary shrink-0 mt-0.5" size={20} />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground">Gerar descrição com IA</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Cria automaticamente um texto profissional e otimizado para SEO com base nos dados preenchidos. Você pode editar antes de salvar.
+                </p>
+              </div>
+            </div>
+            <Button
+              type="button"
+              onClick={requestGenerateAI}
+              disabled={generatingAI || saving}
+              className="w-full gap-2"
+              variant="default"
+            >
+              {generatingAI ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+              {generatingAI ? "Gerando descrição..." : "Gerar descrição com IA"}
+            </Button>
+          </div>
+
           {/* Submit */}
-          <div className="flex gap-3">
-            <Button type="submit" className="flex-1" disabled={saving}>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button type="submit" className="flex-1" disabled={saving || generatingAI}>
               {saving ? "Salvando..." : isEditing ? "Salvar Alterações" : "Cadastrar Imóvel"}
             </Button>
             <Button type="button" variant="outline" onClick={() => navigate("/dashboard")}>
               Cancelar
             </Button>
           </div>
+
+          <AlertDialog open={confirmOverwrite} onOpenChange={setConfirmOverwrite}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Substituir descrição existente?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Já existe um texto preenchido no campo Descrição. Ao gerar com IA, esse conteúdo será substituído. Deseja continuar?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction onClick={() => void generateAIDescription()}>
+                  Substituir e gerar
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </form>
       </main>
     </div>
