@@ -635,13 +635,21 @@ const PropertyForm = () => {
               <AlertDialogHeader>
                 <AlertDialogTitle>Substituir descrição existente?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Já existe um texto preenchido no campo Descrição. Ao gerar com IA, esse conteúdo será substituído. Deseja continuar?
+                  Já existe um texto preenchido no campo Descrição. Ao aplicar a pré-visualização da IA, esse conteúdo será substituído. Deseja continuar?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction onClick={() => void generateAIDescription()}>
-                  Substituir e gerar
+                <AlertDialogAction
+                  onClick={() => {
+                    setForm((prev) => ({ ...prev, description: aiPreview }));
+                    setAiPreview("");
+                    setEditingPreview(false);
+                    setConfirmOverwrite(false);
+                    toast({ title: "Descrição aplicada", description: "Lembre-se de salvar o imóvel." });
+                  }}
+                >
+                  Substituir e aplicar
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
