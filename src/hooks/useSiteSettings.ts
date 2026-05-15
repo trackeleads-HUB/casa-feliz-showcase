@@ -33,6 +33,34 @@ const DEFAULTS: SiteSettings = {
   creci: "",
   privacy_policy_content: "",
   terms_of_use_content: "",
+  // Para Proprietários
+  owner_badge: "Para Proprietários",
+  owner_title: "Quer Vender ou Alugar seu Imóvel?",
+  owner_text: "Cadastre seu imóvel e nossa equipe entrará em contato para ajudá-lo a fechar o melhor negócio.",
+  owner_button: "Anunciar meu Imóvel",
+  // Sobre Nós
+  about_label: "Sobre nós",
+  about_title: "Realizando sonhos há mais de uma década",
+  about_text_1: "A SO Alphaville nasceu com o propósito de transformar a experiência de comprar, vender e alugar imóveis.",
+  about_text_2: "Com uma equipe apaixonada e tecnologia de ponta, conectamos pessoas ao lugar perfeito para chamar de lar.",
+  about_image: "",
+  about_stat_1_value: "500+", about_stat_1_label: "Imóveis",
+  about_stat_2_value: "10+", about_stat_2_label: "Anos",
+  about_stat_3_value: "1.200+", about_stat_3_label: "Clientes",
+  about_stat_4_value: "50+", about_stat_4_label: "Corretores",
+  // Serviços
+  services_label: "O que fazemos",
+  services_title: "Nossos Serviços",
+  service_1_title: "Compra", service_1_desc: "",
+  service_2_title: "Venda", service_2_desc: "",
+  service_3_title: "Aluguel", service_3_desc: "",
+  service_4_title: "Avaliação", service_4_desc: "",
+  // Depoimentos
+  testimonials_label: "Depoimentos",
+  testimonials_title: "O que dizem nossos clientes",
+  // Contato
+  cta_label: "Entre em contato",
+  cta_button: "Fale Conosco",
 };
 
 let cachedSettings: SiteSettings | null = null;
