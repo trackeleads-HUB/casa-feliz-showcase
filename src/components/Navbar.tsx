@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Settings, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import logo from "@/assets/logo-so-alphaville.png";
 
 const isRouterLink = (href: string) => !href.includes("#");
 
@@ -49,8 +50,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/#hero" onClick={(e) => handleAnchorClick(e, "/#hero")} className="text-2xl font-bold tracking-tight">
-          <span className="text-gradient-brand">SO</span> <span className="text-foreground">Alphaville</span>
+        <a href="/#hero" onClick={(e) => handleAnchorClick(e, "/#hero")} className="flex items-center" aria-label="SO Alphaville - Início">
+          <img src={logo} alt="SO Alphaville" className="h-9 sm:h-10 w-auto" />
         </a>
 
         {/* Desktop */}
