@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from "react";
 import SEOHead from "@/components/SEOHead";
+import logo from "@/assets/logo-so-alphaville.png";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -63,8 +64,8 @@ const Auth = () => {
       <SEOHead title={isLogin ? "Login" : "Cadastro"} description="Acesse sua conta SO Alphaville para gerenciar seus imóveis." noindex />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <a href="/" className="text-3xl font-bold text-foreground">
-            SO <span className="text-primary">Alphaville</span>
+          <a href="/" className="inline-flex items-center justify-center" aria-label="SO Alphaville - Início">
+            <img src={logo} alt="SO Alphaville" className="h-12 sm:h-14 w-auto mx-auto" />
           </a>
           <p className="text-muted-foreground mt-2">
             {isLogin ? "Entre na sua conta" : "Crie sua conta"}
