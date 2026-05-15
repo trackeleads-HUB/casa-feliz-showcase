@@ -16,11 +16,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-10 sm:mb-12 md:mb-16">
           {/* Brand */}
           <div>
-            <p className="text-2xl sm:text-3xl font-semibold mb-3 sm:mb-4">
-              {settings.site_name?.split(" ").map((w, i) =>
-                i === 0 ? <span key={i}>{w} </span> : <span key={i} className="text-primary-foreground/50">{w}</span>
-              )}
-            </p>
+            <img src={logo} alt={settings.site_name || "SO Alphaville"} className="h-12 sm:h-14 w-auto mb-4 brightness-0 invert" />
             <p className="text-sm text-primary-foreground/40 leading-relaxed font-light">
               {settings.site_tagline}
             </p>
