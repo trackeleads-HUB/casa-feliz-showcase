@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from "react";
 import SEOHead from "@/components/SEOHead";
+import logo from "@/assets/logo-so-alphaville.png";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
