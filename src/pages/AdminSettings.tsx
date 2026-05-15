@@ -18,24 +18,50 @@ type SettingRow = {
   label: string;
 };
 
-const GROUPS = [
+const GROUPS: { title: string; keys: string[]; help?: string }[] = [
+  { title: "Identidade do Site", keys: ["site_name", "site_tagline"] },
+  { title: "Contato", keys: ["whatsapp", "phone", "email", "address"] },
+  { title: "Redes Sociais", keys: ["instagram", "facebook", "linkedin"] },
+  { title: "Hero / Página Inicial", keys: ["hero_title", "hero_subtitle"] },
   {
-    title: "Identidade do Site",
-    keys: ["site_name", "site_tagline"],
+    title: "Seção: Para Proprietários",
+    keys: ["owner_badge", "owner_title", "owner_text", "owner_button"],
   },
   {
-    title: "Contato",
-    keys: ["whatsapp", "phone", "email", "address"],
+    title: "Seção: Sobre Nós",
+    keys: [
+      "about_label", "about_title", "about_text_1", "about_text_2", "about_image",
+      "about_stat_1_value", "about_stat_1_label",
+      "about_stat_2_value", "about_stat_2_label",
+      "about_stat_3_value", "about_stat_3_label",
+      "about_stat_4_value", "about_stat_4_label",
+    ],
   },
   {
-    title: "Redes Sociais",
-    keys: ["instagram", "facebook", "linkedin"],
+    title: "Seção: Nossos Serviços",
+    keys: [
+      "services_label", "services_title",
+      "service_1_title", "service_1_desc",
+      "service_2_title", "service_2_desc",
+      "service_3_title", "service_3_desc",
+      "service_4_title", "service_4_desc",
+    ],
   },
   {
-    title: "Textos da Página Inicial",
-    keys: ["hero_title", "hero_subtitle", "cta_title", "cta_text"],
+    title: "Seção: Depoimentos",
+    keys: ["testimonials_label", "testimonials_title"],
+    help: "Para gerenciar os depoimentos em si, acesse Admin → Depoimentos.",
+  },
+  {
+    title: "Seção: Entre em Contato",
+    keys: ["cta_label", "cta_title", "cta_text", "cta_button"],
   },
 ];
+
+const IMAGE_KEYS = new Set(["about_image"]);
+const IMAGE_HINTS: Record<string, string> = {
+  about_image: "Tamanho ideal: 1200×900px (proporção 4:3). Formatos: JPG ou WebP. Até 500KB para carregamento rápido.",
+};
 
 const AdminSettings = () => {
   const { user, loading: authLoading } = useAuth();
@@ -110,7 +136,23 @@ const AdminSettings = () => {
 
   const getSetting = (key: string) => settings.find((s) => s.key === key);
 
-  const isLongText = (key: string) => ["hero_subtitle", "cta_text"].includes(key);
+  const isLongText = (key: string) =>
+    ["hero_subtitle", "cta_text", "owner_text", "about_text_1", "about_text_2",
+     "service_1_desc", "service_2_desc", "service_3_desc", "service_4_desc"].includes(key);
+
+  const handleImageUpload = async (key: string, file: File) => {
+    if (!file) return;
+    const ext = file.name.split(".").pop();
+    const path = `${key}-${Date.now()}.${ext}`;
+    const { error: upErr } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
+    if (upErr) {
+      toast({ title: "Erro no upload", description: upErr.message, variant: "destructive" });
+      return;
+    }
+    const { data } = supabase.storage.from("site-images").getPublicUrl(path);
+    handleChange(key, data.publicUrl);
+    toast({ title: "Imagem enviada! Lembre de salvar." });
+  };
 
   if (authLoading || loading) {
     return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Carregando...</div>;
@@ -145,16 +187,47 @@ const AdminSettings = () => {
       <main className="container mx-auto px-6 py-8 max-w-3xl space-y-8">
         {GROUPS.map((group) => (
           <section key={group.title} className="bg-card border border-border rounded-xl p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-foreground">{group.title}</h2>
+            <div>
+              <h2 className="text-lg font-semibold text-foreground">{group.title}</h2>
+              {group.help && <p className="text-xs text-muted-foreground mt-1">{group.help}</p>}
+            </div>
 
             {group.keys.map((key) => {
               const setting = getSetting(key);
               if (!setting) return null;
+              const isImage = IMAGE_KEYS.has(key);
 
               return (
                 <div key={key}>
                   <Label htmlFor={key}>{setting.label}</Label>
-                  {isLongText(key) ? (
+                  {isImage ? (
+                    <div className="mt-1.5 space-y-2">
+                      {setting.value && (
+                        <img src={setting.value} alt="" className="w-full max-w-xs h-32 object-cover rounded-md border border-border" />
+                      )}
+                      <div className="flex gap-2 items-center">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => e.target.files?.[0] && handleImageUpload(key, e.target.files[0])}
+                          className="flex-1"
+                        />
+                        {setting.value && (
+                          <Button type="button" variant="outline" size="sm" onClick={() => handleChange(key, "")}>
+                            Remover
+                          </Button>
+                        )}
+                      </div>
+                      <Input
+                        value={setting.value || ""}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                        placeholder="Ou cole uma URL de imagem"
+                      />
+                      {IMAGE_HINTS[key] && (
+                        <p className="text-xs text-muted-foreground">📐 {IMAGE_HINTS[key]}</p>
+                      )}
+                    </div>
+                  ) : isLongText(key) ? (
                     <Textarea
                       id={key}
                       value={setting.value || ""}

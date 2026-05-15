@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { Quote } from "lucide-react";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 type Testimonial = {
   id: string;
@@ -13,6 +14,7 @@ type Testimonial = {
 
 const TestimonialsSection = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const { settings } = useSiteSettings();
 
   useEffect(() => {
     supabase
@@ -31,9 +33,9 @@ const TestimonialsSection = () => {
     <section id="depoimentos" className="py-16 sm:py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">Depoimentos</p>
+          <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">{settings.testimonials_label}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground">
-            O que dizem nossos <span className="italic font-light">clientes</span>
+            {settings.testimonials_title}
           </h2>
         </div>
 
