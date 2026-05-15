@@ -28,10 +28,17 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center scale-105"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      />
+      <picture className="absolute inset-0 block">
+        <source srcSet={heroBgWebp} type="image/webp" />
+        <img
+          src={heroBgJpg}
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+        />
+      </picture>
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/40 to-foreground/80" />
       <div className="absolute inset-0 bg-gradient-to-r from-[hsl(145_60%_36%/0.15)] via-transparent to-[hsl(185_55%_30%/0.15)]" />
 
