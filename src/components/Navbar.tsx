@@ -49,9 +49,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/#hero" onClick={(e) => handleAnchorClick(e, "/#hero")} className="flex items-center" aria-label="SO Alphaville - Início">
-          <img src={logo} alt="SO Alphaville" className="h-9 sm:h-10 w-auto" />
+      <div className="container mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
+        <a href="/#hero" onClick={(e) => handleAnchorClick(e, "/#hero")} className="flex items-center shrink-0" aria-label="SO Alphaville - Início">
+          <img src={logo} alt="SO Alphaville" className="h-8 sm:h-9 md:h-10 w-auto block object-contain" />
         </a>
 
         {/* Desktop */}
@@ -95,8 +95,12 @@ const Navbar = () => {
         </div>
 
         {/* Mobile toggle */}
-        <button className="md:hidden text-foreground" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <button
+          className="md:hidden text-foreground inline-flex items-center justify-center h-10 w-10 -mr-2 shrink-0"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+        >
+          {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
