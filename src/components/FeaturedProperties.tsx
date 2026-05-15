@@ -102,7 +102,7 @@ const FeaturedProperties = () => {
               >
                 <div className="relative h-64 overflow-hidden bg-muted">
                   {p.image ? (
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <img src={p.image} alt={p.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">
                       <Home size={48} />

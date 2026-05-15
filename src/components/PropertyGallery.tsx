@@ -76,7 +76,7 @@ const PropertyGallery = ({ images, title }: Props) => {
                   i === currentIndex ? "border-primary" : "border-transparent opacity-60 hover:opacity-100"
                 }`}
               >
-                <img src={img.url} alt={`Miniatura ${i + 1}`} className="w-full h-full object-cover" />
+                <img src={img.url} alt={`Miniatura ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
               </button>
             ))}
           </div>
