@@ -5,6 +5,8 @@ import { Search, ArrowRight } from "lucide-react";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import heroBgWebp from "@/assets/hero-bg.webp";
 import heroBgJpg from "@/assets/hero-bg.jpg";
+import heroBgMobileWebp from "@/assets/hero-bg-mobile.webp";
+import heroBgMobileJpg from "@/assets/hero-bg-mobile.jpg";
 
 const HeroSection = () => {
   const navigate = useNavigate();
