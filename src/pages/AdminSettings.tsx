@@ -136,7 +136,23 @@ const AdminSettings = () => {
 
   const getSetting = (key: string) => settings.find((s) => s.key === key);
 
-  const isLongText = (key: string) => ["hero_subtitle", "cta_text"].includes(key);
+  const isLongText = (key: string) =>
+    ["hero_subtitle", "cta_text", "owner_text", "about_text_1", "about_text_2",
+     "service_1_desc", "service_2_desc", "service_3_desc", "service_4_desc"].includes(key);
+
+  const handleImageUpload = async (key: string, file: File) => {
+    if (!file) return;
+    const ext = file.name.split(".").pop();
+    const path = `${key}-${Date.now()}.${ext}`;
+    const { error: upErr } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
+    if (upErr) {
+      toast({ title: "Erro no upload", description: upErr.message, variant: "destructive" });
+      return;
+    }
+    const { data } = supabase.storage.from("site-images").getPublicUrl(path);
+    handleChange(key, data.publicUrl);
+    toast({ title: "Imagem enviada! Lembre de salvar." });
+  };
 
   if (authLoading || loading) {
     return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Carregando...</div>;
