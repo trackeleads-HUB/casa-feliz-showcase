@@ -18,24 +18,50 @@ type SettingRow = {
   label: string;
 };
 
-const GROUPS = [
+const GROUPS: { title: string; keys: string[]; help?: string }[] = [
+  { title: "Identidade do Site", keys: ["site_name", "site_tagline"] },
+  { title: "Contato", keys: ["whatsapp", "phone", "email", "address"] },
+  { title: "Redes Sociais", keys: ["instagram", "facebook", "linkedin"] },
+  { title: "Hero / Página Inicial", keys: ["hero_title", "hero_subtitle"] },
   {
-    title: "Identidade do Site",
-    keys: ["site_name", "site_tagline"],
+    title: "Seção: Para Proprietários",
+    keys: ["owner_badge", "owner_title", "owner_text", "owner_button"],
   },
   {
-    title: "Contato",
-    keys: ["whatsapp", "phone", "email", "address"],
+    title: "Seção: Sobre Nós",
+    keys: [
+      "about_label", "about_title", "about_text_1", "about_text_2", "about_image",
+      "about_stat_1_value", "about_stat_1_label",
+      "about_stat_2_value", "about_stat_2_label",
+      "about_stat_3_value", "about_stat_3_label",
+      "about_stat_4_value", "about_stat_4_label",
+    ],
   },
   {
-    title: "Redes Sociais",
-    keys: ["instagram", "facebook", "linkedin"],
+    title: "Seção: Nossos Serviços",
+    keys: [
+      "services_label", "services_title",
+      "service_1_title", "service_1_desc",
+      "service_2_title", "service_2_desc",
+      "service_3_title", "service_3_desc",
+      "service_4_title", "service_4_desc",
+    ],
   },
   {
-    title: "Textos da Página Inicial",
-    keys: ["hero_title", "hero_subtitle", "cta_title", "cta_text"],
+    title: "Seção: Depoimentos",
+    keys: ["testimonials_label", "testimonials_title"],
+    help: "Para gerenciar os depoimentos em si, acesse Admin → Depoimentos.",
+  },
+  {
+    title: "Seção: Entre em Contato",
+    keys: ["cta_label", "cta_title", "cta_text", "cta_button"],
   },
 ];
+
+const IMAGE_KEYS = new Set(["about_image"]);
+const IMAGE_HINTS: Record<string, string> = {
+  about_image: "Tamanho ideal: 1200×900px (proporção 4:3). Formatos: JPG ou WebP. Até 500KB para carregamento rápido.",
+};
 
 const AdminSettings = () => {
   const { user, loading: authLoading } = useAuth();
