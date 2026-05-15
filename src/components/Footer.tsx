@@ -1,5 +1,6 @@
 import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin } from "lucide-react";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import logo from "@/assets/logo-so-alphaville.png";
 
 const Footer = () => {
   const { settings } = useSiteSettings();
