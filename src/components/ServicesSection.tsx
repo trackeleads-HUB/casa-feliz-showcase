@@ -1,20 +1,25 @@
 import { Home, DollarSign, Key, ClipboardCheck } from "lucide-react";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
-const services = [
-  { icon: Home, title: "Compra", description: "Encontre o imóvel ideal com nossa curadoria personalizada e atendimento dedicado." },
-  { icon: DollarSign, title: "Venda", description: "Venda seu imóvel com a melhor avaliação de mercado e estratégias de divulgação." },
-  { icon: Key, title: "Aluguel", description: "Alugue com segurança e praticidade. Cuidamos de toda a burocracia para você." },
-  { icon: ClipboardCheck, title: "Avaliação", description: "Avaliação profissional do seu imóvel com base em dados reais de mercado." },
-];
+const icons = [Home, DollarSign, Key, ClipboardCheck];
 
 const ServicesSection = () => {
+  const { settings } = useSiteSettings();
+  const services = [1, 2, 3, 4]
+    .map((i, idx) => ({
+      icon: icons[idx],
+      title: settings[`service_${i}_title`],
+      description: settings[`service_${i}_desc`],
+    }))
+    .filter((s) => s.title);
+
   return (
     <section id="servicos" className="py-16 sm:py-20 md:py-28 bg-gradient-brand-soft">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">O que fazemos</p>
+          <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">{settings.services_label}</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground">
-            Nossos <span className="italic font-light">Serviços</span>
+            {settings.services_title}
           </h2>
         </div>
 
