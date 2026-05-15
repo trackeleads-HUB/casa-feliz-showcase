@@ -1,21 +1,14 @@
-// Gera public/sitemap.xml com todas as rotas estáticas + imóveis disponíveis.
-// Roda automaticamente antes de `vite dev` e `vite build` (predev/prebuild).
-import { writeFileSync } from "fs";
-import { resolve } from "path";
+// Gera public/sitemap.xml com rotas estáticas + imóveis disponíveis.
+// Usa apenas Node nativo (sem tsx) para rodar em qualquer ambiente de build.
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const BASE_URL = "https://soalphaville.lovable.app";
 const SUPABASE_URL = "https://sgwwbujfmulklhguspae.supabase.co";
 const SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNnd3didWpmbXVsa2xoZ3VzcGFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NjI2NTksImV4cCI6MjA4ODEzODY1OX0.ep_eFnvt17sa8Y5fKHGrVAYdBN9AeyAXgtpz8LOe2N0";
 
-interface Entry {
-  path: string;
-  lastmod?: string;
-  changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-  priority?: string;
-}
-
-const staticEntries: Entry[] = [
+const staticEntries = [
   { path: "/", changefreq: "daily", priority: "1.0" },
   { path: "/imoveis", changefreq: "daily", priority: "0.9" },
   { path: "/anunciar", changefreq: "monthly", priority: "0.7" },
@@ -23,7 +16,7 @@ const staticEntries: Entry[] = [
   { path: "/termos-de-uso", changefreq: "yearly", priority: "0.3" },
 ];
 
-async function fetchProperties(): Promise<Entry[]> {
+async function fetchProperties() {
   try {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/properties?select=id,updated_at&status=eq.disponivel&order=updated_at.desc&limit=1000`,
@@ -33,7 +26,7 @@ async function fetchProperties(): Promise<Entry[]> {
       console.warn(`[sitemap] Falha ao buscar imóveis (${res.status})`);
       return [];
     }
-    const data: { id: string; updated_at: string }[] = await res.json();
+    const data = await res.json();
     return data.map((p) => ({
       path: `/imoveis/${p.id}`,
       lastmod: new Date(p.updated_at).toISOString().split("T")[0],
@@ -46,7 +39,7 @@ async function fetchProperties(): Promise<Entry[]> {
   }
 }
 
-function buildXml(entries: Entry[]) {
+function buildXml(entries) {
   const urls = entries
     .map((e) =>
       [
@@ -69,9 +62,7 @@ ${urls}
 `;
 }
 
-(async () => {
-  const properties = await fetchProperties();
-  const all = [...staticEntries, ...properties];
-  writeFileSync(resolve("public/sitemap.xml"), buildXml(all));
-  console.log(`[sitemap] gerado com ${all.length} URLs (${properties.length} imóveis).`);
-})();
+const properties = await fetchProperties();
+const all = [...staticEntries, ...properties];
+writeFileSync(resolve("public/sitemap.xml"), buildXml(all));
+console.log(`[sitemap] gerado com ${all.length} URLs (${properties.length} imóveis).`);
