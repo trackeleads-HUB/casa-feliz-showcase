@@ -187,16 +187,47 @@ const AdminSettings = () => {
       <main className="container mx-auto px-6 py-8 max-w-3xl space-y-8">
         {GROUPS.map((group) => (
           <section key={group.title} className="bg-card border border-border rounded-xl p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-foreground">{group.title}</h2>
+            <div>
+              <h2 className="text-lg font-semibold text-foreground">{group.title}</h2>
+              {group.help && <p className="text-xs text-muted-foreground mt-1">{group.help}</p>}
+            </div>
 
             {group.keys.map((key) => {
               const setting = getSetting(key);
               if (!setting) return null;
+              const isImage = IMAGE_KEYS.has(key);
 
               return (
                 <div key={key}>
                   <Label htmlFor={key}>{setting.label}</Label>
-                  {isLongText(key) ? (
+                  {isImage ? (
+                    <div className="mt-1.5 space-y-2">
+                      {setting.value && (
+                        <img src={setting.value} alt="" className="w-full max-w-xs h-32 object-cover rounded-md border border-border" />
+                      )}
+                      <div className="flex gap-2 items-center">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => e.target.files?.[0] && handleImageUpload(key, e.target.files[0])}
+                          className="flex-1"
+                        />
+                        {setting.value && (
+                          <Button type="button" variant="outline" size="sm" onClick={() => handleChange(key, "")}>
+                            Remover
+                          </Button>
+                        )}
+                      </div>
+                      <Input
+                        value={setting.value || ""}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                        placeholder="Ou cole uma URL de imagem"
+                      />
+                      {IMAGE_HINTS[key] && (
+                        <p className="text-xs text-muted-foreground">📐 {IMAGE_HINTS[key]}</p>
+                      )}
+                    </div>
+                  ) : isLongText(key) ? (
                     <Textarea
                       id={key}
                       value={setting.value || ""}
