@@ -62,6 +62,8 @@ type PropertyData = {
   features: string[] | null;
   meta_title: string | null;
   meta_description: string | null;
+  created_at?: string;
+  updated_at?: string;
 };
 
 const PropertyDetails = () => {
@@ -167,7 +169,13 @@ const PropertyDetails = () => {
     name: property.title,
     description: property.description || seoDesc,
     url: `${window.location.origin}/imoveis/${property.id}`,
-    ...(coverImage && { image: coverImage }),
+    ...(images.length > 0 && { image: images.map((i) => i.url).slice(0, 8) }),
+    ...(property.created_at && { datePosted: property.created_at }),
+    ...(property.area && {
+      floorSize: { "@type": "QuantitativeValue", value: property.area, unitCode: "MTK" },
+    }),
+    ...(property.bedrooms && { numberOfRooms: property.bedrooms }),
+    ...(property.bathrooms && { numberOfBathroomsTotal: property.bathrooms }),
     address: {
       "@type": "PostalAddress",
       streetAddress: property.address || undefined,
@@ -181,7 +189,11 @@ const PropertyDetails = () => {
         "@type": "Offer",
         price: property.price,
         priceCurrency: "BRL",
-        availability: property.status === "disponivel" ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+        availability:
+          property.status === "disponivel"
+            ? "https://schema.org/InStock"
+            : "https://schema.org/SoldOut",
+        url: `${window.location.origin}/imoveis/${property.id}`,
       },
     }),
   };
