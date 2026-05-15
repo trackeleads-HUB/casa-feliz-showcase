@@ -31,6 +31,8 @@ const HeroSection = () => {
   return (
     <section id="hero" className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
       <picture className="absolute inset-0 block">
+        <source media="(max-width: 767px)" srcSet={heroBgMobileWebp} type="image/webp" />
+        <source media="(max-width: 767px)" srcSet={heroBgMobileJpg} type="image/jpeg" />
         <source srcSet={heroBgWebp} type="image/webp" />
         <img
           src={heroBgJpg}
@@ -38,7 +40,7 @@ const HeroSection = () => {
           aria-hidden="true"
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-center scale-105"
         />
       </picture>
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/40 to-foreground/80" />
