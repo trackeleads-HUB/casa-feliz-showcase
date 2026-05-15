@@ -51,7 +51,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
         <a href="/#hero" onClick={(e) => handleAnchorClick(e, "/#hero")} className="flex items-center shrink-0" aria-label="SO Alphaville - Início">
-          <img src={logo} alt="SO Alphaville" className="h-10 sm:h-11 md:h-12 w-auto block object-contain" />
+          <img src={logo} alt="SO Alphaville" className="h-12 sm:h-14 md:h-16 w-auto block object-contain" />
         </a>
 
         {/* Desktop */}
