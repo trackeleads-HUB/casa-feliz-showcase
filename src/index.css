@@ -109,6 +109,10 @@
     --fs-small: clamp(0.8125rem, 0.78rem + 0.13vw, 0.875rem);
   }
 
+  html {
+    font-family: 'Lora', Georgia, serif;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'Lora', Georgia, serif;
