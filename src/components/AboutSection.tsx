@@ -18,7 +18,7 @@ const AboutSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="relative pb-10 lg:pb-0">
             <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-foreground/5">
-              <img src={imgSrc} alt={settings.about_title || "Equipe"} className="w-full h-56 sm:h-72 lg:h-[28rem] object-cover" />
+              <img src={imgSrc} alt={settings.about_title || "Equipe"} className="w-full h-56 sm:h-72 lg:h-[28rem] object-cover object-top scale-x-[-1]" />
             </div>
             {stats.length > 0 && (
               <div className="absolute -bottom-6 left-2 right-2 sm:left-4 sm:right-4 lg:left-auto lg:-right-8 bg-card rounded-2xl shadow-xl p-3 sm:p-6 grid gap-2 sm:gap-4 border border-border/50"
