@@ -12,7 +12,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Upload, X, Star, Sparkles, Loader2, Check, Trash2, Pencil, Copy, RefreshCw } from "lucide-react";
+import { ArrowLeft, Upload, X, Star, Sparkles, Loader2, Check, Trash2, Pencil, Copy, RefreshCw, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
 
 const FEATURES_OPTIONS = [
   "Piscina", "Churrasqueira", "Academia", "Playground", "Portaria 24h",
@@ -63,6 +63,20 @@ const PropertyForm = () => {
   });
 
   const [images, setImages] = useState<ImageFile[]>([]);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [overIndex, setOverIndex] = useState<number | null>(null);
+
+  const reorderImages = (from: number, to: number) => {
+    if (from === to || from < 0 || to < 0 || from >= images.length || to >= images.length) return;
+    setImages((prev) => {
+      const next = [...prev];
+      const [moved] = next.splice(from, 1);
+      next.splice(to, 0, moved);
+      return next;
+    });
+  };
+
+  const moveImage = (index: number, dir: -1 | 1) => reorderImages(index, index + dir);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
@@ -291,10 +305,14 @@ const PropertyForm = () => {
         });
       }
 
-      // Update cover status for existing images
+      // Update cover + sort_order for existing images
       const existingImages = images.filter((img) => img.id);
-      for (const img of existingImages) {
-        await supabase.from("property_images").update({ is_cover: img.is_cover }).eq("id", img.id!);
+      for (let i = 0; i < existingImages.length; i++) {
+        const img = existingImages[i];
+        const orderIndex = images.indexOf(img);
+        await supabase.from("property_images")
+          .update({ is_cover: img.is_cover, sort_order: orderIndex })
+          .eq("id", img.id!);
       }
 
       // Delete removed images
@@ -311,6 +329,9 @@ const PropertyForm = () => {
           await supabase.from("property_images").delete().in("id", toDelete.map((i) => i.id));
         }
       }
+
+
+
 
       toast({ title: isEditing ? "Imóvel atualizado!" : "Imóvel cadastrado!" });
       navigate("/dashboard");
@@ -474,21 +495,85 @@ const PropertyForm = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {images.map((img, i) => (
-                <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-border group">
-                  <img src={img.preview} alt="" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button type="button" onClick={() => setCover(i)} className={`p-1.5 rounded-full ${img.is_cover ? "bg-yellow-500" : "bg-white/80"}`}>
+                <div
+                  key={img.id || img.preview}
+                  draggable
+                  onDragStart={() => setDragIndex(i)}
+                  onDragOver={(e) => { e.preventDefault(); setOverIndex(i); }}
+                  onDragLeave={() => setOverIndex((v) => (v === i ? null : v))}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    if (dragIndex !== null) reorderImages(dragIndex, i);
+                    setDragIndex(null);
+                    setOverIndex(null);
+                  }}
+                  onDragEnd={() => { setDragIndex(null); setOverIndex(null); }}
+                  className={`relative aspect-square rounded-lg overflow-hidden border bg-muted group cursor-move transition-all ${
+                    overIndex === i && dragIndex !== i
+                      ? "border-primary ring-2 ring-primary/40"
+                      : "border-border"
+                  } ${dragIndex === i ? "opacity-50" : ""}`}
+                >
+                  <img src={img.preview} alt="" className="w-full h-full object-cover pointer-events-none" />
+
+                  {/* Order badge */}
+                  <span className="absolute top-1 right-1 bg-foreground/70 text-background text-[10px] font-semibold px-1.5 py-0.5 rounded-full">
+                    {i + 1}
+                  </span>
+
+                  {/* Cover badge */}
+                  {img.is_cover && (
+                    <span className="absolute top-1 left-1 bg-yellow-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-medium flex items-center gap-0.5">
+                      <Star size={10} className="fill-current" /> Capa
+                    </span>
+                  )}
+
+                  {/* Drag handle hint (desktop) */}
+                  <div className="hidden md:flex absolute inset-x-0 top-0 h-7 bg-gradient-to-b from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center text-white pointer-events-none">
+                    <GripVertical size={14} />
+                  </div>
+
+                  {/* Mobile reorder controls (always visible) */}
+                  <div className="md:hidden absolute bottom-1 left-1 flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => moveImage(i, -1)}
+                      disabled={i === 0}
+                      className="p-1 rounded-full bg-background/90 border border-border disabled:opacity-40"
+                      aria-label="Mover para trás"
+                    >
+                      <ArrowUp size={12} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveImage(i, 1)}
+                      disabled={i === images.length - 1}
+                      className="p-1 rounded-full bg-background/90 border border-border disabled:opacity-40"
+                      aria-label="Mover para frente"
+                    >
+                      <ArrowDown size={12} />
+                    </button>
+                  </div>
+
+                  {/* Action overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setCover(i)}
+                      className={`p-1.5 rounded-full ${img.is_cover ? "bg-yellow-500" : "bg-white/90"}`}
+                      title="Definir como capa"
+                    >
                       <Star size={14} className={img.is_cover ? "text-white" : "text-foreground"} />
                     </button>
-                    <button type="button" onClick={() => removeImage(i)} className="p-1.5 rounded-full bg-destructive">
+                    <button
+                      type="button"
+                      onClick={() => removeImage(i)}
+                      className="p-1.5 rounded-full bg-destructive"
+                      title="Remover"
+                    >
                       <X size={14} className="text-destructive-foreground" />
                     </button>
                   </div>
-                  {img.is_cover && (
-                    <span className="absolute top-1 left-1 bg-yellow-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-medium">
-                      Capa
-                    </span>
-                  )}
                 </div>
               ))}
 
@@ -498,7 +583,9 @@ const PropertyForm = () => {
                 <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
               </label>
             </div>
-            <p className="text-xs text-muted-foreground">Clique na estrela para definir a foto de capa.</p>
+            <p className="text-xs text-muted-foreground">
+              Arraste as fotos para reordenar (no celular use as setas). Clique na estrela para definir a foto de capa. O número no canto indica a ordem de exibição.
+            </p>
           </section>
 
           {/* SEO */}
