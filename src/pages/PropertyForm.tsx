@@ -102,6 +102,7 @@ const PropertyForm = () => {
 
     setForm({
       title: data.title,
+      property_code: (data as any).property_code || "",
       description: data.description || "",
       property_type: data.property_type,
       listing_type: data.listing_type,
