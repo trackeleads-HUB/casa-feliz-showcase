@@ -65,6 +65,11 @@ const DEFAULTS: SiteSettings = {
 
 let cachedSettings: SiteSettings | null = null;
 let fetchPromise: Promise<SiteSettings> | null = null;
+const subscribers = new Set<(s: SiteSettings) => void>();
+
+function notify(s: SiteSettings) {
+  subscribers.forEach((cb) => cb(s));
+}
 
 async function fetchSettings(): Promise<SiteSettings> {
   const { data } = await supabase
@@ -78,6 +83,7 @@ async function fetchSettings(): Promise<SiteSettings> {
     }
   }
   cachedSettings = settings;
+  notify(settings);
   return settings;
 }
 
@@ -86,20 +92,24 @@ export function useSiteSettings() {
   const [loading, setLoading] = useState(!cachedSettings);
 
   useEffect(() => {
+    subscribers.add(setSettings);
+
     if (cachedSettings) {
       setSettings(cachedSettings);
       setLoading(false);
-      return;
+    } else {
+      if (!fetchPromise) {
+        fetchPromise = fetchSettings();
+      }
+      fetchPromise.then((s) => {
+        setSettings(s);
+        setLoading(false);
+      });
     }
 
-    if (!fetchPromise) {
-      fetchPromise = fetchSettings();
-    }
-
-    fetchPromise.then((s) => {
-      setSettings(s);
-      setLoading(false);
-    });
+    return () => {
+      subscribers.delete(setSettings);
+    };
   }, []);
 
   const refresh = async () => {
@@ -114,5 +124,5 @@ export function useSiteSettings() {
 
 export function invalidateSettingsCache() {
   cachedSettings = null;
-  fetchPromise = null;
+  fetchPromise = fetchSettings();
 }
