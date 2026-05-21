@@ -305,10 +305,29 @@ const PropertyForm = () => {
         });
       }
 
-      // Update cover status for existing images
+      // Update cover + sort_order for existing images
       const existingImages = images.filter((img) => img.id);
-      for (const img of existingImages) {
-        await supabase.from("property_images").update({ is_cover: img.is_cover }).eq("id", img.id!);
+      for (let i = 0; i < existingImages.length; i++) {
+        const img = existingImages[i];
+        const orderIndex = images.indexOf(img);
+        await supabase.from("property_images")
+          .update({ is_cover: img.is_cover, sort_order: orderIndex })
+          .eq("id", img.id!);
+      }
+
+      // Delete removed images
+      if (isEditing) {
+        const currentIds = images.filter((img) => img.id).map((img) => img.id!);
+        const { data: allImgs } = await supabase
+          .from("property_images")
+          .select("id, storage_path")
+          .eq("property_id", propertyId!);
+
+        const toDelete = (allImgs || []).filter((img) => !currentIds.includes(img.id));
+        if (toDelete.length) {
+          await supabase.storage.from("property-images").remove(toDelete.map((i) => i.storage_path));
+          await supabase.from("property_images").delete().in("id", toDelete.map((i) => i.id));
+        }
       }
 
       // Delete removed images
