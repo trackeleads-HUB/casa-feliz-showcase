@@ -119,7 +119,9 @@ const PropertyDetails = () => {
     : "";
 
   const whatsappMessage = property
-    ? encodeURIComponent(`Olá! Tenho interesse no imóvel "${property.title}". Poderia me enviar mais informações?`)
+    ? encodeURIComponent(
+        `Olá! Tenho interesse no imóvel "${property.title}"${property.property_code ? ` (Código: ${property.property_code})` : ""}. Poderia me enviar mais informações?`
+      )
     : "";
 
   if (loading) {
