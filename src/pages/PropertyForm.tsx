@@ -254,6 +254,7 @@ const PropertyForm = () => {
       const propertyData = {
         user_id: user.id,
         title: form.title.trim(),
+        property_code: form.property_code.trim() || null,
         description: form.description.trim() || null,
         property_type: form.property_type as any,
         listing_type: form.listing_type as any,
