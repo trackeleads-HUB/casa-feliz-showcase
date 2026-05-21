@@ -28,7 +28,7 @@ const listingLabels: Record<string, string> = {
 type DisplayProperty = {
   id: string; image: string; title: string; location: string;
   price: number | null; beds: number | null; baths: number | null;
-  area: number | null; tag: string;
+  area: number | null; tag: string; code: string | null;
 };
 
 const formatPrice = (price: number | null) => {
