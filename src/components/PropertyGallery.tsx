@@ -11,7 +11,6 @@ type Props = {
 const PropertyGallery = ({ images, title }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const isMobile = useIsMobile();
 
   if (!images.length) {
     return (
