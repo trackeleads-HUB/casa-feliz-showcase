@@ -128,12 +128,15 @@ const AdminSettings = () => {
     if (error) {
       toast({ title: "Erro ao carregar configurações", variant: "destructive" });
     } else {
-      setSettings(data || []);
+      const draft = dirtyRef.current;
+      setSettings((data || []).map((s) => ({ ...s, value: draft[s.key] ?? s.value ?? "" })));
     }
     setLoading(false);
   };
 
   const handleChange = (key: string, value: string) => {
+    dirtyRef.current = { ...dirtyRef.current, [key]: value };
+    writeDraft(dirtyRef.current);
     setSettings((prev) =>
       prev.map((s) => (s.key === key ? { ...s, value } : s))
     );
@@ -142,14 +145,21 @@ const AdminSettings = () => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      for (const s of settings) {
-        await supabase
+      const changedSettings = settings.filter((s) => Object.prototype.hasOwnProperty.call(dirtyRef.current, s.key));
+
+      for (const s of changedSettings) {
+        const { error } = await supabase
           .from("site_settings")
-          .update({ value: s.value, updated_at: new Date().toISOString() })
-          .eq("id", s.id);
+          .update({ value: s.value ?? "", updated_at: new Date().toISOString() })
+          .eq("key", s.key);
+
+        if (error) throw new Error(`${s.label || s.key}: ${error.message}`);
       }
+      dirtyRef.current = {};
+      writeDraft({});
       invalidateSettingsCache();
-      toast({ title: "Configurações salvas com sucesso!" });
+      toast({ title: "Configurações salvas com sucesso!", description: "As alterações foram gravadas e já estão disponíveis no site." });
+      await loadSettings();
     } catch (err: any) {
       toast({ title: "Erro ao salvar", description: err.message, variant: "destructive" });
     } finally {
