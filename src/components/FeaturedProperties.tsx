@@ -13,12 +13,12 @@ import property5 from "@/assets/property-5.jpg";
 import property6 from "@/assets/property-6.jpg";
 
 const mockProperties = [
-  { id: "1", image: property1, title: "Apartamento Vista Mar", location: "Copacabana, Rio de Janeiro", price: 850000, beds: 3, baths: 2, area: 120, tag: "Venda" },
-  { id: "2", image: property2, title: "Casa com Jardim", location: "Alphaville, São Paulo", price: 1200000, beds: 4, baths: 3, area: 250, tag: "Venda" },
-  { id: "3", image: property3, title: "Cobertura Duplex", location: "Barra da Tijuca, Rio de Janeiro", price: 2500000, beds: 4, baths: 4, area: 320, tag: "Destaque" },
-  { id: "4", image: property4, title: "Sobrado Moderno", location: "Vila Madalena, São Paulo", price: 980000, beds: 3, baths: 2, area: 180, tag: "Venda" },
-  { id: "5", image: property5, title: "Casa de Praia", location: "Jurerê, Florianópolis", price: 1800000, beds: 5, baths: 4, area: 300, tag: "Destaque" },
-  { id: "6", image: property6, title: "Loft Industrial", location: "Pinheiros, São Paulo", price: 650000, beds: 1, baths: 1, area: 85, tag: "Aluguel" },
+  { id: "1", image: property1, title: "Apartamento Vista Mar", location: "Copacabana, Rio de Janeiro", price: 850000, beds: 3, baths: 2, area: 120, tag: "Venda", code: null },
+  { id: "2", image: property2, title: "Casa com Jardim", location: "Alphaville, São Paulo", price: 1200000, beds: 4, baths: 3, area: 250, tag: "Venda", code: null },
+  { id: "3", image: property3, title: "Cobertura Duplex", location: "Barra da Tijuca, Rio de Janeiro", price: 2500000, beds: 4, baths: 4, area: 320, tag: "Destaque", code: null },
+  { id: "4", image: property4, title: "Sobrado Moderno", location: "Vila Madalena, São Paulo", price: 980000, beds: 3, baths: 2, area: 180, tag: "Venda", code: null },
+  { id: "5", image: property5, title: "Casa de Praia", location: "Jurerê, Florianópolis", price: 1800000, beds: 5, baths: 4, area: 300, tag: "Destaque", code: null },
+  { id: "6", image: property6, title: "Loft Industrial", location: "Pinheiros, São Paulo", price: 650000, beds: 1, baths: 1, area: 85, tag: "Aluguel", code: null },
 ];
 
 const listingLabels: Record<string, string> = {
@@ -45,7 +45,7 @@ const FeaturedProperties = () => {
     const fetchProperties = async () => {
       const { data, error } = await supabase
         .from("properties")
-        .select("id, title, listing_type, price, bedrooms, bathrooms, area, neighborhood, city")
+        .select("id, title, listing_type, price, bedrooms, bathrooms, area, neighborhood, city, property_code")
         .eq("status", "disponivel")
         .order("created_at", { ascending: false })
         .limit(6);
@@ -67,6 +67,7 @@ const FeaturedProperties = () => {
             price: p.price ? Number(p.price) : null, beds: p.bedrooms,
             baths: p.bathrooms, area: p.area ? Number(p.area) : null,
             tag: listingLabels[p.listing_type] || p.listing_type,
+            code: p.property_code || null,
           };
         })
       );
@@ -109,6 +110,11 @@ const FeaturedProperties = () => {
                     </div>
                   )}
                   <Badge className="absolute top-4 left-4 rounded-full px-3">{p.tag}</Badge>
+                  {p.code && (
+                    <span className="absolute top-4 right-4 rounded-full px-3 py-1 text-[11px] font-mono font-semibold bg-background/90 text-foreground backdrop-blur-sm border border-border/50">
+                      {p.code}
+                    </span>
+                  )}
                 </div>
                 <div className="p-6">
                   <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
