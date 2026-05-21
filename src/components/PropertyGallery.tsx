@@ -24,7 +24,7 @@ const PropertyGallery = ({ images, title }: Props) => {
   const next = () => setCurrentIndex((i) => (i === images.length - 1 ? 0 : i + 1));
 
   const handleImageClick = () => {
-    if (isMobile) setLightboxOpen(true);
+    setLightboxOpen(true);
   };
 
   return (
