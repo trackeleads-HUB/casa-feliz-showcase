@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Home, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
+
 
 type Props = {
   images: { url: string; is_cover: boolean | null }[];
@@ -11,7 +11,6 @@ type Props = {
 const PropertyGallery = ({ images, title }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const isMobile = useIsMobile();
 
   if (!images.length) {
     return (
@@ -25,7 +24,7 @@ const PropertyGallery = ({ images, title }: Props) => {
   const next = () => setCurrentIndex((i) => (i === images.length - 1 ? 0 : i + 1));
 
   const handleImageClick = () => {
-    if (isMobile) setLightboxOpen(true);
+    setLightboxOpen(true);
   };
 
   return (
@@ -36,7 +35,7 @@ const PropertyGallery = ({ images, title }: Props) => {
           <img
             src={images[currentIndex].url}
             alt={`${title} - Foto ${currentIndex + 1}`}
-            className="w-full h-full object-cover cursor-pointer md:cursor-default"
+            className="w-full h-full object-cover cursor-zoom-in"
             onClick={handleImageClick}
           />
 
