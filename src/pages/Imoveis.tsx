@@ -43,6 +43,7 @@ type DisplayProperty = {
   area: number | null;
   tag: string;
   propertyType: string;
+  code: string | null;
 };
 
 const Imoveis = () => {
@@ -72,7 +73,7 @@ const Imoveis = () => {
 
       let query = supabase
         .from("properties")
-        .select("id, title, listing_type, property_type, price, bedrooms, bathrooms, area, neighborhood, city, status", { count: "exact" })
+        .select("id, title, listing_type, property_type, price, bedrooms, bathrooms, area, neighborhood, city, status, property_code", { count: "exact" })
         .eq("status", "disponivel")
         .order("created_at", { ascending: false });
 
@@ -133,6 +134,7 @@ const Imoveis = () => {
             area: p.area ? Number(p.area) : null,
             tag: listingLabels[p.listing_type] || p.listing_type,
             propertyType: propertyTypeLabels[p.property_type] || p.property_type,
+            code: p.property_code || null,
           };
         })
       );
@@ -273,6 +275,9 @@ const Imoveis = () => {
                     <Badge variant="secondary" className="absolute top-4 right-4">{p.propertyType}</Badge>
                   </div>
                   <CardContent className="p-5">
+                    {p.code && (
+                      <p className="text-[11px] font-mono font-semibold text-muted-foreground tracking-wider mb-1">COD: {p.code}</p>
+                    )}
                     <p className="text-2xl font-bold text-foreground mb-1">{formatPrice(p.price)}</p>
                     <h3 className="text-lg font-semibold text-foreground mb-2">{p.title}</h3>
                     <p className="flex items-center gap-1 text-base text-muted-foreground mb-4">

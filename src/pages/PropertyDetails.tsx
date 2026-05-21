@@ -62,6 +62,7 @@ type PropertyData = {
   features: string[] | null;
   meta_title: string | null;
   meta_description: string | null;
+  property_code: string | null;
   created_at?: string;
   updated_at?: string;
 };
@@ -235,6 +236,9 @@ const PropertyDetails = () => {
                 <Badge>{listingLabels[property.listing_type] || property.listing_type}</Badge>
                 <Badge variant="secondary">{propertyTypeLabels[property.property_type] || property.property_type}</Badge>
                 <Badge variant="outline">{statusLabels[property.status] || property.status}</Badge>
+                {property.property_code && (
+                  <Badge variant="outline" className="font-mono tracking-wider">COD: {property.property_code}</Badge>
+                )}
               </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground mb-2 break-words">
                 {property.title}
