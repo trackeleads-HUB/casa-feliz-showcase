@@ -366,9 +366,21 @@ const PropertyForm = () => {
           <section className="bg-card border border-border rounded-xl p-6 space-y-4">
             <h2 className="text-lg font-semibold">Informações Básicas</h2>
 
-            <div>
-              <Label htmlFor="title">Título *</Label>
-              <Input id="title" value={form.title} onChange={(e) => handleChange("title", e.target.value)} placeholder="Ex: Casa moderna em Alphaville" className="mt-1.5" required />
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_200px] gap-4">
+              <div>
+                <Label htmlFor="title">Título *</Label>
+                <Input id="title" value={form.title} onChange={(e) => handleChange("title", e.target.value)} placeholder="Ex: Casa moderna em Alphaville" className="mt-1.5" required />
+              </div>
+              <div>
+                <Label htmlFor="property_code">Código do Imóvel</Label>
+                <Input
+                  id="property_code"
+                  value={form.property_code}
+                  onChange={(e) => handleChange("property_code", e.target.value.toUpperCase())}
+                  placeholder="Ex: SO-1234"
+                  className="mt-1.5 font-mono uppercase"
+                />
+              </div>
             </div>
 
             <div>
