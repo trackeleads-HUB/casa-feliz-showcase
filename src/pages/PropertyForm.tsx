@@ -63,6 +63,20 @@ const PropertyForm = () => {
   });
 
   const [images, setImages] = useState<ImageFile[]>([]);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [overIndex, setOverIndex] = useState<number | null>(null);
+
+  const reorderImages = (from: number, to: number) => {
+    if (from === to || from < 0 || to < 0 || from >= images.length || to >= images.length) return;
+    setImages((prev) => {
+      const next = [...prev];
+      const [moved] = next.splice(from, 1);
+      next.splice(to, 0, moved);
+      return next;
+    });
+  };
+
+  const moveImage = (index: number, dir: -1 | 1) => reorderImages(index, index + dir);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
