@@ -43,6 +43,7 @@ const PropertyForm = () => {
 
   const [form, setForm] = useState({
     title: "",
+    property_code: "",
     description: "",
     property_type: "casa" as string,
     listing_type: "venda" as string,
