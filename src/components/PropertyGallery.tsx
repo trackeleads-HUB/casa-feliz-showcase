@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Home, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
+
 
 type Props = {
   images: { url: string; is_cover: boolean | null }[];
