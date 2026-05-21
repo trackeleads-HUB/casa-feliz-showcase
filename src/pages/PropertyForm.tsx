@@ -330,20 +330,8 @@ const PropertyForm = () => {
         }
       }
 
-      // Delete removed images
-      if (isEditing) {
-        const currentIds = images.filter((img) => img.id).map((img) => img.id!);
-        const { data: allImgs } = await supabase
-          .from("property_images")
-          .select("id, storage_path")
-          .eq("property_id", propertyId!);
 
-        const toDelete = (allImgs || []).filter((img) => !currentIds.includes(img.id));
-        if (toDelete.length) {
-          await supabase.storage.from("property-images").remove(toDelete.map((i) => i.storage_path));
-          await supabase.from("property_images").delete().in("id", toDelete.map((i) => i.id));
-        }
-      }
+
 
       toast({ title: isEditing ? "Imóvel atualizado!" : "Imóvel cadastrado!" });
       navigate("/dashboard");
