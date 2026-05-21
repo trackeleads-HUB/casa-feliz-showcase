@@ -1,0 +1,2 @@
+ALTER TABLE public.properties ADD COLUMN IF NOT EXISTS property_code text;
+CREATE UNIQUE INDEX IF NOT EXISTS properties_property_code_unique ON public.properties (property_code) WHERE property_code IS NOT NULL;

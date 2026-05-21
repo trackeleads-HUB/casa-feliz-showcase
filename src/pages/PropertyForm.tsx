@@ -43,6 +43,7 @@ const PropertyForm = () => {
 
   const [form, setForm] = useState({
     title: "",
+    property_code: "",
     description: "",
     property_type: "casa" as string,
     listing_type: "venda" as string,
@@ -101,6 +102,7 @@ const PropertyForm = () => {
 
     setForm({
       title: data.title,
+      property_code: (data as any).property_code || "",
       description: data.description || "",
       property_type: data.property_type,
       listing_type: data.listing_type,
@@ -252,6 +254,7 @@ const PropertyForm = () => {
       const propertyData = {
         user_id: user.id,
         title: form.title.trim(),
+        property_code: form.property_code.trim() || null,
         description: form.description.trim() || null,
         property_type: form.property_type as any,
         listing_type: form.listing_type as any,
@@ -363,9 +366,21 @@ const PropertyForm = () => {
           <section className="bg-card border border-border rounded-xl p-6 space-y-4">
             <h2 className="text-lg font-semibold">Informações Básicas</h2>
 
-            <div>
-              <Label htmlFor="title">Título *</Label>
-              <Input id="title" value={form.title} onChange={(e) => handleChange("title", e.target.value)} placeholder="Ex: Casa moderna em Alphaville" className="mt-1.5" required />
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_200px] gap-4">
+              <div>
+                <Label htmlFor="title">Título *</Label>
+                <Input id="title" value={form.title} onChange={(e) => handleChange("title", e.target.value)} placeholder="Ex: Casa moderna em Alphaville" className="mt-1.5" required />
+              </div>
+              <div>
+                <Label htmlFor="property_code">Código do Imóvel</Label>
+                <Input
+                  id="property_code"
+                  value={form.property_code}
+                  onChange={(e) => handleChange("property_code", e.target.value.toUpperCase())}
+                  placeholder="Ex: SO-1234"
+                  className="mt-1.5 font-mono uppercase"
+                />
+              </div>
             </div>
 
             <div>

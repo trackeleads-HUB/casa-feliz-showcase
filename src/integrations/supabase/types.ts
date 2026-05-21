@@ -159,6 +159,7 @@ export type Database = {
           neighborhood: string | null
           parking_spots: number | null
           price: number | null
+          property_code: string | null
           property_type: Database["public"]["Enums"]["property_type"]
           state: string | null
           status: Database["public"]["Enums"]["property_status"]
@@ -185,6 +186,7 @@ export type Database = {
           neighborhood?: string | null
           parking_spots?: number | null
           price?: number | null
+          property_code?: string | null
           property_type?: Database["public"]["Enums"]["property_type"]
           state?: string | null
           status?: Database["public"]["Enums"]["property_status"]
@@ -211,6 +213,7 @@ export type Database = {
           neighborhood?: string | null
           parking_spots?: number | null
           price?: number | null
+          property_code?: string | null
           property_type?: Database["public"]["Enums"]["property_type"]
           state?: string | null
           status?: Database["public"]["Enums"]["property_status"]
