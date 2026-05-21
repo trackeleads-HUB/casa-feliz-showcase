@@ -35,7 +35,7 @@ const PropertyGallery = ({ images, title }: Props) => {
           <img
             src={images[currentIndex].url}
             alt={`${title} - Foto ${currentIndex + 1}`}
-            className="w-full h-full object-cover cursor-pointer md:cursor-default"
+            className="w-full h-full object-cover cursor-zoom-in"
             onClick={handleImageClick}
           />
 
