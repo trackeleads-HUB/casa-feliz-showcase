@@ -285,53 +285,60 @@ const PropertyForm = () => {
         propertyId = data.id;
       }
 
-      // Upload new images
+      // Upload new images in parallel
       const newImages = images.filter((img) => img.file);
-      for (const img of newImages) {
-        const ext = img.file!.name.split(".").pop();
-        const path = `${user.id}/${propertyId}/${crypto.randomUUID()}.${ext}`;
+      const uploadPromise = Promise.all(
+        newImages.map(async (img) => {
+          const ext = img.file!.name.split(".").pop();
+          const path = `${user.id}/${propertyId}/${crypto.randomUUID()}.${ext}`;
+          const { error: uploadError } = await supabase.storage
+            .from("property-images")
+            .upload(path, img.file!, { cacheControl: "3600", upsert: false });
+          if (uploadError) throw uploadError;
+          const { data: urlData } = supabase.storage.from("property-images").getPublicUrl(path);
+          return {
+            property_id: propertyId!,
+            url: urlData.publicUrl,
+            storage_path: path,
+            is_cover: img.is_cover,
+            sort_order: images.indexOf(img),
+          };
+        })
+      ).then(async (rows) => {
+        if (rows.length) {
+          const { error } = await supabase.from("property_images").insert(rows);
+          if (error) throw error;
+        }
+      });
 
-        const { error: uploadError } = await supabase.storage
-          .from("property-images")
-          .upload(path, img.file!);
-
-        if (uploadError) throw uploadError;
-
-        const { data: urlData } = supabase.storage.from("property-images").getPublicUrl(path);
-
-        await supabase.from("property_images").insert({
-          property_id: propertyId!,
-          url: urlData.publicUrl,
-          storage_path: path,
-          is_cover: img.is_cover,
-          sort_order: images.indexOf(img),
-        });
-      }
-
-      // Update cover + sort_order for existing images
+      // Update existing images (cover + order) in parallel
       const existingImages = images.filter((img) => img.id);
-      for (let i = 0; i < existingImages.length; i++) {
-        const img = existingImages[i];
-        const orderIndex = images.indexOf(img);
-        await supabase.from("property_images")
-          .update({ is_cover: img.is_cover, sort_order: orderIndex })
-          .eq("id", img.id!);
-      }
+      const updatePromise = Promise.all(
+        existingImages.map((img) =>
+          supabase.from("property_images")
+            .update({ is_cover: img.is_cover, sort_order: images.indexOf(img) })
+            .eq("id", img.id!)
+        )
+      );
 
-      // Delete removed images
-      if (isEditing) {
-        const currentIds = images.filter((img) => img.id).map((img) => img.id!);
+      // Delete removed images in parallel
+      const deletePromise = (async () => {
+        if (!isEditing) return;
+        const currentIds = new Set(images.filter((img) => img.id).map((img) => img.id!));
         const { data: allImgs } = await supabase
           .from("property_images")
           .select("id, storage_path")
           .eq("property_id", propertyId!);
-
-        const toDelete = (allImgs || []).filter((img) => !currentIds.includes(img.id));
+        const toDelete = (allImgs || []).filter((img) => !currentIds.has(img.id));
         if (toDelete.length) {
-          await supabase.storage.from("property-images").remove(toDelete.map((i) => i.storage_path));
-          await supabase.from("property_images").delete().in("id", toDelete.map((i) => i.id));
+          await Promise.all([
+            supabase.storage.from("property-images").remove(toDelete.map((i) => i.storage_path)),
+            supabase.from("property_images").delete().in("id", toDelete.map((i) => i.id)),
+          ]);
         }
-      }
+      })();
+
+      await Promise.all([uploadPromise, updatePromise, deletePromise]);
 
 
 
