@@ -82,7 +82,7 @@ const FeaturedProperties = () => {
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
           <p className="text-[11px] sm:text-[13px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-primary mb-3 sm:mb-4">Destaques</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground">
-            Imóveis em <span className="italic font-light">Destaque</span>
+            Imóveis em <span className="italic font-bold text-primary underline decoration-primary/40 decoration-2 underline-offset-8">Destaque</span>
           </h2>
         </div>
 
