@@ -495,21 +495,85 @@ const PropertyForm = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {images.map((img, i) => (
-                <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-border group">
-                  <img src={img.preview} alt="" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button type="button" onClick={() => setCover(i)} className={`p-1.5 rounded-full ${img.is_cover ? "bg-yellow-500" : "bg-white/80"}`}>
+                <div
+                  key={img.id || img.preview}
+                  draggable
+                  onDragStart={() => setDragIndex(i)}
+                  onDragOver={(e) => { e.preventDefault(); setOverIndex(i); }}
+                  onDragLeave={() => setOverIndex((v) => (v === i ? null : v))}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    if (dragIndex !== null) reorderImages(dragIndex, i);
+                    setDragIndex(null);
+                    setOverIndex(null);
+                  }}
+                  onDragEnd={() => { setDragIndex(null); setOverIndex(null); }}
+                  className={`relative aspect-square rounded-lg overflow-hidden border bg-muted group cursor-move transition-all ${
+                    overIndex === i && dragIndex !== i
+                      ? "border-primary ring-2 ring-primary/40"
+                      : "border-border"
+                  } ${dragIndex === i ? "opacity-50" : ""}`}
+                >
+                  <img src={img.preview} alt="" className="w-full h-full object-cover pointer-events-none" />
+
+                  {/* Order badge */}
+                  <span className="absolute top-1 right-1 bg-foreground/70 text-background text-[10px] font-semibold px-1.5 py-0.5 rounded-full">
+                    {i + 1}
+                  </span>
+
+                  {/* Cover badge */}
+                  {img.is_cover && (
+                    <span className="absolute top-1 left-1 bg-yellow-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-medium flex items-center gap-0.5">
+                      <Star size={10} className="fill-current" /> Capa
+                    </span>
+                  )}
+
+                  {/* Drag handle hint (desktop) */}
+                  <div className="hidden md:flex absolute inset-x-0 top-0 h-7 bg-gradient-to-b from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center text-white pointer-events-none">
+                    <GripVertical size={14} />
+                  </div>
+
+                  {/* Mobile reorder controls (always visible) */}
+                  <div className="md:hidden absolute bottom-1 left-1 flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => moveImage(i, -1)}
+                      disabled={i === 0}
+                      className="p-1 rounded-full bg-background/90 border border-border disabled:opacity-40"
+                      aria-label="Mover para trás"
+                    >
+                      <ArrowUp size={12} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveImage(i, 1)}
+                      disabled={i === images.length - 1}
+                      className="p-1 rounded-full bg-background/90 border border-border disabled:opacity-40"
+                      aria-label="Mover para frente"
+                    >
+                      <ArrowDown size={12} />
+                    </button>
+                  </div>
+
+                  {/* Action overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setCover(i)}
+                      className={`p-1.5 rounded-full ${img.is_cover ? "bg-yellow-500" : "bg-white/90"}`}
+                      title="Definir como capa"
+                    >
                       <Star size={14} className={img.is_cover ? "text-white" : "text-foreground"} />
                     </button>
-                    <button type="button" onClick={() => removeImage(i)} className="p-1.5 rounded-full bg-destructive">
+                    <button
+                      type="button"
+                      onClick={() => removeImage(i)}
+                      className="p-1.5 rounded-full bg-destructive"
+                      title="Remover"
+                    >
                       <X size={14} className="text-destructive-foreground" />
                     </button>
                   </div>
-                  {img.is_cover && (
-                    <span className="absolute top-1 left-1 bg-yellow-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-medium">
-                      Capa
-                    </span>
-                  )}
                 </div>
               ))}
 
@@ -519,7 +583,9 @@ const PropertyForm = () => {
                 <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
               </label>
             </div>
-            <p className="text-xs text-muted-foreground">Clique na estrela para definir a foto de capa.</p>
+            <p className="text-xs text-muted-foreground">
+              Arraste as fotos para reordenar (no celular use as setas). Clique na estrela para definir a foto de capa. O número no canto indica a ordem de exibição.
+            </p>
           </section>
 
           {/* SEO */}
