@@ -21,7 +21,8 @@ const AboutSection = () => {
               <img
                 src={imgSrc}
                 alt={settings.about_title || "Equipe"}
-                className="w-full aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] object-cover object-top scale-x-[-1]"
+                className="w-full aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] object-cover scale-x-[-1]"
+                style={{ objectPosition: "70% 20%" }}
               />
             </div>
             {stats.length > 0 && (
