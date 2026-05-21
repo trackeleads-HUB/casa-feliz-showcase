@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,6 +16,28 @@ type SettingRow = {
   key: string;
   value: string;
   label: string;
+};
+
+const DRAFT_STORAGE_KEY = "so-alphaville-admin-settings-draft";
+
+const readDraft = (): Record<string, string> => {
+  try {
+    return JSON.parse(sessionStorage.getItem(DRAFT_STORAGE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+};
+
+const writeDraft = (draft: Record<string, string>) => {
+  try {
+    if (Object.keys(draft).length) {
+      sessionStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+    } else {
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+    }
+  } catch {
+    // Ignora falhas do navegador ao salvar rascunho local.
+  }
 };
 
 const GROUPS: { title: string; keys: string[]; help?: string }[] = [
@@ -71,6 +93,7 @@ const AdminSettings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const dirtyRef = useRef<Record<string, string>>(readDraft());
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
