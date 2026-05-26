@@ -13,7 +13,6 @@ const Navbar = () => {
   const location = useLocation();
 
   const links = [
-    { label: "Início", href: "/#hero" },
     { label: "Imóveis", href: "/imoveis" },
     { label: "Anuncie seu Imóvel", href: "/anunciar" },
     { label: "Sobre", href: "/#sobre" },
