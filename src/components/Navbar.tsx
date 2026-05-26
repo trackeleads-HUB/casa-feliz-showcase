@@ -79,19 +79,11 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:block">
-          {user ? (
-            <Link to="/dashboard">
-              <Button size="sm" variant="outline" className="gap-2 rounded-full px-5">
-                <Settings size={14} /> Admin
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/auth">
-              <Button size="sm" className="gap-2 rounded-full px-5">
-                Entrar <ArrowRight size={14} />
-              </Button>
-            </Link>
-          )}
+          <Link to="/auth">
+            <Button size="sm" className="gap-2 rounded-full px-5">
+              Entrar <ArrowRight size={14} />
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -128,19 +120,11 @@ const Navbar = () => {
               </a>
             )
           )}
-          {user ? (
-            <Link to="/dashboard">
-              <Button size="sm" variant="outline" className="w-full gap-2 rounded-full">
-                <Settings size={14} /> Admin
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/auth">
-              <Button size="sm" className="w-full gap-2 rounded-full">
-                Entrar <ArrowRight size={14} />
-              </Button>
-            </Link>
-          )}
+          <Link to="/auth">
+            <Button size="sm" className="w-full gap-2 rounded-full">
+              Entrar <ArrowRight size={14} />
+            </Button>
+          </Link>
         </div>
       )}
     </nav>

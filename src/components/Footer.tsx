@@ -1,4 +1,6 @@
-import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin } from "lucide-react";
+import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import logo from "@/assets/logo-so-alphaville.png";
 
