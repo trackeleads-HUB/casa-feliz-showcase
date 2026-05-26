@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/logo-so-alphaville.png";
 
@@ -78,13 +77,6 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className="hidden md:block">
-          <Link to="/auth">
-            <Button size="sm" className="gap-2 rounded-full px-5">
-              Entrar <ArrowRight size={14} />
-            </Button>
-          </Link>
-        </div>
 
         {/* Mobile toggle */}
         <button
@@ -120,11 +112,6 @@ const Navbar = () => {
               </a>
             )
           )}
-          <Link to="/auth">
-            <Button size="sm" className="w-full gap-2 rounded-full">
-              Entrar <ArrowRight size={14} />
-            </Button>
-          </Link>
         </div>
       )}
     </nav>
