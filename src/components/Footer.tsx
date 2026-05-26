@@ -5,6 +5,7 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 import logo from "@/assets/logo-so-alphaville.png";
 
 const Footer = () => {
+  const { user } = useAuth();
   const { settings } = useSiteSettings();
 
   const socialLinks = [
