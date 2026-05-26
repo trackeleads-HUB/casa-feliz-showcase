@@ -1,8 +1,11 @@
-import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin } from "lucide-react";
+import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import logo from "@/assets/logo-so-alphaville.png";
 
 const Footer = () => {
+  const { user } = useAuth();
   const { settings } = useSiteSettings();
 
   const socialLinks = [
@@ -77,8 +80,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/10 pt-6 sm:pt-8 text-center text-[11px] sm:text-xs text-primary-foreground/25 tracking-wider px-2">
-          © {new Date().getFullYear()} {settings.site_name}. Todos os direitos reservados.
+        <div className="border-t border-primary-foreground/10 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] sm:text-xs text-primary-foreground/25 tracking-wider px-2">
+          <span>© {new Date().getFullYear()} {settings.site_name}. Todos os direitos reservados.</span>
+          {user && (
+            <Link to="/dashboard" className="flex items-center gap-1.5 hover:text-primary-foreground/40 transition-colors duration-300">
+              <Settings size={12} /> <span>Admin</span>
+            </Link>
+          )}
         </div>
       </div>
     </footer>

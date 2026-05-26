@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Settings, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/logo-so-alphaville.png";
 
@@ -79,19 +79,11 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:block">
-          {user ? (
-            <Link to="/dashboard">
-              <Button size="sm" variant="outline" className="gap-2 rounded-full px-5">
-                <Settings size={14} /> Admin
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/auth">
-              <Button size="sm" className="gap-2 rounded-full px-5">
-                Entrar <ArrowRight size={14} />
-              </Button>
-            </Link>
-          )}
+          <Link to="/auth">
+            <Button size="sm" className="gap-2 rounded-full px-5">
+              Entrar <ArrowRight size={14} />
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -128,19 +120,11 @@ const Navbar = () => {
               </a>
             )
           )}
-          {user ? (
-            <Link to="/dashboard">
-              <Button size="sm" variant="outline" className="w-full gap-2 rounded-full">
-                <Settings size={14} /> Admin
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/auth">
-              <Button size="sm" className="w-full gap-2 rounded-full">
-                Entrar <ArrowRight size={14} />
-              </Button>
-            </Link>
-          )}
+          <Link to="/auth">
+            <Button size="sm" className="w-full gap-2 rounded-full">
+              Entrar <ArrowRight size={14} />
+            </Button>
+          </Link>
         </div>
       )}
     </nav>
