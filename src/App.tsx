@@ -17,6 +17,7 @@ import AdminTestimonials from "./pages/AdminTestimonials";
 import AdminLeads from "./pages/AdminLeads";
 import AdminSEO from "./pages/AdminSEO";
 import AdminAI from "./pages/AdminAI";
+import AdminUsers from "./pages/AdminUsers";
 import AnunciarImovel from "./pages/AnunciarImovel";
 import PoliticaDePrivacidade from "./pages/PoliticaDePrivacidade";
 import TermosDeUso from "./pages/TermosDeUso";
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/admin/leads" element={<AdminLeads />} />
               <Route path="/admin/seo" element={<AdminSEO />} />
               <Route path="/admin/ia" element={<AdminAI />} />
+              <Route path="/admin/usuarios" element={<AdminUsers />} />
               <Route path="/anunciar" element={<AnunciarImovel />} />
               <Route path="/politica-de-privacidade" element={<PoliticaDePrivacidade />} />
               <Route path="/termos-de-uso" element={<TermosDeUso />} />
