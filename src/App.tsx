@@ -47,6 +47,7 @@ const App = () => (
               <Route path="/admin/leads" element={<AdminLeads />} />
               <Route path="/admin/seo" element={<AdminSEO />} />
               <Route path="/admin/ia" element={<AdminAI />} />
+              <Route path="/admin/usuarios" element={<AdminUsers />} />
               <Route path="/anunciar" element={<AnunciarImovel />} />
               <Route path="/politica-de-privacidade" element={<PoliticaDePrivacidade />} />
               <Route path="/termos-de-uso" element={<TermosDeUso />} />
