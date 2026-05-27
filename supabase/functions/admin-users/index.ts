@@ -99,9 +99,10 @@ Deno.serve(async (req) => {
     }
 
     if (action === "reset_password") {
-      const { user_id, password } = body as { user_id: string; password: string };
+      const { user_id } = body as { user_id: string };
+      const password = ((body.password as string) || "").trim();
       if (!user_id || !password || password.length < 8) return json({ error: "Dados inválidos" }, 400);
-      const { error } = await admin.auth.admin.updateUserById(user_id, { password });
+      const { error } = await admin.auth.admin.updateUserById(user_id, { password, email_confirm: true });
       if (error) return json({ error: error.message }, 400);
       return json({ ok: true });
     }
