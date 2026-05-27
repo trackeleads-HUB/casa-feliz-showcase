@@ -206,6 +206,9 @@ const Dashboard = () => {
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/ia"); }}>
                         <Sparkles size={18} /> IA
                       </Button>
+                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/usuarios"); }}>
+                        <Users size={18} /> Usuários
+                      </Button>
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
                         <Settings size={18} /> Configurações
                       </Button>
