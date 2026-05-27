@@ -50,10 +50,13 @@ const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const [adminChecked, setAdminChecked] = useState(false);
+
   useEffect(() => {
     if (user) {
       supabase.rpc("has_role", { _user_id: user.id, _role: "admin" }).then(({ data }) => {
         setIsAdmin(!!data);
+        setAdminChecked(true);
       });
     }
   }, [user]);
@@ -63,16 +66,21 @@ const Dashboard = () => {
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
-    if (user) fetchProperties();
-  }, [user]);
+    if (user && adminChecked) fetchProperties();
+  }, [user, adminChecked, isAdmin]);
 
   const fetchProperties = async () => {
     setLoading(true);
-    const { data, error } = await supabase
+    let query = supabase
       .from("properties")
       .select("id, title, property_type, listing_type, status, price, city, neighborhood, bedrooms, bathrooms, area, created_at")
-      .eq("user_id", user!.id)
       .order("created_at", { ascending: false });
+
+    if (!isAdmin) {
+      query = query.eq("user_id", user!.id);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       toast({ title: "Erro ao carregar imóveis", description: error.message, variant: "destructive" });
