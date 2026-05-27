@@ -61,8 +61,12 @@ Deno.serve(async (req) => {
     }
 
     if (action === "create") {
-      const { email, password, full_name, phone, role } = body as {
-        email: string; password: string; full_name?: string; phone?: string; role: Role;
+      const rawEmail = (body.email as string) || "";
+      const rawPassword = (body.password as string) || "";
+      const email = rawEmail.trim().toLowerCase();
+      const password = rawPassword.trim();
+      const { full_name, phone, role } = body as {
+        full_name?: string; phone?: string; role: Role;
       };
       if (!email || !password || !VALID_ROLES.includes(role)) {
         return json({ error: "Dados inválidos" }, 400);
