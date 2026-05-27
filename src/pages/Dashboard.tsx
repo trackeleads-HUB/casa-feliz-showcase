@@ -149,6 +149,9 @@ const Dashboard = () => {
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/ia")}>
                   <Sparkles size={16} /> IA
                 </Button>
+                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/usuarios")}>
+                  <Users size={16} /> Usuários
+                </Button>
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
                   <Settings size={16} /> Configurações
                 </Button>
