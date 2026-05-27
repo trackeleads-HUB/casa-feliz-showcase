@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search, Menu, Sparkles } from "lucide-react";
+import { Plus, LogOut, Pencil, Trash2, Home, Bed, Bath, Ruler, ArrowLeft, Settings, MessageSquareQuote, Search, Menu, Sparkles, Users } from "lucide-react";
 
 type Property = {
   id: string;
