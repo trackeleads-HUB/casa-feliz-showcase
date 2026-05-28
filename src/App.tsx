@@ -35,6 +35,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <TrackingScripts />
+            <WhatsAppFloat />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
