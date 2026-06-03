@@ -51,7 +51,7 @@ const FeaturedProperties = () => {
         .limit(6);
 
       if (error || !data || data.length === 0) {
-        setProperties(mockProperties);
+        setProperties([]);
         setLoading(false);
         return;
       }
@@ -92,6 +92,11 @@ const FeaturedProperties = () => {
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-muted rounded-2xl h-96 animate-pulse" />
             ))}
+          </div>
+        ) : properties.length === 0 ? (
+          <div className="text-center py-16 text-muted-foreground">
+            <Home size={48} className="mx-auto mb-4 opacity-30" />
+            <p className="text-lg">Em breve, novos imóveis em destaque.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
