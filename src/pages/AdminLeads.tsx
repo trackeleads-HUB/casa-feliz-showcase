@@ -4,9 +4,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
-import { ArrowLeft, Trash2, MessageCircle, Users } from "lucide-react";
+import { ArrowLeft, Trash2, MessageCircle, Users, Eye, Mail, Phone, Home, Tag, MapPin, Calendar, FileText } from "lucide-react";
 
 type Lead = {
   id: string;
