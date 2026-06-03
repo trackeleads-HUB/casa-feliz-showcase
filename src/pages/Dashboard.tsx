@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { isMasterAdmin } from "@/lib/admin";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -49,6 +50,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const isMaster = isMasterAdmin(user);
 
   const [adminChecked, setAdminChecked] = useState(false);
 
@@ -148,21 +150,27 @@ const Dashboard = () => {
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/leads")}>
                   <Home size={16} /> Leads
                 </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/depoimentos")}>
-                  <MessageSquareQuote size={16} /> Depoimentos
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/seo")}>
-                  <Search size={16} /> SEO
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/ia")}>
-                  <Sparkles size={16} /> IA
-                </Button>
+                {isMaster && (
+                  <>
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/depoimentos")}>
+                      <MessageSquareQuote size={16} /> Depoimentos
+                    </Button>
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/seo")}>
+                      <Search size={16} /> SEO
+                    </Button>
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/ia")}>
+                      <Sparkles size={16} /> IA
+                    </Button>
+                  </>
+                )}
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/usuarios")}>
                   <Users size={16} /> Usuários
                 </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
-                  <Settings size={16} /> Configurações
-                </Button>
+                {isMaster && (
+                  <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
+                    <Settings size={16} /> Configurações
+                  </Button>
+                )}
               </div>
             )}
             <Button onClick={() => navigate("/imoveis/novo")} size="sm" className="gap-2">
@@ -205,21 +213,27 @@ const Dashboard = () => {
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/leads"); }}>
                         <Home size={18} /> Leads
                       </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/depoimentos"); }}>
-                        <MessageSquareQuote size={18} /> Depoimentos
-                      </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
-                        <Search size={18} /> SEO
-                      </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/ia"); }}>
-                        <Sparkles size={18} /> IA
-                      </Button>
+                      {isMaster && (
+                        <>
+                          <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/depoimentos"); }}>
+                            <MessageSquareQuote size={18} /> Depoimentos
+                          </Button>
+                          <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
+                            <Search size={18} /> SEO
+                          </Button>
+                          <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/ia"); }}>
+                            <Sparkles size={18} /> IA
+                          </Button>
+                        </>
+                      )}
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/usuarios"); }}>
                         <Users size={18} /> Usuários
                       </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
-                        <Settings size={18} /> Configurações
-                      </Button>
+                      {isMaster && (
+                        <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
+                          <Settings size={18} /> Configurações
+                        </Button>
+                      )}
                     </>
                   )}
 

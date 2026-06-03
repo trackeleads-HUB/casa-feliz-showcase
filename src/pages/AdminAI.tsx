@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { isMasterAdmin } from "@/lib/admin";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,6 +59,7 @@ const AdminAI = () => {
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
+    else if (!authLoading && user && !isMasterAdmin(user)) navigate("/dashboard");
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
