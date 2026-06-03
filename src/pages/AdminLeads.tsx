@@ -4,9 +4,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
-import { ArrowLeft, Trash2, MessageCircle, Users } from "lucide-react";
+import { ArrowLeft, Trash2, MessageCircle, Users, Eye, Mail, Phone, Home, Tag, MapPin, Calendar, FileText } from "lucide-react";
 
 type Lead = {
   id: string;
@@ -26,6 +27,7 @@ const AdminLeads = () => {
   const { toast } = useToast();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
@@ -127,6 +129,9 @@ const AdminLeads = () => {
                     <TableCell className="hidden lg:table-cell">{lead.neighborhood || "-"}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
+                        <Button variant="outline" size="sm" className="gap-1" onClick={() => setSelectedLead(lead)}>
+                          <Eye size={14} />
+                        </Button>
                         <Button variant="outline" size="sm" className="gap-1" onClick={() => openWhatsApp(lead.phone, lead.name)}>
                           <MessageCircle size={14} />
                         </Button>
@@ -142,6 +147,94 @@ const AdminLeads = () => {
           </div>
         )}
       </main>
+
+      <Dialog open={!!selectedLead} onOpenChange={(open) => !open && setSelectedLead(null)}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl">Detalhes do Contato</DialogTitle>
+            <DialogDescription>Informações enviadas pelo cliente</DialogDescription>
+          </DialogHeader>
+          {selectedLead && (
+            <div className="space-y-4 pt-2">
+              <div className="grid grid-cols-1 gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                  <Users size={18} className="text-primary mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-xs text-muted-foreground">Nome</p>
+                    <p className="font-medium">{selectedLead.name}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                    <Phone size={18} className="text-primary mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground">Telefone</p>
+                      <p className="font-medium truncate">{selectedLead.phone}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                    <Mail size={18} className="text-primary mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground">E-mail</p>
+                      <p className="font-medium truncate">{selectedLead.email || "-"}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                    <Home size={18} className="text-primary mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs text-muted-foreground">Tipo</p>
+                      <p className="font-medium capitalize">{selectedLead.property_type || "-"}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                    <Tag size={18} className="text-primary mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs text-muted-foreground">Finalidade</p>
+                      <p className="font-medium">{listingLabel[selectedLead.listing_type || ""] || "-"}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                  <MapPin size={18} className="text-primary mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-xs text-muted-foreground">Bairro</p>
+                    <p className="font-medium">{selectedLead.neighborhood || "-"}</p>
+                  </div>
+                </div>
+
+                {selectedLead.message && (
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                    <FileText size={18} className="text-primary mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs text-muted-foreground">Mensagem</p>
+                      <p className="font-medium whitespace-pre-wrap">{selectedLead.message}</p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                  <Calendar size={18} className="text-primary mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-xs text-muted-foreground">Recebido em</p>
+                    <p className="font-medium">{formatDate(selectedLead.created_at)}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                <Button className="flex-1 gap-2" onClick={() => openWhatsApp(selectedLead.phone, selectedLead.name)}>
+                  <MessageCircle size={16} /> Abrir WhatsApp
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
