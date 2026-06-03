@@ -81,8 +81,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/10 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] sm:text-xs text-primary-foreground/25 tracking-wider px-2">
-          <span>© {new Date().getFullYear()} {settings.site_name}. Todos os direitos reservados.</span>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 order-2 sm:order-1">
             {user ? (
               <Link to="/dashboard" className="flex items-center gap-1.5 hover:text-primary-foreground/40 transition-colors duration-300">
                 <Settings size={12} /> <span>Admin</span>
@@ -93,6 +92,7 @@ const Footer = () => {
               </Link>
             )}
           </div>
+          <span className="order-1 sm:order-2">© {new Date().getFullYear()} {settings.site_name}. Todos os direitos reservados.</span>
         </div>
       </div>
     </footer>
