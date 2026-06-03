@@ -155,7 +155,7 @@ const AnunciarImovel = () => {
 
             <Button type="submit" size="lg" disabled={loading} className="w-full gap-2 bg-gradient-brand hover:opacity-90 text-primary-foreground">
               <MessageCircle size={18} />
-              {loading ? "Enviando..." : "Enviar via WhatsApp"}
+              {loading ? "Enviando..." : "ENVIAR CADASTRO"}
             </Button>
           </form>
         </div>
