@@ -8,6 +8,7 @@ const DEFAULTS: SiteSettings = {
   site_tagline: "Imóveis de Alto Padrão em Alphaville",
   site_url: "https://soalphaville.lovable.app",
   whatsapp: "5511999999999",
+  whatsapp_default_message: "Olá! Gostaria de mais informações.",
   phone: "(11) 99999-9999",
   email: "contato@soalphaville.com.br",
   address: "Alphaville, Barueri - SP",
