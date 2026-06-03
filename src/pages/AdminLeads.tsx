@@ -129,6 +129,9 @@ const AdminLeads = () => {
                     <TableCell className="hidden lg:table-cell">{lead.neighborhood || "-"}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
+                        <Button variant="outline" size="sm" className="gap-1" onClick={() => setSelectedLead(lead)}>
+                          <Eye size={14} />
+                        </Button>
                         <Button variant="outline" size="sm" className="gap-1" onClick={() => openWhatsApp(lead.phone, lead.name)}>
                           <MessageCircle size={14} />
                         </Button>
