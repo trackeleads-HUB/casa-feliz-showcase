@@ -150,21 +150,27 @@ const Dashboard = () => {
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/leads")}>
                   <Home size={16} /> Leads
                 </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/depoimentos")}>
-                  <MessageSquareQuote size={16} /> Depoimentos
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/seo")}>
-                  <Search size={16} /> SEO
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/ia")}>
-                  <Sparkles size={16} /> IA
-                </Button>
+                {isMaster && (
+                  <>
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/depoimentos")}>
+                      <MessageSquareQuote size={16} /> Depoimentos
+                    </Button>
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/seo")}>
+                      <Search size={16} /> SEO
+                    </Button>
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/ia")}>
+                      <Sparkles size={16} /> IA
+                    </Button>
+                  </>
+                )}
                 <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/usuarios")}>
                   <Users size={16} /> Usuários
                 </Button>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
-                  <Settings size={16} /> Configurações
-                </Button>
+                {isMaster && (
+                  <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/configuracoes")}>
+                    <Settings size={16} /> Configurações
+                  </Button>
+                )}
               </div>
             )}
             <Button onClick={() => navigate("/imoveis/novo")} size="sm" className="gap-2">
