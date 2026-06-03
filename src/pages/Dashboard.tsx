@@ -213,21 +213,27 @@ const Dashboard = () => {
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/leads"); }}>
                         <Home size={18} /> Leads
                       </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/depoimentos"); }}>
-                        <MessageSquareQuote size={18} /> Depoimentos
-                      </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
-                        <Search size={18} /> SEO
-                      </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/ia"); }}>
-                        <Sparkles size={18} /> IA
-                      </Button>
+                      {isMaster && (
+                        <>
+                          <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/depoimentos"); }}>
+                            <MessageSquareQuote size={18} /> Depoimentos
+                          </Button>
+                          <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/seo"); }}>
+                            <Search size={18} /> SEO
+                          </Button>
+                          <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/ia"); }}>
+                            <Sparkles size={18} /> IA
+                          </Button>
+                        </>
+                      )}
                       <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/usuarios"); }}>
                         <Users size={18} /> Usuários
                       </Button>
-                      <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
-                        <Settings size={18} /> Configurações
-                      </Button>
+                      {isMaster && (
+                        <Button variant="ghost" className="w-full justify-start gap-3 h-11" onClick={() => { setMenuOpen(false); navigate("/admin/configuracoes"); }}>
+                          <Settings size={18} /> Configurações
+                        </Button>
+                      )}
                     </>
                   )}
 
