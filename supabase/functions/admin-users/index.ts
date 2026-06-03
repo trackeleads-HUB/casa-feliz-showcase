@@ -111,6 +111,18 @@ Deno.serve(async (req) => {
       const { user_id } = body as { user_id: string };
       if (!user_id) return json({ error: "user_id obrigatório" }, 400);
       if (user_id === userData.user.id) return json({ error: "Você não pode excluir a si mesmo" }, 400);
+
+      // Preserva os imóveis cadastrados: reatribui ao admin que está excluindo
+      const { error: reassignErr } = await admin
+        .from("properties")
+        .update({ user_id: userData.user.id })
+        .eq("user_id", user_id);
+      if (reassignErr) return json({ error: `Falha ao preservar imóveis: ${reassignErr.message}` }, 400);
+
+      // Remove vínculos que bloqueariam a exclusão do usuário
+      await admin.from("user_roles").delete().eq("user_id", user_id);
+      await admin.from("profiles").delete().eq("user_id", user_id);
+
       const { error } = await admin.auth.admin.deleteUser(user_id);
       if (error) return json({ error: error.message }, 400);
       return json({ ok: true });
