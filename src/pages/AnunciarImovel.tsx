@@ -11,7 +11,7 @@ import SEOHead from "@/components/SEOHead";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { ArrowLeft, Send, MessageCircle } from "lucide-react";
+import { ArrowLeft, Send } from "lucide-react";
 
 const AnunciarImovel = () => {
   const { toast } = useToast();
@@ -154,7 +154,7 @@ const AnunciarImovel = () => {
             </div>
 
             <Button type="submit" size="lg" disabled={loading} className="w-full gap-2 bg-gradient-brand hover:opacity-90 text-primary-foreground">
-              <MessageCircle size={18} />
+              <Send size={18} />
               {loading ? "Enviando..." : "ENVIAR CADASTRO"}
             </Button>
           </form>
