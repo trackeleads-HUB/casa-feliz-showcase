@@ -97,6 +97,7 @@ const AdminSettings = () => {
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
+    else if (!authLoading && user && !isMasterAdmin(user)) navigate("/dashboard");
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
