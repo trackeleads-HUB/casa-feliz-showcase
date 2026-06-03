@@ -50,6 +50,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const isMaster = isMasterAdmin(user);
 
   const [adminChecked, setAdminChecked] = useState(false);
 
