@@ -43,7 +43,7 @@ const writeDraft = (draft: Record<string, string>) => {
 
 const GROUPS: { title: string; keys: string[]; help?: string }[] = [
   { title: "Identidade do Site", keys: ["site_name", "site_tagline"] },
-  { title: "Contato", keys: ["whatsapp", "phone", "email", "address"] },
+  { title: "Contato", keys: ["whatsapp", "whatsapp_default_message", "phone", "email", "address"] },
   { title: "Redes Sociais", keys: ["instagram", "facebook", "linkedin"] },
   { title: "Hero / Página Inicial", keys: ["hero_title", "hero_subtitle"] },
   {
@@ -173,7 +173,8 @@ const AdminSettings = () => {
 
   const isLongText = (key: string) =>
     ["hero_subtitle", "cta_text", "owner_text", "about_text_1", "about_text_2",
-     "service_1_desc", "service_2_desc", "service_3_desc", "service_4_desc"].includes(key);
+     "service_1_desc", "service_2_desc", "service_3_desc", "service_4_desc",
+     "whatsapp_default_message"].includes(key);
 
   const handleImageUpload = async (key: string, file: File) => {
     if (!file) return;

@@ -6,9 +6,8 @@ const WhatsAppFloat = () => {
   const number = (settings.whatsapp || "").replace(/\D/g, "");
   if (!number) return null;
 
-  const url = `https://wa.me/${number}?text=${encodeURIComponent(
-    "Olá! Gostaria de mais informações."
-  )}`;
+  const message = settings.whatsapp_default_message || "Olá! Gostaria de mais informações.";
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 
   return (
     <a
