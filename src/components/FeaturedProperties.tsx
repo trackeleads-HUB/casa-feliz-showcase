@@ -51,7 +51,7 @@ const FeaturedProperties = () => {
         .limit(6);
 
       if (error || !data || data.length === 0) {
-        setProperties(mockProperties);
+        setProperties([]);
         setLoading(false);
         return;
       }
