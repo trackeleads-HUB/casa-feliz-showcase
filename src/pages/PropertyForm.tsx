@@ -274,6 +274,11 @@ const PropertyForm = () => {
       toast({ title: "Preencha o título do imóvel", variant: "destructive" });
       return;
     }
+    if (youtubeError) {
+      toast({ title: "Link do YouTube inválido", description: youtubeError, variant: "destructive" });
+      return;
+    }
+
 
     setSaving(true);
 
