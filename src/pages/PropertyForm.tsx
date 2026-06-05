@@ -121,6 +121,7 @@ const PropertyForm = () => {
       features: data.features || [],
       meta_title: (data as any).meta_title || "",
       meta_description: (data as any).meta_description || "",
+      youtube_url: (data as any).youtube_url || "",
     });
 
     // Load images
