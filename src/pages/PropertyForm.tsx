@@ -274,7 +274,8 @@ const PropertyForm = () => {
         features: form.features,
         meta_title: form.meta_title.trim() || null,
         meta_description: form.meta_description.trim() || null,
-      };
+        youtube_url: form.youtube_url.trim() || null,
+      } as any;
 
       let propertyId = id;
 
