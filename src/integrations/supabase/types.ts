@@ -166,6 +166,7 @@ export type Database = {
           title: string
           updated_at: string
           user_id: string
+          youtube_url: string | null
           zip_code: string | null
         }
         Insert: {
@@ -193,6 +194,7 @@ export type Database = {
           title: string
           updated_at?: string
           user_id: string
+          youtube_url?: string | null
           zip_code?: string | null
         }
         Update: {
@@ -220,6 +222,7 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id?: string
+          youtube_url?: string | null
           zip_code?: string | null
         }
         Relationships: []

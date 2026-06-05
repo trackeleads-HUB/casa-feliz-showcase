@@ -61,6 +61,7 @@ const PropertyForm = () => {
     features: [] as string[],
     meta_title: "",
     meta_description: "",
+    youtube_url: "",
   });
 
   const [images, setImages] = useState<ImageFile[]>([]);
@@ -120,6 +121,7 @@ const PropertyForm = () => {
       features: data.features || [],
       meta_title: (data as any).meta_title || "",
       meta_description: (data as any).meta_description || "",
+      youtube_url: (data as any).youtube_url || "",
     });
 
     // Load images
@@ -272,7 +274,8 @@ const PropertyForm = () => {
         features: form.features,
         meta_title: form.meta_title.trim() || null,
         meta_description: form.meta_description.trim() || null,
-      };
+        youtube_url: form.youtube_url.trim() || null,
+      } as any;
 
       let propertyId = id;
 
@@ -608,6 +611,23 @@ const PropertyForm = () => {
             <p className="text-xs text-muted-foreground">
               Arraste as fotos para reordenar (no celular use as setas). Clique na estrela para definir a foto de capa. O número no canto indica a ordem de exibição.
             </p>
+          </section>
+
+          {/* Vídeo */}
+          <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+            <h2 className="text-lg font-semibold">Vídeo (YouTube)</h2>
+            <p className="text-xs text-muted-foreground">Opcional. Cole o link do vídeo do YouTube. Se preenchido, será exibido na página do imóvel.</p>
+            <div>
+              <Label htmlFor="youtube_url">Link do YouTube</Label>
+              <Input
+                id="youtube_url"
+                type="url"
+                value={form.youtube_url}
+                onChange={(e) => handleChange("youtube_url", e.target.value)}
+                placeholder="https://www.youtube.com/watch?v=..."
+                className="mt-1.5"
+              />
+            </div>
           </section>
 
           {/* SEO */}
