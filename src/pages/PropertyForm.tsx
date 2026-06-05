@@ -655,8 +655,14 @@ const PropertyForm = () => {
                 value={form.youtube_url}
                 onChange={(e) => handleChange("youtube_url", e.target.value)}
                 placeholder="https://www.youtube.com/watch?v=..."
-                className="mt-1.5"
+                aria-invalid={!!youtubeError}
+                className={`mt-1.5 ${youtubeError ? "border-destructive focus-visible:ring-destructive" : ""}`}
               />
+              {youtubeError ? (
+                <p className="text-xs text-destructive mt-1.5">{youtubeError}</p>
+              ) : form.youtube_url.trim() ? (
+                <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1.5">Link válido ✓</p>
+              ) : null}
             </div>
           </section>
 
