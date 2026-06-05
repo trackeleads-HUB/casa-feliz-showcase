@@ -61,6 +61,7 @@ const PropertyForm = () => {
     features: [] as string[],
     meta_title: "",
     meta_description: "",
+    youtube_url: "",
   });
 
   const [images, setImages] = useState<ImageFile[]>([]);
