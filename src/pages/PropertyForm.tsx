@@ -613,6 +613,23 @@ const PropertyForm = () => {
             </p>
           </section>
 
+          {/* Vídeo */}
+          <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+            <h2 className="text-lg font-semibold">Vídeo (YouTube)</h2>
+            <p className="text-xs text-muted-foreground">Opcional. Cole o link do vídeo do YouTube. Se preenchido, será exibido na página do imóvel.</p>
+            <div>
+              <Label htmlFor="youtube_url">Link do YouTube</Label>
+              <Input
+                id="youtube_url"
+                type="url"
+                value={form.youtube_url}
+                onChange={(e) => handleChange("youtube_url", e.target.value)}
+                placeholder="https://www.youtube.com/watch?v=..."
+                className="mt-1.5"
+              />
+            </div>
+          </section>
+
           {/* SEO */}
           <section className="bg-card border border-border rounded-xl p-6 space-y-4">
             <h2 className="text-lg font-semibold">SEO (Otimização para Buscadores)</h2>
