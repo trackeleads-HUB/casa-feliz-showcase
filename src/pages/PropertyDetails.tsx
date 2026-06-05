@@ -307,6 +307,35 @@ const PropertyDetails = () => {
               </div>
             )}
 
+            {/* Vídeo */}
+            {property.youtube_url && (() => {
+              const url = property.youtube_url;
+              let videoId = "";
+              try {
+                const u = new URL(url);
+                if (u.hostname.includes("youtu.be")) videoId = u.pathname.slice(1);
+                else if (u.searchParams.get("v")) videoId = u.searchParams.get("v")!;
+                else if (u.pathname.includes("/embed/")) videoId = u.pathname.split("/embed/")[1];
+                else if (u.pathname.includes("/shorts/")) videoId = u.pathname.split("/shorts/")[1];
+              } catch { /* ignore */ }
+              if (!videoId) return null;
+              return (
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">Vídeo</h2>
+                  <div className="relative w-full overflow-hidden rounded-xl border border-border" style={{ paddingTop: "56.25%" }}>
+                    <iframe
+                      className="absolute inset-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      title="Vídeo do imóvel"
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              );
+            })()}
+
             {/* Features */}
             {property.features && property.features.length > 0 && (
               <div>
