@@ -146,6 +146,31 @@ const PropertyForm = () => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const extractYoutubeId = (url: string): string | null => {
+    const trimmed = url.trim();
+    if (!trimmed) return null;
+    try {
+      const u = new URL(trimmed);
+      const host = u.hostname.replace(/^www\./, "");
+      if (!["youtube.com", "m.youtube.com", "youtu.be", "youtube-nocookie.com"].includes(host)) return null;
+      let id = "";
+      if (host === "youtu.be") id = u.pathname.slice(1);
+      else if (u.searchParams.get("v")) id = u.searchParams.get("v")!;
+      else if (u.pathname.startsWith("/embed/")) id = u.pathname.split("/embed/")[1];
+      else if (u.pathname.startsWith("/shorts/")) id = u.pathname.split("/shorts/")[1];
+      else if (u.pathname.startsWith("/live/")) id = u.pathname.split("/live/")[1];
+      id = (id || "").split(/[/?&#]/)[0];
+      return /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const youtubeError = form.youtube_url.trim() && !extractYoutubeId(form.youtube_url)
+    ? "Link do YouTube inválido. Use um formato como https://youtu.be/ID ou https://www.youtube.com/watch?v=ID"
+    : "";
+
+
   const toggleFeature = (feature: string) => {
     setForm((prev) => ({
       ...prev,
@@ -249,6 +274,11 @@ const PropertyForm = () => {
       toast({ title: "Preencha o título do imóvel", variant: "destructive" });
       return;
     }
+    if (youtubeError) {
+      toast({ title: "Link do YouTube inválido", description: youtubeError, variant: "destructive" });
+      return;
+    }
+
 
     setSaving(true);
 
@@ -625,8 +655,14 @@ const PropertyForm = () => {
                 value={form.youtube_url}
                 onChange={(e) => handleChange("youtube_url", e.target.value)}
                 placeholder="https://www.youtube.com/watch?v=..."
-                className="mt-1.5"
+                aria-invalid={!!youtubeError}
+                className={`mt-1.5 ${youtubeError ? "border-destructive focus-visible:ring-destructive" : ""}`}
               />
+              {youtubeError ? (
+                <p className="text-xs text-destructive mt-1.5">{youtubeError}</p>
+              ) : form.youtube_url.trim() ? (
+                <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1.5">Link válido ✓</p>
+              ) : null}
             </div>
           </section>
 
