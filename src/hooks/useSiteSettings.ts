@@ -5,7 +5,7 @@ export type SiteSettings = Record<string, string>;
 
 const DEFAULTS: SiteSettings = {
   site_name: "SO Alphaville",
-  site_tagline: "Imóveis de Alto Padrão em Alphaville",
+  site_tagline: "Excelência em Imóveis de Alto Padrão em Alphaville",
   site_url: "https://soalphaville.lovable.app",
   whatsapp: "5511999999999",
   whatsapp_default_message: "Olá! Gostaria de mais informações.",
