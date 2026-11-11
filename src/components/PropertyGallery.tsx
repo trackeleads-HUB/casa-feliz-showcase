@@ -35,6 +35,8 @@ const PropertyGallery = ({ images, title }: Props) => {
           <img
             src={images[currentIndex].url}
             alt={`${title} - Foto ${currentIndex + 1}`}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover cursor-zoom-in"
             onClick={handleImageClick}
           />
@@ -75,7 +77,7 @@ const PropertyGallery = ({ images, title }: Props) => {
                   i === currentIndex ? "border-primary" : "border-transparent opacity-60 hover:opacity-100"
                 }`}
               >
-                <img src={img.url} alt={`Miniatura ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                <img src={img.url} alt={`${title} - Foto ${i + 1}`} width={80} height={56} loading="lazy" decoding="async" className="w-full h-full object-cover" />
               </button>
             ))}
           </div>

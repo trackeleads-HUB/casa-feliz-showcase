@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/seo";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -6,7 +7,7 @@ export type SiteSettings = Record<string, string>;
 const DEFAULTS: SiteSettings = {
   site_name: "SO Alphaville",
   site_tagline: "Excelência em Imóveis de Alto Padrão em Alphaville",
-  site_url: "https://soalphaville.lovable.app",
+  site_url: SITE_URL,
   whatsapp: "5511999999999",
   whatsapp_default_message: "Olá! Gostaria de mais informações.",
   phone: "(11) 99999-9999",

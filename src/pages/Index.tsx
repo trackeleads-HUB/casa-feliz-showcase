@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/seo";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import FeaturedProperties from "@/components/FeaturedProperties";
@@ -13,7 +14,7 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 const Index = () => {
   const { settings } = useSiteSettings();
-  const origin = typeof window !== "undefined" ? window.location.origin : settings.site_url;
+  const origin = SITE_URL;
 
   const realEstateLd = {
     "@context": "https://schema.org",
@@ -21,42 +22,35 @@ const Index = () => {
     name: settings.site_name || "SO Alphaville",
     description: settings.default_meta_description || "Imobiliária especializada em imóveis de alto padrão em Alphaville.",
     url: origin,
+    "@id": `${origin}/#organization`,
     telephone: settings.phone,
     email: settings.email,
     image: settings.default_og_image || undefined,
-    areaServed: { "@type": "Place", name: "Alphaville, Barueri, SP" },
+    areaServed: { "@type": "Place", name: settings.address },
     address: {
       "@type": "PostalAddress",
       streetAddress: settings.address,
-      addressLocality: "Barueri",
-      addressRegion: "SP",
       addressCountry: "BR",
     },
     sameAs: [settings.instagram, settings.facebook, settings.linkedin].filter(Boolean),
   };
 
-  const orgLd = {
+  const websiteLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "WebSite",
     name: settings.site_name,
     url: origin,
-    logo: settings.default_og_image || undefined,
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: settings.phone,
-      contactType: "sales",
-      areaServed: "BR",
-      availableLanguage: "Portuguese",
-    },
+    "@id": `${origin}/#website`,
+    inLanguage: "pt-BR",
+    publisher: { "@id": `${origin}/#organization` },
   };
 
   return (
     <div className="min-h-screen">
       <SEOHead
-        title="Imóveis de Alto Padrão em Alphaville"
         description={settings.default_meta_description}
         canonical={origin}
-        jsonLd={[realEstateLd, orgLd]}
+        jsonLd={[realEstateLd, websiteLd]}
       />
       <Navbar />
       <HeroSection />

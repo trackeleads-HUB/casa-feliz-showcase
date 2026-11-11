@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ChevronRight, Home } from "lucide-react";
-import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { canonicalUrl } from "@/lib/seo";
+import { useLocation } from "react-router-dom";
 
 export type Crumb = {
   label: string;
@@ -19,9 +20,7 @@ interface BreadcrumbsProps {
  * nos resultados de busca.
  */
 const Breadcrumbs = ({ items, className = "" }: BreadcrumbsProps) => {
-  const { settings } = useSiteSettings();
-  const origin =
-    (typeof window !== "undefined" ? window.location.origin : settings.site_url) || "";
+  const { pathname } = useLocation();
 
   const fullItems: Crumb[] = [{ label: "Início", href: "/" }, ...items];
 
@@ -32,7 +31,7 @@ const Breadcrumbs = ({ items, className = "" }: BreadcrumbsProps) => {
       "@type": "ListItem",
       position: i + 1,
       name: c.label,
-      ...(c.href ? { item: `${origin}${c.href}` } : {}),
+      item: canonicalUrl(c.href || pathname),
     })),
   };
 

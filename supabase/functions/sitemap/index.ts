@@ -1,7 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-const SUPABASE_ANON = Deno.env.get("SUPABASE_ANON_KEY")!;
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+const SUPABASE_ANON = Deno.env.get("SUPABASE_ANON_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -12,9 +12,9 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
+    if (!SUPABASE_URL || !SUPABASE_ANON) throw new Error("Missing server configuration");
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
-    const { data: settings } = await supabase.from("site_settings").select("key, value").eq("key", "site_url").maybeSingle();
-    const siteUrl = (settings?.value || "https://soalphaville.lovable.app").replace(/\/$/, "");
+    const siteUrl = "https://soalphaville.camacari.website";
 
     const staticUrls = [
       { loc: `${siteUrl}/`, priority: "1.0", changefreq: "daily" },
@@ -24,16 +24,22 @@ Deno.serve(async (req) => {
       { loc: `${siteUrl}/termos-de-uso`, priority: "0.3", changefreq: "yearly" },
     ];
 
-    const { data: properties } = await supabase
+    const properties = [];
+    for (let offset = 0; ; offset += 1000) {
+    const { data, error } = await supabase
       .from("properties")
       .select("id, updated_at")
       .eq("status", "disponivel")
       .order("updated_at", { ascending: false })
-      .limit(1000);
+      .range(offset, offset + 999);
+    if (error) throw error;
+    properties.push(...(data || []));
+    if (!data || data.length < 1000) break;
+    }
 
     const propertyUrls = (properties || []).map((p) => ({
       loc: `${siteUrl}/imoveis/${p.id}`,
-      lastmod: new Date(p.updated_at).toISOString().split("T")[0],
+      ...(p.updated_at && !Number.isNaN(Date.parse(p.updated_at)) ? { lastmod: new Date(p.updated_at).toISOString() } : {}),
       priority: "0.8",
       changefreq: "weekly",
     }));

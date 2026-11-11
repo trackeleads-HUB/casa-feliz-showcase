@@ -1,3 +1,4 @@
+import { canonicalUrl, propertyListingSchema } from "@/lib/seo";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -85,6 +86,7 @@ const PropertyDetails = () => {
 
     const fetchData = async () => {
       setLoading(true);
+      setNotFound(false);
 
       const [propRes, imgRes] = await Promise.all([
         supabase.from("properties").select("*").eq("id", id).single(),
@@ -145,6 +147,7 @@ const PropertyDetails = () => {
   if (notFound || !property) {
     return (
       <div className="min-h-screen bg-background">
+        <SEOHead title="Imóvel não encontrado" noindex />
         <Navbar />
         <div className="pt-24 container mx-auto px-6 py-20 text-center">
           <Home size={48} className="mx-auto text-muted-foreground/30 mb-4" />
@@ -167,49 +170,16 @@ const PropertyDetails = () => {
   const seoDesc = property.meta_description || 
     `${propertyTypeLabels[property.property_type] || property.property_type} ${listingLabels[property.listing_type]?.toLowerCase() || ""} em ${property.neighborhood || property.city || "Alphaville"}. ${property.bedrooms ? property.bedrooms + " quartos, " : ""}${property.area ? property.area + "m². " : ""}${formatPrice(property.price)}.`;
   
-  const propertyJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    name: property.title,
-    description: property.description || seoDesc,
-    url: `${window.location.origin}/imoveis/${property.id}`,
-    ...(images.length > 0 && { image: images.map((i) => i.url).slice(0, 8) }),
-    ...(property.created_at && { datePosted: property.created_at }),
-    ...(property.area && {
-      floorSize: { "@type": "QuantitativeValue", value: property.area, unitCode: "MTK" },
-    }),
-    ...(property.bedrooms && { numberOfRooms: property.bedrooms }),
-    ...(property.bathrooms && { numberOfBathroomsTotal: property.bathrooms }),
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: property.address || undefined,
-      addressLocality: property.city || "Barueri",
-      addressRegion: property.state || "SP",
-      addressCountry: "BR",
-      postalCode: property.zip_code || undefined,
-    },
-    ...(property.price && {
-      offers: {
-        "@type": "Offer",
-        price: property.price,
-        priceCurrency: "BRL",
-        availability:
-          property.status === "disponivel"
-            ? "https://schema.org/InStock"
-            : "https://schema.org/SoldOut",
-        url: `${window.location.origin}/imoveis/${property.id}`,
-      },
-    }),
-  };
+  const propertyJsonLd = propertyListingSchema(property, images.map((image) => image.url), seoDesc);
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={seoTitle}
         description={seoDesc}
-        canonical={`${window.location.origin}/imoveis/${property.id}`}
+        canonical={canonicalUrl(`/imoveis/${property.id}`)}
         ogImage={coverImage || undefined}
-        ogType="article"
+        ogType="website"
         jsonLd={propertyJsonLd}
       />
       <Navbar />
@@ -314,7 +284,7 @@ const PropertyDetails = () => {
               try {
                 const u = new URL(url);
                 if (u.hostname.includes("youtu.be")) videoId = u.pathname.slice(1);
-                else if (u.searchParams.get("v")) videoId = u.searchParams.get("v")!;
+                else if (u.searchParams.get("v")) videoId = u.searchParams.get("v") || "";
                 else if (u.pathname.includes("/embed/")) videoId = u.pathname.split("/embed/")[1];
                 else if (u.pathname.includes("/shorts/")) videoId = u.pathname.split("/shorts/")[1];
               } catch { /* ignore */ }

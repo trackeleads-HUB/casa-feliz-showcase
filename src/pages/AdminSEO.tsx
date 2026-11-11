@@ -269,7 +269,7 @@ const AdminSEO = () => {
                 <Button onClick={addFaq} size="sm" className="gap-2"><Plus size={14}/>Nova</Button>
               </div>
               <p className="text-sm text-muted-foreground">
-                Aparecem na home com schema <code>FAQPage</code>, ajudando o ranqueamento no Google.
+                Aparecem na página inicial para esclarecer dúvidas dos visitantes.
               </p>
 
               <div className="space-y-3">

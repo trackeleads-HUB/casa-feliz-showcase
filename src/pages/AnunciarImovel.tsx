@@ -76,7 +76,7 @@ const AnunciarImovel = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead title="Anunciar Imóvel - SO Alphaville" description="Quer vender ou alugar seu imóvel? Preencha o formulário e entre em contato conosco." />
+      <SEOHead title="Anunciar Imóvel" description="Quer vender ou alugar seu imóvel? Preencha o formulário e entre em contato conosco." />
       <Navbar />
 
       <main className="pt-24 sm:pt-28 pb-12 sm:pb-16">

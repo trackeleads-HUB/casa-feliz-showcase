@@ -1,25 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Bed, Bath, Maximize, Home, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-
-import property1 from "@/assets/property-1.jpg";
-import property2 from "@/assets/property-2.jpg";
-import property3 from "@/assets/property-3.jpg";
-import property4 from "@/assets/property-4.jpg";
-import property5 from "@/assets/property-5.jpg";
-import property6 from "@/assets/property-6.jpg";
-
-const mockProperties = [
-  { id: "1", image: property1, title: "Apartamento Vista Mar", location: "Copacabana, Rio de Janeiro", price: 850000, beds: 3, baths: 2, area: 120, tag: "Venda", code: null },
-  { id: "2", image: property2, title: "Casa com Jardim", location: "Alphaville, São Paulo", price: 1200000, beds: 4, baths: 3, area: 250, tag: "Venda", code: null },
-  { id: "3", image: property3, title: "Cobertura Duplex", location: "Barra da Tijuca, Rio de Janeiro", price: 2500000, beds: 4, baths: 4, area: 320, tag: "Destaque", code: null },
-  { id: "4", image: property4, title: "Sobrado Moderno", location: "Vila Madalena, São Paulo", price: 980000, beds: 3, baths: 2, area: 180, tag: "Venda", code: null },
-  { id: "5", image: property5, title: "Casa de Praia", location: "Jurerê, Florianópolis", price: 1800000, beds: 5, baths: 4, area: 300, tag: "Destaque", code: null },
-  { id: "6", image: property6, title: "Loft Industrial", location: "Pinheiros, São Paulo", price: 650000, beds: 1, baths: 1, area: 85, tag: "Aluguel", code: null },
-];
 
 const listingLabels: Record<string, string> = {
   venda: "Venda", aluguel: "Aluguel", venda_aluguel: "Venda/Aluguel",
@@ -37,7 +21,6 @@ const formatPrice = (price: number | null) => {
 };
 
 const FeaturedProperties = () => {
-  const navigate = useNavigate();
   const [properties, setProperties] = useState<DisplayProperty[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,21 +39,18 @@ const FeaturedProperties = () => {
         return;
       }
 
-      const withImages = await Promise.all(
-        data.map(async (p) => {
-          const { data: imgs } = await supabase
-            .from("property_images").select("url")
-            .eq("property_id", p.id).eq("is_cover", true).limit(1);
+      const { data: covers } = await supabase.from("property_images")
+        .select("property_id, url").in("property_id", data.map((p) => p.id)).eq("is_cover", true);
+      const withImages = data.map((p) => {
           return {
-            id: p.id, image: imgs?.[0]?.url || "", title: p.title,
+            id: p.id, image: covers?.find((image) => image.property_id === p.id)?.url || "", title: p.title,
             location: [p.neighborhood, p.city].filter(Boolean).join(", ") || "Localização não informada",
             price: p.price ? Number(p.price) : null, beds: p.bedrooms,
             baths: p.bathrooms, area: p.area ? Number(p.area) : null,
             tag: listingLabels[p.listing_type] || p.listing_type,
             code: p.property_code || null,
           };
-        })
-      );
+        });
       setProperties(withImages);
       setLoading(false);
     };
@@ -101,10 +81,10 @@ const FeaturedProperties = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
             {properties.map((p) => (
-              <div
+              <Link
                 key={p.id}
+                to={`/imoveis/${p.id}`}
                 className="group bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-2xl hover:shadow-foreground/5 transition-all duration-500 cursor-pointer"
-                onClick={() => navigate(`/imoveis/${p.id}`)}
               >
                 <div className="relative h-64 overflow-hidden bg-muted">
                   {p.image ? (
@@ -133,14 +113,14 @@ const FeaturedProperties = () => {
                     {p.area ? <span className="flex items-center gap-1.5"><Maximize size={14} /> {p.area}m²</span> : null}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
 
         <div className="text-center mt-10 sm:mt-12 md:mt-16">
-          <Button variant="outline" size="lg" className="rounded-full px-8 gap-2" onClick={() => navigate("/imoveis")}>
-            Ver todos os imóveis <ArrowRight size={14} />
+          <Button asChild variant="outline" size="lg" className="rounded-full px-8 gap-2">
+            <Link to="/imoveis">Ver todos os imóveis <ArrowRight size={14} /></Link>
           </Button>
         </div>
       </div>

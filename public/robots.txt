@@ -3,17 +3,39 @@ Allow: /
 Disallow: /dashboard
 Disallow: /admin
 Disallow: /auth
+Disallow: /imoveis/novo
+Disallow: /imoveis/*/editar
 
 User-agent: Googlebot
 Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /auth
+Disallow: /imoveis/novo
+Disallow: /imoveis/*/editar
 
 User-agent: Bingbot
 Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /auth
+Disallow: /imoveis/novo
+Disallow: /imoveis/*/editar
 
 User-agent: Twitterbot
 Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /auth
+Disallow: /imoveis/novo
+Disallow: /imoveis/*/editar
 
 User-agent: facebookexternalhit
 Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /auth
+Disallow: /imoveis/novo
+Disallow: /imoveis/*/editar
 
-Sitemap: https://soalphaville.lovable.app/sitemap.xml
+Sitemap: https://soalphaville.camacari.website/sitemap.xml

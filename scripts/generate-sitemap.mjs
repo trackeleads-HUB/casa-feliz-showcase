@@ -3,7 +3,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const BASE_URL = "https://soalphaville.lovable.app";
+const BASE_URL = "https://soalphaville.camacari.website";
 const SUPABASE_URL = "https://sgwwbujfmulklhguspae.supabase.co";
 const SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNnd3didWpmbXVsa2xoZ3VzcGFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NjI2NTksImV4cCI6MjA4ODEzODY1OX0.ep_eFnvt17sa8Y5fKHGrVAYdBN9AeyAXgtpz8LOe2N0";
@@ -18,24 +18,29 @@ const staticEntries = [
 
 async function fetchProperties() {
   try {
+    const rows = [];
+    for (let offset = 0; ; offset += 1000) {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/properties?select=id,updated_at&status=eq.disponivel&order=updated_at.desc&limit=1000`,
+      `${SUPABASE_URL}/rest/v1/properties?select=id,updated_at&status=eq.disponivel&order=updated_at.desc&limit=1000&offset=${offset}`,
       { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
     );
     if (!res.ok) {
       console.warn(`[sitemap] Falha ao buscar imóveis (${res.status})`);
-      return [];
+      throw new Error(`Property fetch failed: ${res.status}`);
     }
     const data = await res.json();
-    return data.map((p) => ({
+    rows.push(...data);
+    if (data.length < 1000) break;
+    }
+    return rows.map((p) => ({
       path: `/imoveis/${p.id}`,
-      lastmod: new Date(p.updated_at).toISOString().split("T")[0],
+      ...(p.updated_at && !Number.isNaN(Date.parse(p.updated_at)) ? { lastmod: new Date(p.updated_at).toISOString() } : {}),
       changefreq: "weekly",
       priority: "0.8",
     }));
   } catch (err) {
     console.warn("[sitemap] erro ao buscar imóveis:", err);
-    return [];
+    throw err;
   }
 }
 

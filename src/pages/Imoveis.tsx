@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { canonicalUrl } from "@/lib/seo";
 import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
@@ -114,18 +115,14 @@ const Imoveis = () => {
 
       setTotalCount(count || 0);
 
-      const withImages = await Promise.all(
-        data.map(async (p) => {
-          const { data: imgs } = await supabase
-            .from("property_images")
-            .select("url")
-            .eq("property_id", p.id)
-            .eq("is_cover", true)
-            .limit(1);
+      const { data: covers } = data.length ? await supabase
+        .from("property_images").select("property_id, url")
+        .in("property_id", data.map((p) => p.id)).eq("is_cover", true) : { data: [] };
+      const withImages = data.map((p) => {
 
           return {
             id: p.id,
-            image: imgs?.[0]?.url || "",
+            image: covers?.find((image) => image.property_id === p.id)?.url || "",
             title: p.title,
             location: [p.neighborhood, p.city].filter(Boolean).join(", ") || "Localização não informada",
             price: p.price ? Number(p.price) : null,
@@ -136,8 +133,7 @@ const Imoveis = () => {
             propertyType: propertyTypeLabels[p.property_type] || p.property_type,
             code: p.property_code || null,
           };
-        })
-      );
+        });
 
       setProperties(withImages);
       setLoading(false);
@@ -157,9 +153,16 @@ const Imoveis = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buscar Imóveis"
-        description="Pesquise imóveis em Alphaville. Filtros por tipo, preço, localização. Casas, apartamentos, terrenos e muito mais."
-        canonical={`${window.location.origin}/imoveis`}
+        title="Imóveis à venda e para alugar em Camaçari"
+        description="Encontre casas, apartamentos e terrenos em Alphaville, Camaçari, Bahia. Consulte preços, fotos e detalhes dos imóveis à venda e para alugar."
+        canonical="/imoveis"
+        jsonLd={{
+          "@context": "https://schema.org", "@type": "CollectionPage",
+          name: "Imóveis à venda e para alugar em Camaçari", url: canonicalUrl("/imoveis"),
+          mainEntity: { "@type": "ItemList", itemListElement: properties.map((p, index) => ({
+            "@type": "ListItem", position: index + 1, name: p.title, url: canonicalUrl(`/imoveis/${p.id}`),
+          })) },
+        }}
       />
       <Navbar />
 

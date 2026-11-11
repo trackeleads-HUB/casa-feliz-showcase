@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+import { canonicalUrl, isPrivatePath } from "@/lib/seo";
 import { Helmet } from "react-helmet-async";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
@@ -21,13 +23,15 @@ const SEOHead = ({
   noindex = false,
 }: SEOHeadProps) => {
   const { settings } = useSiteSettings();
+  const { pathname } = useLocation();
+  const preventIndexing = noindex || isPrivatePath(pathname);
 
   const siteName = settings.site_name || "SO Alphaville";
   const baseTitle = settings.default_meta_title || `${siteName} - Imóveis de Alto Padrão em Alphaville`;
   const baseDesc = description || settings.default_meta_description || "Imóveis de alto padrão em Alphaville.";
-  const baseOg = ogImage || settings.default_og_image || "https://lovable.dev/opengraph-image-p98pqg.png";
-  const fullTitle = title ? `${title} | ${siteName}` : baseTitle;
-  const url = canonical || (typeof window !== "undefined" ? window.location.href : settings.site_url);
+  const baseOg = ogImage || settings.default_og_image || "";
+  const fullTitle = title ? (title.toLowerCase().includes(siteName.toLowerCase()) ? title : `${title} | ${siteName}`) : baseTitle;
+  const url = canonicalUrl(canonical || pathname);
 
   const jsonLdArr = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 
@@ -36,7 +40,7 @@ const SEOHead = ({
       <html lang="pt-BR" />
       <title>{fullTitle}</title>
       <meta name="description" content={baseDesc} />
-      {noindex ? (
+      {preventIndexing ? (
         <meta name="robots" content="noindex, nofollow" />
       ) : (
         <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -47,8 +51,8 @@ const SEOHead = ({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={baseDesc} />
       <meta property="og:type" content={ogType} />
-      <meta property="og:image" content={baseOg} />
-      <meta property="og:image:alt" content={fullTitle} />
+      {baseOg && <meta property="og:image" content={baseOg} />}
+      {baseOg && <meta property="og:image:alt" content={fullTitle} />}
       {url && <meta property="og:url" content={url} />}
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="pt_BR" />
@@ -57,7 +61,7 @@ const SEOHead = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={baseDesc} />
-      <meta name="twitter:image" content={baseOg} />
+      {baseOg && <meta name="twitter:image" content={baseOg} />}
 
       {/* Verificações */}
       {settings.google_site_verification && (
