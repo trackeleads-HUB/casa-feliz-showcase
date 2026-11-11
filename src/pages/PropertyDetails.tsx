@@ -230,9 +230,9 @@ const PropertyDetails = () => {
         {/* Gallery */}
         <PropertyGallery images={images} title={property.title} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mt-6 lg:mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-6 md:mt-8">
           {/* Main info */}
-          <div className="lg:col-span-2 space-y-5 sm:space-y-6 order-2 lg:order-1">
+          <div className="md:col-span-2 space-y-5 sm:space-y-6 order-2 md:order-1">
             {/* Header */}
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -354,8 +354,8 @@ const PropertyDetails = () => {
           </div>
 
           {/* Sidebar – Contact */}
-          <div className="lg:col-span-1 order-1 lg:order-2">
-            <div className="lg:sticky lg:top-28 bg-card border border-border rounded-xl p-5 sm:p-6 shadow-sm space-y-4 sm:space-y-5">
+          <div className="md:col-span-1 order-1 md:order-2">
+            <div className="md:sticky md:top-24 bg-card border border-border rounded-xl p-5 sm:p-6 shadow-sm space-y-4 sm:space-y-5">
               <h3 className="text-lg font-bold text-foreground">
                 Interessado neste imóvel?
               </h3>

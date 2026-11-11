@@ -90,7 +90,10 @@
   }
 
   html, body {
+    /* `clip` em vez de `hidden`: impede o scroll horizontal sem criar
+       um contêiner de rolagem, o que manteria o `position: sticky` quebrado. */
     overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100%;
   }
 
